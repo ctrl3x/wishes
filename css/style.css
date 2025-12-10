@@ -111,8 +111,10 @@
     position: absolute;
     height: 80px;
     left: 0px;
-    right: -658px;
+    right: 0px;
     top: 2464px;
+    display: flex;
+    overflow: hidden;
 }
 
 .main-title h1{
@@ -184,4 +186,242 @@
     flex: none;
     order: 0;
     flex-grow: 0;
+}
+
+
+.first-cube {
+    position: absolute;
+    width: 82.1px;
+    height: 76.46px;
+    left: 38.95px;
+    top: 50px;
+}
+
+.second-cube {
+    position: absolute;
+    width: 82.88px;
+    height: 85.02px;
+    left: 38.56px;
+    top: 296.46px;
+}
+
+.third-cube {
+    position: absolute;
+    width: 82.1px;
+    height: 76.46px;
+    left: 38.95px;
+    top: 561.48px;
+
+    transform: rotate(180deg);
+}
+
+.fourth-cube {
+    position: absolute;
+    width: 82.88px;
+    height: 85.02px;
+    left: 38.56px;
+    top: 817.93px;
+
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+}
+
+.fifth-cube {
+    position: absolute;
+    width: 82.1px;
+    height: 76.46px;
+    left: 38.95px;
+    top: 1082.95px;
+
+    transform: matrix(1, 0, 0, -1, 0, 0);
+}
+
+.first-long-branch {
+    position: absolute;
+    width: 52px;
+    left: calc(50% - 52px/2 - 0px);
+    top: 3.08%;
+    bottom: 52.92%;
+
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+}
+
+.second-long-branch {
+    position: absolute;
+    width: 52px;
+    left: calc(50% - 52px/2 - 0px);
+    top: 52.92%;
+    bottom: 3.08%;
+
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+}
+
+.freedom{
+    box-sizing: border-box;
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 17px;
+    gap: 10px;
+
+    position: absolute;
+    width: 110px;
+    left: calc(50% - 110px/2);
+    top: 8.33%;
+    bottom: 88.33%;
+
+    background: #000000;
+    border: 1.06855px solid #FFFFFF;
+    transform: rotate(-40deg);
+}
+
+.freedom h1{
+    width: 76px;
+    height: 29px;
+
+    font-family: 'Cormorant Garamond';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 29px;
+    /* identical to box height */
+    text-align: center;
+
+    color: #FFFFFF;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.memory{
+    box-sizing: border-box;
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 16px;
+    gap: 10px;
+
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    left: calc(50% - 100px/2 - 2.95px);
+    top: calc(50% - 40px/2 - 8px);
+
+    background: #000000;
+    border: 1.06855px solid #FFFFFF;
+    transform: rotate(10deg);
+}
+
+.memory h1{
+    width: 76px;
+    height: 29px;
+
+    font-family: 'Cormorant Garamond';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 29px;
+    /* identical to box height */
+    text-align: center;
+
+    color: #FFFFFF;
+}
+
+.lifetime{
+    box-sizing: border-box;
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 4px 13px;
+    gap: 10px;
+
+    position: absolute;
+    width: 150px;
+    height: 40px;
+    left: calc(50% - 150px/2 + 11px);
+    top: 952.22px;
+
+    background: #000000;
+    border: 1.06855px solid #FFFFFF;
+    transform: rotate(-50deg);
+}
+
+.lifetime h1{
+    width: 106px;
+    height: 29px;
+
+    font-family: 'Cormorant Garamond';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 29px;
+    color: #FFFFFF;
+}
+
+.hse-lable {
+    box-sizing: border-box;
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px 46px;
+    gap: 10px;
+
+    width: 212px;
+    height: 80px;
+    flex-shrink: 0;
+
+    background: #000000;
+}
+
+.footer-right {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    height: 80px;
+    background: white;
+}
+
+
+.author-run-line {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    white-space: nowrap;
+    animation: run-text 10s linear infinite;
+    color: black;
+
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    /* identical to box height */
+    text-transform: uppercase;
+}
+
+@keyframes run-text {
+    0% {
+        transform: translateY(-50%) translateX(100%);
+    }
+    100% {
+        transform: translateY(-50%) translateX(-50%);
+    }
+}
+
+.author-run-line h1 {
+    margin: 0;
+    padding: 0;
+    line-height: 80px;
 }
