@@ -368,6 +368,86 @@
     color: #FFFFFF;
 }
 
+.logo{
+    box-sizing: border-box;
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 19.6964px;
+    gap: 7.39px;
+
+    position: absolute;
+    width: 200px;
+    height: 231px;
+    left: calc(50% - 200px/2);
+    top: calc(50% - 231px/2 + 0.5px);
+
+    background: #FFFFFF;
+    border: 0.961737px solid #000000;
+}
+
+.chains {
+    position: relative;
+    height: 783.87px;
+    left: 0px;
+    right: 0px;
+    bottom: 0.13px;
+
+    background: #FFFFFF;
+    border: 0.5px solid #000000;
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+}
+
+.left-top-hand {
+    position: absolute;
+    width: 238.8px;
+    height: 112.49px;
+    left: -0.02px;
+    bottom: 257.51px;
+}
+
+.left-bottom-hand{
+    position: absolute;
+    width: 257.1px;
+    height: 257.1px;
+    left: 61.26px;
+    bottom: 0px;
+}
+
+.left-main-hand{
+    position: absolute;
+    height: 91px;
+    left: 324px;
+    right: 812px;
+    bottom: 0px;
+}
+
+.right-main-hand{
+    position: absolute;
+    width: 144px;
+    height: 91px;
+    left: calc(50% - 144px/2 + 297px);
+    bottom: 0px;
+}
+
+.right-bottom-hand{
+    position: absolute;
+    width: 256.94px;
+    height: 257px;
+    right: -3.28px;
+    bottom: 0px;
+}
+
+.right-top-hand{
+    position: absolute;
+    width: 238.8px;
+    height: 112.49px;
+    right: 0.16px;
+    bottom: 257.51px;
+}
+
 .hse-lable {
     box-sizing: border-box;
 
