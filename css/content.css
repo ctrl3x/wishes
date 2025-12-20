@@ -381,10 +381,7 @@
     /* Auto layout */
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
     padding: 4px 13px;
-    gap: 10px;
 
     position: absolute;
     width: 150px;
@@ -407,6 +404,7 @@
     font-size: 24px;
     line-height: 29px;
     color: #FFFFFF;
+    white-space: nowrap;
 }
 
 .balance-wheel-block {
