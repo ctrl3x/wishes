@@ -29,6 +29,10 @@
     will-change: transform;
 }
 
+.track:hover{
+    animation-play-state: paused;
+}
+
 .cas-run-line {
     display: flex;
     align-items: center;
@@ -657,6 +661,10 @@
     font-weight: 400;
     font-size: 16px;
     text-transform: uppercase;
+}
+
+.author-run-line h1:hover{
+    animation-play-state: paused;
 }
 
 .author-run-line h1 span {
