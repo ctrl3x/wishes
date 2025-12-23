@@ -120,6 +120,7 @@
 
     background: #000000;
     z-index: 5;
+    overflow: hidden;
 }
 
 .wheel {
@@ -314,8 +315,7 @@
     position: absolute;
     width: 110px;
     left: calc(50% - 110px/2);
-    top: 8.33%;
-    bottom: 88.33%;
+    top: 0;
 
     background: #000000;
     border: 1.06855px solid #FFFFFF;
@@ -357,7 +357,7 @@
     width: 100px;
     height: 40px;
     left: calc(50% - 100px/2 - 2.95px);
-    top: calc(50% - 40px/2 - 8px);
+    top: 0;
 
     background: #000000;
     border: 1.06855px solid #FFFFFF;
@@ -391,7 +391,7 @@
     width: 150px;
     height: 40px;
     left: calc(50% - 150px/2 + 11px);
-    top: 952.22px;
+    top: 0;
 
     background: #000000;
     border: 1.06855px solid #FFFFFF;
@@ -670,4 +670,77 @@
 .author-run-line h1 span {
     display: inline-block;
     margin-right: 5em;
+}
+
+@keyframes fall-down {
+    0% {
+        transform: translateY(0) rotate(var(--initial-rotation, 0deg)) scale(0.8);
+        opacity: 0;
+        filter: blur(4px);
+    }
+    15% {
+        transform: translateY(50px) rotate(var(--initial-rotation, 0deg)) scale(1);
+        opacity: 1;
+        filter: blur(0px);
+    }
+    85% {
+        transform: translateY(1100px) rotate(var(--final-rotation, 0deg)) scale(1);
+        opacity: 1;
+        filter: blur(0px);
+    }
+    100% {
+        transform: translateY(1200px) rotate(var(--final-rotation, 0deg)) scale(0.9);
+        opacity: 0;
+        filter: blur(3px);
+    }
+}
+
+.freedom {
+    --initial-rotation: -40deg;
+    --final-rotation: -50deg;
+    animation: fall-down 4s cubic-bezier(0.25, 0.1, 0.25, 1) 0s infinite;
+    transition: filter 0.3s ease;
+}
+
+.memory {
+    --initial-rotation: 10deg;
+    --final-rotation: 25deg;
+    animation: fall-down 4s cubic-bezier(0.25, 0.1, 0.25, 1) 1.3s infinite;
+    transition: filter 0.3s ease;
+}
+
+.lifetime {
+    --initial-rotation: -50deg;
+    --final-rotation: -60deg;
+    animation: fall-down 4s cubic-bezier(0.25, 0.1, 0.25, 1) 2.6s infinite;
+    transition: filter 0.3s ease;
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+.first-cube {
+    animation: blink 3s ease-in-out 0s infinite;
+}
+
+.second-cube {
+    animation: blink 3s ease-in-out 0.6s infinite;
+}
+
+.third-cube {
+    animation: blink 3s ease-in-out 1.2s infinite;
+}
+
+.fourth-cube {
+    animation: blink 3s ease-in-out 1.8s infinite;
+}
+
+.fifth-cube {
+    animation: blink 3s ease-in-out 2.4s infinite;
 }
