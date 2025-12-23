@@ -84,7 +84,6 @@
     max-width: 100vw;
     /* Ширина не больше ширины экрана */
     overflow-x: auto;
-    /* Горизонтальная прокрутка на маленьких экранах */
     margin: 0;
     padding: 0;
 }
@@ -207,18 +206,14 @@
     table-layout: fixed;
     /* равномерное распределение столбцов */
     border-collapse: collapse;
-    /* убираем двойные границы */
     overflow-y: auto;
 }
 
-/* Заголовки и ячейки */
 .panel th,
 .panel td {
     padding: 12px 16px;
     text-align: center;
-    /* горизонтальное выравнивание */
     vertical-align: middle;
-    /* вертикальное выравнивание */
     word-wrap: break-word;
     overflow-wrap: break-word;
     border: 1px solid #000;
@@ -233,7 +228,6 @@
     order: 0;
     flex-grow: 0;
 }
-
 
 .first-cube {
     position: absolute;
@@ -331,12 +325,10 @@
     font-weight: 400;
     font-size: 24px;
     line-height: 29px;
-    /* identical to box height */
     text-align: center;
 
     color: #FFFFFF;
 
-    /* Inside auto layout */
     flex: none;
     order: 0;
     flex-grow: 0;
@@ -345,7 +337,6 @@
 .memory {
     box-sizing: border-box;
 
-    /* Auto layout */
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -373,7 +364,6 @@
     font-weight: 400;
     font-size: 24px;
     line-height: 29px;
-    /* identical to box height */
     text-align: center;
 
     color: #FFFFFF;
@@ -382,7 +372,6 @@
 .lifetime {
     box-sizing: border-box;
 
-    /* Auto layout */
     display: flex;
     flex-direction: row;
     padding: 4px 13px;
@@ -435,6 +424,8 @@
     left: calc(50% - 417.83px/2 + 0.41px);
     top: calc(50% - 417.83px/2 + 67.41px);
     z-index: 2;
+    transform-origin: center;
+    animation: rotate-wheel 10s linear infinite;
 }
 
 .white-people {
@@ -467,7 +458,6 @@
     font-weight: 400;
     font-size: 36px;
     line-height: 100%;
-    /* or 36px */
     text-align: justify;
     text-transform: uppercase;
 
@@ -475,16 +465,11 @@
 }
 
 .get-it-rows{
-    /* Arrow 3 */
-
     box-sizing: border-box;
 
     width: 137px;
     height: 13px;
 
-    /* border: 2px solid #000000; */
-
-    /* Inside auto layout */
     flex: none;
     order: 0;
     flex-grow: 0;
@@ -613,7 +598,6 @@
 .hse-lable {
     box-sizing: border-box;
 
-    /* Auto layout */
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -743,4 +727,13 @@
 
 .fifth-cube {
     animation: blink 3s ease-in-out 2.4s infinite;
+}
+
+@keyframes rotate-wheel {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
