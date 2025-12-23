@@ -2,8 +2,33 @@
 
 }
 
-@media (max-width: 767px) {
-
+@media (max-width: 769px) {
+    .panel {
+        height: auto;
+        min-height: 536px;
+        overflow: visible;
+    }
+    
+    .panel table {
+        display: block;
+        height: auto;
+        width: 100%;
+    }
+    
+    .panel tbody {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        width: 100%;
+    }
+    
+    .panel tr {
+        display: contents;
+    }
+    
+    .panel td {
+        width: 100%;
+        box-sizing: border-box;
+    }
 }
 
 @media (max-width: 319px) {
