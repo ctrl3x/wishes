@@ -17,7 +17,7 @@
     
     .panel tbody {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         width: 100%;
     }
     
@@ -29,6 +29,22 @@
         width: 100%;
         box-sizing: border-box;
     }
+    
+    .about {
+        top: 1036px;
+    }
+    
+    .left-panel {
+        top: 1036px;
+    }
+    
+    .right-panel {
+        top: 1036px;
+    }
+}
+
+@media (max-width: 767px) {
+
 }
 
 @media (max-width: 319px) {
