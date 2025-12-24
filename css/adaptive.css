@@ -4,15 +4,15 @@
 
 @media (max-width: 769px) {
     .panel {
-        height: auto;
-        min-height: 536px;
-        overflow: visible;
+        height: auto !important;
+        overflow: visible !important;
     }
     
     .panel table {
         display: block;
         height: auto;
         width: 100%;
+        overflow: visible;
     }
     
     .panel tbody {
@@ -31,22 +31,124 @@
     }
     
     .about {
-        top: 1036px;
+        top: 720px;
+        left: 120px;
+        right: 120px;
     }
     
     .left-panel {
-        top: 1036px;
+        top: 720px;
+        width: 120px;
     }
     
     .right-panel {
-        top: 1036px;
+        top: 720px;
+        width: 120px;
+    }
+    
+    .wheel {
+        left: 120px;
+        right: 120px;
+    }
+    
+    .balance-wheel-block {
+        left: 120px;
+        right: 120px;
+    }
+    
+    .about p {
+        left: 120px;
+    }
+
+    .get-it .get-it-arrows {
+        display: none;
+    }
+    
+}
+
+@media (max-width: 480px) {
+    .about {
+        left: 80px;
+        right: 80px;
+    }
+    
+    .left-panel {
+        width: 80px;
+    }
+    
+    .right-panel {
+        width: 80px;
+    }
+    
+    .wheel {
+        left: 80px;
+        right: 80px;
+    }
+    
+    .balance-wheel-block {
+        left: 80px;
+        right: 80px;
+    }
+    
+    .about p {
+        left: 80px;
     }
 }
 
-@media (max-width: 767px) {
-
+@media (max-width: 360px) {
+    .about {
+        left: 64px;
+        right: 64px;
+    }
+    
+    .left-panel {
+        width: 64px;
+    }
+    
+    .right-panel {
+        width: 64px;
+    }
+    
+    .wheel {
+        left: 64px;
+        right: 64px;
+    }
+    
+    .balance-wheel-block {
+        left: 64px;
+        right: 64px;
+    }
+    
+    .about p {
+        left: 64px;
+    }
 }
 
-@media (max-width: 319px) {
-
+@media (max-width: 320px) {
+    .about {
+        left: 54px;
+        right: 54px;
+    }
+    
+    .left-panel {
+        width: 54px;
+    }
+    
+    .right-panel {
+        width: 54px;
+    }
+    
+    .wheel {
+        left: 54px;
+        right: 54px;
+    }
+    
+    .balance-wheel-block {
+        left: 54px;
+        right: 54px;
+    }
+    
+    .about p {
+        left: 54px;
+    }
 }
