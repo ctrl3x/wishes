@@ -39,11 +39,15 @@
     .left-panel {
         top: 720px;
         width: 120px;
+        height: 1114px;
+        overflow: hidden;
     }
     
     .right-panel {
         top: 720px;
         width: 120px;
+        height: 1114px;
+        overflow: hidden;
     }
     
     .wheel {
@@ -63,6 +67,90 @@
     .get-it .get-it-arrows {
         display: none;
     }
+
+    .first-cube,
+    .third-cube,
+    .fifth-cube {
+        width: 62px; 
+        height: 57px; 
+        left: calc(50% - 62px / 2);
+    }
+
+    .second-cube,
+    .fourth-cube {
+        width: 62px; 
+        height: 64px; 
+        left: calc(50% - 62px / 2);
+    }
+
+    .first-cube {
+        top: 46px; 
+    }
+
+    .second-cube {
+        top: 275px; 
+    }
+
+    .third-cube {
+        top: 521px; 
+    }
+
+    .fourth-cube {
+        top: 759px; 
+    }
+
+    .fifth-cube {
+        top: 1005px; 
+    }
+
+    .freedom {
+        width: 82.5px; 
+        padding: 4px 13px; 
+        border-width: 0.8px; 
+    }
+
+    .freedom h1 {
+        width: 57px; 
+        height: 21.75px; 
+        font-size: 18px; 
+        line-height: 21.75px; 
+    }
+
+    .memory {
+        width: 75px; 
+        height: 30px; 
+        padding: 4px 12px; 
+        left: calc(50% - 75px/2 - 2px); 
+        border-width: 0.8px; 
+    }
+
+    .memory h1 {
+        width: 57px; 
+        height: 21.75px; 
+        font-size: 18px; 
+        line-height: 21.75px; 
+    }
+
+    .lifetime {
+        width: 112.5px; 
+        height: 30px; 
+        padding: 3px 9.75px; 
+        left: calc(50% - 112.5px/2 + 8.25px); 
+        border-width: 0.8px; 
+    }
+
+    .lifetime h1 {
+        width: 79.5px; 
+        height: 21.75px; 
+        font-size: 18px; 
+        line-height: 21.75px; 
+    }
+
+    .first-long-branch,
+    .second-long-branch {
+        width: 45px;
+        left: calc(50% - 45px / 2);
+    }
     
 }
 
@@ -74,10 +162,14 @@
     
     .left-panel {
         width: 80px;
+        height: 1114px;
+        overflow: hidden;
     }
     
     .right-panel {
         width: 80px;
+        height: 1114px;
+        overflow: hidden;
     }
     
     .wheel {
@@ -92,6 +184,90 @@
     
     .about p {
         left: 80px;
+    }
+
+    .first-cube,
+    .third-cube,
+    .fifth-cube {
+        width: 41px; 
+        height: 38px; 
+        left: calc(50% - 41px / 2);
+    }
+
+    .second-cube,
+    .fourth-cube {
+        width: 41px; 
+        height: 43px; 
+        left: calc(50% - 41px / 2);
+    }
+
+    .first-cube {
+        top: 46px; 
+    }
+
+    .second-cube {
+        top: 275px; 
+    }
+
+    .third-cube {
+        top: 521px; 
+    }
+
+    .fourth-cube {
+        top: 759px; 
+    }
+
+    .fifth-cube {
+        top: 1005px; 
+    }
+
+    .freedom {
+        width: 55px; 
+        padding: 2.5px 8.5px; 
+        border-width: 0.5px; 
+    }
+
+    .freedom h1 {
+        width: 38px; 
+        height: 14.5px; 
+        font-size: 12px; 
+        line-height: 14.5px; 
+    }
+
+    .memory {
+        width: 50px; 
+        height: 20px; 
+        padding: 2.5px 8px; 
+        left: calc(50% - 50px/2 - 2px); 
+        border-width: 0.5px; 
+    }
+
+    .memory h1 {
+        width: 38px; 
+        height: 14.5px; 
+        font-size: 12px; 
+        line-height: 14.5px; 
+    }
+
+    .lifetime {
+        width: 75px; 
+        height: 20px; 
+        padding: 2px 6.5px; 
+        left: calc(50% - 75px/2 + 5px); 
+        border-width: 0.5px; 
+    }
+
+    .lifetime h1 {
+        width: 53px; 
+        height: 14.5px; 
+        font-size: 12px; 
+        line-height: 14.5px; 
+    }
+
+    .first-long-branch,
+    .second-long-branch {
+        width: 38px;
+        left: calc(50% - 38px / 2);
     }
 }
 
@@ -103,10 +279,14 @@
     
     .left-panel {
         width: 64px;
+        height: 1114px;
+        overflow: hidden;
     }
     
     .right-panel {
         width: 64px;
+        height: 1114px;
+        overflow: hidden;
     }
     
     .wheel {
@@ -121,6 +301,90 @@
     
     .about p {
         left: 64px;
+    }
+
+    .first-cube,
+    .third-cube,
+    .fifth-cube {
+        width: 33px; 
+        height: 31px; 
+        left: calc(50% - 33px / 2);
+    }
+
+    .second-cube,
+    .fourth-cube {
+        width: 33px; 
+        height: 34px; 
+        left: calc(50% - 33px / 2);
+    }
+
+    .first-cube {
+        top: 46px; 
+    }
+
+    .second-cube {
+        top: 275px; 
+    }
+
+    .third-cube {
+        top: 521px; 
+    }
+
+    .fourth-cube {
+        top: 759px; 
+    }
+
+    .fifth-cube {
+        top: 1005px; 
+    }
+
+    .freedom {
+        width: 44px; 
+        padding: 2px 6.8px; 
+        border-width: 0.5px; 
+    }
+
+    .freedom h1 {
+        width: 30.4px; 
+        height: 11.6px; 
+        font-size: 9.6px; 
+        line-height: 11.6px; 
+    }
+
+    .memory {
+        width: 40px; 
+        height: 16px; 
+        padding: 2px 6.4px; 
+        left: calc(50% - 40px/2 - 1px); 
+        border-width: 0.5px; 
+    }
+
+    .memory h1 {
+        width: 30.4px; 
+        height: 11.6px; 
+        font-size: 9.6px; 
+        line-height: 11.6px; 
+    }
+
+    .lifetime {
+        width: 60px; 
+        height: 16px; 
+        padding: 1.6px 5.2px; 
+        left: calc(50% - 60px/2 + 4px); 
+        border-width: 0.5px; 
+    }
+
+    .lifetime h1 {
+        width: 42.4px; 
+        height: 11.6px; 
+        font-size: 9.6px; 
+        line-height: 11.6px; 
+    }
+
+    .first-long-branch,
+    .second-long-branch {
+        width: 33px;
+        left: calc(50% - 33px / 2);
     }
 }
 
@@ -132,10 +396,14 @@
     
     .left-panel {
         width: 54px;
+        height: 1114px;
+        overflow: hidden;
     }
     
     .right-panel {
         width: 54px;
+        height: 1114px;
+        overflow: hidden;
     }
     
     .wheel {
@@ -150,5 +418,90 @@
     
     .about p {
         left: 54px;
+    }
+
+    .freedom {
+        width: 37px; 
+        padding: 2px 6px; 
+        border-width: 0.4px; 
+    }
+
+    .freedom h1 {
+        width: 25.65px; 
+        height: 10px; 
+        font-size: 8px; 
+        line-height: 10px; 
+    }
+
+    .memory {
+        width: 34px; 
+        height: 13.5px; 
+        padding: 2px 5px; 
+        left: calc(50% - 34px/2 - 1px); 
+        border-width: 0.4px; 
+    }
+
+    .memory h1 {
+        width: 25.65px; 
+        height: 10px; 
+        font-size: 8px; 
+        line-height: 10px; 
+    }
+
+    .lifetime {
+        width: 51px; 
+        height: 13.5px; 
+        padding: 1px 4px; 
+        left: calc(50% - 51px/2 + 4px); 
+        border-width: 0.4px; 
+    }
+
+    .lifetime h1 {
+        width: 36px; 
+        height: 10px; 
+        font-size: 8px; 
+        line-height: 10px; 
+    }
+
+    
+    .first-long-branch,
+    .second-long-branch {
+        width: 30px;
+        left: calc(50% - 30px / 2);
+    }
+
+    .first-cube,
+    .third-cube,
+    .fifth-cube {
+        width: 28px; 
+        height: 26px; 
+        left: calc(50% - 28px / 2);
+    }
+
+    .second-cube,
+    .fourth-cube {
+        width: 28px; 
+        height: 29px; 
+        left: calc(50% - 28px / 2);
+    }
+
+    .first-cube {
+        top: 46px; 
+    }
+
+    .second-cube {
+        top: 275px; 
+    }
+
+    .third-cube {
+        top: 521px; 
+    }
+
+    .fourth-cube {
+        top: 759px; 
+    }
+
+    .fifth-cube {
+        top: 1005px; 
     }
 }
