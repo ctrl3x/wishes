@@ -199,6 +199,10 @@
         left: calc(50% - 45px / 2);
     }
     
+    .left-main-hand, 
+    .right-main-hand {
+        visibility: hidden;
+    }
 }
 
 @media (max-width: 480px) {
