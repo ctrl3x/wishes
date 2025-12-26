@@ -201,7 +201,7 @@
     height: calc(100vw * 223 / 1280);
     left: calc(100vw * 235 / 1280);
     top: calc(100vw * 75 / 1280);
-    filter: blur(4px);
+    filter: blur(2px);
 }
 
 .thorns2 {
@@ -210,7 +210,7 @@
     height: calc(100vw * 223 / 1280);
     left: calc(100vw * 435 / 1280);
     top: calc(100vw * 75 / 1280);
-    filter: blur(4px);
+    filter: blur(2px);
 }
 
 .thorns3 {
@@ -220,7 +220,7 @@
     left: calc(100vw * 615 / 1280);
     top: calc(100vw * 90 / 1280);
     transform: rotate(153deg);
-    filter: blur(4px);
+    filter: blur(2px);
 }
 
 .thorns4 {
@@ -230,7 +230,7 @@
     left: calc(100vw * 843 / 1280);
     top: calc(100vw * 90 / 1280);
     transform: rotate(153deg);
-    filter: blur(4px);
+    filter: blur(2px);
 }
 
 .thorns5 {
@@ -239,7 +239,7 @@
     height: calc(100vw * 223 / 1280);
     left: calc(100vw * 1020 / 1280);
     top: calc(100vw * 75 / 1280);
-    filter: blur(4px);
+    filter: blur(2px);
 }
 
 .thorns6 {
@@ -248,7 +248,7 @@
     height: calc(100vw * 68 / 1280);
     left: calc(100vw * 1073/1280);
     top: calc(100vw * 25/1280);
-    filter: blur(4px);
+    filter: blur(2px);
     transform: rotate(-116deg);
 }
 
@@ -267,8 +267,11 @@
     text-align: center;
 
     color: #FFFFFF;
-    animation: width-anim 6s ease-in-out infinite;
-    transform-origin: center;
+    animation: letter-spacing-anim 2s ease-in-out infinite;
+}
+
+.about p:hover {
+    animation-play-state: paused;
 }
 
 .panel table {
@@ -966,11 +969,11 @@
     }
 }
 
-@keyframes width-anim {
+@keyframes letter-spacing-anim {
     0%, 100% {
-        transform: scaleX(1);
+        letter-spacing: 0px;
     }
     50% {
-        transform: scaleX(1.15);
+        letter-spacing: 5px;
     }
 }

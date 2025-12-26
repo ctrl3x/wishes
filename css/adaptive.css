@@ -28,7 +28,7 @@
     }
 
     .thorns1, .thorns2, .thorns3, .thorns4, .thorns5, .thorns6 {
-        filter: blur(3px);
+        filter: blur(1px);
     }
     
     .about {
@@ -206,9 +206,6 @@
 }
 
 @media (max-width: 480px) {
-    .thorns1, .thorns2, .thorns3, .thorns4, .thorns5, .thorns6 {
-        filter: blur(2px);
-    }
 
     .about {
         left: 80px;
@@ -373,9 +370,6 @@
 }
 
 @media (max-width: 360px) {
-    .thorns1, .thorns2, .thorns3, .thorns4, .thorns5, .thorns6 {
-        filter: blur(1px);
-    }
 
     .about {
         left: 64px;
