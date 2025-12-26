@@ -195,6 +195,53 @@
     animation: pendulum-swing 2s ease-in-out infinite;
 }
 
+.thorns1 {
+    position: absolute;
+    width: calc(100vw * 60 / 1280);
+    height: calc(100vw * 223 / 1280);
+    left: calc(50% - 100vw * 809 / 2560);
+    top: calc(100vw * 75 / 1280);
+    filter: blur(4px);
+}
+
+.thorns2 {
+    position: absolute;
+    width: calc(100vw * 60 / 1280);
+    height: calc(100vw * 223 / 1280);
+    left: calc(50% - 100vw * 409 / 2560);
+    top: calc(100vw * 75 / 1280);
+    filter: blur(4px);
+}
+
+.thorns3 {
+    position: absolute;
+    width: calc(100vw * 60 / 1280);
+    height: calc(100vw * 223 / 1280);
+    left: calc(50% - 100vw * 49 / 2560);
+    top: calc(100vw * 90 / 1280);
+    transform: rotate(153deg);
+    filter: blur(4px);
+}
+
+.thorns4 {
+    position: absolute;
+    width: calc(100vw * 60 / 1280);
+    height: calc(100vw * 223 / 1280);
+    left: calc(50% + 100vw * 407 / 2560);
+    top: calc(100vw * 90 / 1280);
+    transform: rotate(153deg);
+    filter: blur(4px);
+}
+
+.thorns5 {
+    position: absolute;
+    width: calc(100vw * 60 / 1280);
+    height: calc(100vw * 223 / 1280);
+    left: calc(50% + 100vw * 751 / 2560);
+    top: calc(100vw * 75 / 1280);
+    filter: blur(4px);
+}
+
 .about p {
     position: absolute;
     height: 160px;
