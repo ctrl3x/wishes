@@ -6,6 +6,7 @@
     top: 0px;
 
     background: #FFFFFF;
+    animation: background-invert 2s linear infinite;
 }
 
 .run-line {
@@ -180,6 +181,7 @@
 
     color: #000000;
     z-index: 2;
+    animation: text-invert 2s linear infinite;
 }
 
 .watches {
@@ -779,5 +781,41 @@
     }
     50% {
         transform: rotate(26deg);
+    }
+}
+
+@keyframes background-invert {
+    0% {
+        background: #FFFFFF;
+    }
+    49.99% {
+        background: #FFFFFF;
+    }
+    50% {
+        background: #000000;
+    }
+    99.99% {
+        background: #000000;
+    }
+    100% {
+        background: #FFFFFF;
+    }
+}
+
+@keyframes text-invert {
+    0% {
+        color: #000000;
+    }
+    49.99% {
+        color: #000000;
+    }
+    50% {
+        color: #FFFFFF;
+    }
+    99.99% {
+        color: #FFFFFF;
+    }
+    100% {
+        color: #000000;
     }
 }
