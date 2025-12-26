@@ -55,11 +55,43 @@
         left: 120px;
         right: 120px;
         top: calc(100vw * 480 / 1280 + 691px);
+        height: 741px;
     }
     
     .balance-wheel-block {
         left: 120px;
         right: 120px;
+        height: 741px;
+    }
+    
+    .balance-wheel {
+        animation: rotate-wheel-scale-85 10s linear infinite;
+    }
+    
+    .people {
+        transform: scale(0.85);
+        transform-origin: center;
+    }
+    
+    .circles {
+        transform: scale(0.85);
+        transform-origin: center;
+        top: -60px;
+    }
+    
+    .white-people {
+        transform: scale(0.85);
+        transform-origin: center;
+        bottom: -77px;
+    }
+    
+    @keyframes rotate-wheel-scale-85 {
+        from {
+            transform: scale(0.85) rotate(0deg);
+        }
+        to {
+            transform: scale(0.85) rotate(360deg);
+        }
     }
     
     .about p {
@@ -68,7 +100,7 @@
     }
 
     .get-it {
-        top: calc(100vw * 480 / 1280 + 1518px);
+        top: calc(100vw * 480 / 1280 + 1432px);
     }
 
     .get-it .get-it-arrows {
@@ -76,11 +108,11 @@
     }
 
     .hands {
-        top: calc(100vw * 480 / 1280 + 1678px);
+        top: calc(100vw * 480 / 1280 + 1592px);
     }
 
     .footer {
-        top: calc(100vw * 480 / 1280 + 2148px);
+        top: calc(100vw * 480 / 1280 + 2062px);
     }
 
     .first-cube,
@@ -195,6 +227,34 @@
     .balance-wheel-block {
         left: 80px;
         right: 80px;
+    }
+    
+    .balance-wheel {
+        animation: rotate-wheel-scale-70 10s linear infinite;
+    }
+    
+    .people {
+        transform: scale(0.7);
+        transform-origin: center;
+    }
+    
+    .circles {
+        transform: scale(0.7);
+        transform-origin: center;
+    }
+    
+    .white-people {
+        transform: scale(0.7);
+        transform-origin: center;
+    }
+    
+    @keyframes rotate-wheel-scale-70 {
+        from {
+            transform: scale(0.7) rotate(0deg);
+        }
+        to {
+            transform: scale(0.7) rotate(360deg);
+        }
     }
     
     .about p {
@@ -315,6 +375,34 @@
         right: 64px;
     }
     
+    .balance-wheel {
+        animation: rotate-wheel-scale-60 10s linear infinite;
+    }
+    
+    .people {
+        transform: scale(0.6);
+        transform-origin: center;
+    }
+    
+    .circles {
+        transform: scale(0.6);
+        transform-origin: center;
+    }
+    
+    .white-people {
+        transform: scale(0.6);
+        transform-origin: center;
+    }
+    
+    @keyframes rotate-wheel-scale-60 {
+        from {
+            transform: scale(0.6) rotate(0deg);
+        }
+        to {
+            transform: scale(0.6) rotate(360deg);
+        }
+    }
+    
     .about p {
         left: 64px;
     }
@@ -430,6 +518,34 @@
     .balance-wheel-block {
         left: 54px;
         right: 54px;
+    }
+    
+    .balance-wheel {
+        animation: rotate-wheel-scale-50 10s linear infinite;
+    }
+    
+    .people {
+        transform: scale(0.5);
+        transform-origin: center;
+    }
+    
+    .circles {
+        transform: scale(0.5);
+        transform-origin: center;
+    }
+    
+    .white-people {
+        transform: scale(0.5);
+        transform-origin: center;
+    }
+    
+    @keyframes rotate-wheel-scale-50 {
+        from {
+            transform: scale(0.5) rotate(0deg);
+        }
+        to {
+            transform: scale(0.5) rotate(360deg);
+        }
     }
     
     .about p {
