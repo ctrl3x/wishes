@@ -25,7 +25,7 @@
     width: max-content;
     height: 100%;
     align-items: center;
-    animation: run-text 6s linear infinite;
+    animation: run-text 10s linear infinite;
     will-change: transform;
 }
 
@@ -198,8 +198,8 @@
 .about p {
     position: absolute;
     height: 160px;
-    left: 40px;
-    right: 40px;
+    left: 120px;
+    right: 120px;
     top: 60px;
 
     font-family: 'Cormorant Garamond';
@@ -207,6 +207,7 @@
     font-weight: 500;
     font-size: 24px;
     line-height: 29px;
+    text-align: center;
 
     color: #FFFFFF;
 }
@@ -507,7 +508,7 @@
     display: flex;
     width: max-content;
     align-items: center;
-    animation: marquee-scroll 20s linear infinite;
+    animation: marquee-scroll 3s linear infinite;
     will-change: transform;
 }
 
