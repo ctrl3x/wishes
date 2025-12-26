@@ -267,6 +267,8 @@
     text-align: center;
 
     color: #FFFFFF;
+    animation: width-anim 6s ease-in-out infinite;
+    transform-origin: center;
 }
 
 .panel table {
@@ -961,5 +963,14 @@
     }
     100% {
         color: #000000;
+    }
+}
+
+@keyframes width-anim {
+    0%, 100% {
+        transform: scaleX(1);
+    }
+    50% {
+        transform: scaleX(1.15);
     }
 }

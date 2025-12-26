@@ -1,7 +1,3 @@
-@media (max-width: 1279px) {
-
-}
-
 @media (max-width: 769px) {
     .panel {
         min-height: 268px;
@@ -29,6 +25,10 @@
     .panel td {
         width: 100%;
         box-sizing: border-box;
+    }
+
+    .thorns1, .thorns2, .thorns3, .thorns4, .thorns5, .thorns6 {
+        filter: blur(3px);
     }
     
     .about {
@@ -206,6 +206,10 @@
 }
 
 @media (max-width: 480px) {
+    .thorns1, .thorns2, .thorns3, .thorns4, .thorns5, .thorns6 {
+        filter: blur(2px);
+    }
+
     .about {
         left: 80px;
         right: 80px;
@@ -369,6 +373,10 @@
 }
 
 @media (max-width: 360px) {
+    .thorns1, .thorns2, .thorns3, .thorns4, .thorns5, .thorns6 {
+        filter: blur(1px);
+    }
+
     .about {
         left: 64px;
         right: 64px;
