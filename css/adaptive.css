@@ -4,6 +4,7 @@
 
 @media (max-width: 769px) {
     .panel {
+        min-height: 268px;
         height: auto !important;
         overflow: visible !important;
     }
@@ -31,20 +32,20 @@
     }
     
     .about {
-        top: 720px;
-        left: 120px;
-        right: 120px;
+        top: calc(100vw * 480 / 1280 + 50px + 268px);
+        left: 100px;
+        right: 100px;
     }
     
     .left-panel {
-        top: 720px;
+        top: calc(100vw * 480 / 1280 + 50px + 268px);
         width: 120px;
         height: 1114px;
         overflow: hidden;
     }
     
     .right-panel {
-        top: 720px;
+        top: calc(100vw * 480 / 1280 + 50px + 268px);
         width: 120px;
         height: 1114px;
         overflow: hidden;
@@ -53,6 +54,7 @@
     .wheel {
         left: 120px;
         right: 120px;
+        top: calc(100vw * 480 / 1280 + 691px);
     }
     
     .balance-wheel-block {
@@ -61,11 +63,24 @@
     }
     
     .about p {
-        left: 120px;
+        left: 32px;
+        right: 20px;
+    }
+
+    .get-it {
+        top: calc(100vw * 480 / 1280 + 1518px);
     }
 
     .get-it .get-it-arrows {
         display: none;
+    }
+
+    .hands {
+        top: calc(100vw * 480 / 1280 + 1678px);
+    }
+
+    .footer {
+        top: calc(100vw * 480 / 1280 + 2148px);
     }
 
     .first-cube,
@@ -183,7 +198,8 @@
     }
     
     .about p {
-        left: 80px;
+        left: 20px;
+        right: 20px;
     }
 
     .first-cube,
@@ -417,7 +433,7 @@
     }
     
     .about p {
-        left: 54px;
+        left: 25px;
     }
 
     .freedom {

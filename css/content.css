@@ -1,6 +1,6 @@
 .main-title {
     position: absolute;
-    height: 450px;
+    aspect-ratio: 1280 / 480;
     left: 0px;
     right: 0px;
     top: 0px;
@@ -12,7 +12,7 @@
     position: absolute;
     left: 0;
     right: 0;
-    top: 450px;
+    top: calc(100vw * 480 / 1280);
     height: 50px;
     background: #000;
     overflow: hidden;
@@ -74,7 +74,7 @@
     height: 134px;
     left: 0px;
     right: 0px;
-    top: 500px;
+    top: calc(100vw * 480 / 1280 + 50px);
 
     background: #000000;
 
@@ -90,7 +90,7 @@
     height: 373px;
     left: 160px;
     right: 160px;
-    top: 634px;
+    top: calc(100vw * 480 / 1280 + 184px);
 
     background: #000000;
 }
@@ -100,7 +100,7 @@
     width: 160px;
     height: 1200px;
     left: 0px;
-    top: 634px;
+    top: calc(100vw * 480 / 1280 + 184px);
 
     background: #000000;
     z-index: 5;
@@ -112,7 +112,7 @@
     width: 160px;
     height: 1200px;
     right: 0px;
-    top: 634px;
+    top: calc(100vw * 480 / 1280 + 184px);
 
     background: #000000;
     z-index: 5;
@@ -124,7 +124,7 @@
     height: 827px;
     left: 160px;
     right: 160px;
-    top: 1007px;
+    top: calc(100vw * 480 / 1280 + 557px);
 
     background: #000000;
     overflow: hidden;
@@ -135,7 +135,7 @@
     height: 160px;
     left: 0px;
     right: 0px;
-    top: 1834px;
+    top: calc(100vw * 480 / 1280 + 1384px);
     background: #FFFFFF;
     overflow: hidden;
     white-space: nowrap;
@@ -148,7 +148,7 @@
     height: 470px;
     left: 0px;
     right: 0px;
-    top: 1994px;
+    top: calc(100vw * 480 / 1280 + 1544px);
 
     background: #FFFFFF;
 }
@@ -158,23 +158,22 @@
     height: 80px;
     left: 0px;
     right: 0px;
-    top: 2464px;
+    top: calc(100vw * 480 / 1280 + 2014px);
     display: flex;
     overflow: hidden;
 }
 
 .main-title h1 {
     position: absolute;
-    width: 1129px;
-    height: 189px;
-    left: calc(50% - 1129px/2 + 0.5px);
-    top: 95px;
+    width: calc(100vw * 1129 / 1280);
+    height: calc(100vw * 189 / 1280);
+    left: calc(50% - 100vw * 1129 / 2560 + 0.5px);
 
     font-family: 'Cormorant Garamond';
     font-style: normal;
     font-weight: 600;
-    font-size: 301.829px;
-    line-height: 366px;
+    font-size: calc(100vw * 301.829 / 1280);
+    line-height: calc(100vw * 366 / 1280);
 
     text-align: right;
     text-transform: uppercase;
@@ -203,7 +202,6 @@
     height: 100%;
     min-width: 100%;
     table-layout: fixed;
-    /* равномерное распределение столбцов */
     border-collapse: collapse;
     overflow-y: auto;
 }
