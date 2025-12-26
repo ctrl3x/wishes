@@ -179,6 +179,18 @@
     text-transform: uppercase;
 
     color: #000000;
+    z-index: 2;
+}
+
+.watches {
+    position: absolute;
+    width: calc(100vw * 462.09 / 1280);
+    height: calc(100vw * 273.6 / 1280);
+    left: calc(50% - 100vw * 462.09 / 2560 + 0.21px);
+    top: calc(100vw * 127 / 1280);
+    z-index: 1;
+    transform-origin: 50% 0;
+    animation: pendulum-swing 2s ease-in-out infinite;
 }
 
 .about p {
@@ -758,5 +770,14 @@
     }
     to {
         transform: rotate(360deg);
+    }
+}
+
+@keyframes pendulum-swing {
+    0%, 100% {
+        transform: rotate(-26deg);
+    }
+    50% {
+        transform: rotate(26deg);
     }
 }
