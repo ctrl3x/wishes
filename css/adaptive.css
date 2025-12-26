@@ -76,13 +76,13 @@
     .circles {
         transform: scale(0.85);
         transform-origin: center;
-        top: -60px;
     }
     
     .white-people {
-        transform: scale(0.85);
         transform-origin: center;
         bottom: -77px;
+        bottom: 0px;
+        z-index: 2;
     }
     
     @keyframes rotate-wheel-scale-85 {
@@ -248,8 +248,8 @@
     }
     
     .white-people {
-        transform: scale(0.7);
         transform-origin: center;
+        width: 100%;
     }
     
     @keyframes rotate-wheel-scale-70 {
@@ -349,6 +349,23 @@
         width: 38px;
         left: calc(50% - 38px / 2);
     }
+
+    .left-top-hand {
+        visibility: hidden;
+    }
+    
+    .left-bottom-hand {
+        visibility: hidden;
+    }
+    
+    .right-bottom-hand {
+        visibility: hidden;
+    }
+    
+    .right-top-hand {
+        visibility: hidden;
+    }
+
 }
 
 @media (max-width: 360px) {
@@ -394,7 +411,6 @@
     }
     
     .white-people {
-        transform: scale(0.6);
         transform-origin: center;
     }
     
@@ -539,8 +555,8 @@
     }
     
     .white-people {
-        transform: scale(0.5);
         transform-origin: center;
+        bottom: 0px;
     }
     
     @keyframes rotate-wheel-scale-50 {

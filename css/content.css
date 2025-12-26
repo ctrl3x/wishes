@@ -525,7 +525,7 @@
     position: absolute;
     width: 100%;
     bottom: -90px;
-    z-index: 3;
+    z-index: 1;
 }
 
 .circles {
@@ -640,27 +640,27 @@
     position: absolute;
     width: 238.8px;
     height: 112.49px;
-    left: -0.02px;
+    left: 0px;
     bottom: 257.51px;
-    z-index: 1;
+    z-index: 2;
 }
 
 .left-bottom-hand {
     position: absolute;
     width: 257.1px;
     height: 257.1px;
-    left: 61.26px;
+    left: 0px;
     bottom: 0px;
-    z-index: 1;
+    z-index: 2;
 }
 
 .left-main-hand {
     position: absolute;
     width: 91px ;
     height: 144px;
-    left: calc(50% - 144px/2 - 270px);
+    right: calc(50% - 144px / 2 + 230px);
     bottom: 0px;
-    z-index: 1;
+    z-index: 2;
 }
 
 .right-main-hand {
@@ -669,25 +669,25 @@
     height: 144px;
     left: calc(50% - 144px/2 + 270px);
     bottom: 0px;
-    z-index: 1;
+    z-index: 2;
 }
 
 .right-bottom-hand {
     position: absolute;
     width: 256.94px;
     height: 257px;
-    right: -3.28px;
+    right: 0px;
     bottom: 0px;
-    z-index: 1;
+    z-index: 2;
 }
 
 .right-top-hand {
     position: absolute;
     width: 238.8px;
     height: 112.49px;
-    right: 0.16px;
+    right: 0px;
     bottom: 257.51px;
-    z-index: 1;
+    z-index: 2;
 }
 
 .hse-lable {
