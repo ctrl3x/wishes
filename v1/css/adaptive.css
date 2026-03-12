@@ -32,7 +32,7 @@
     }
     
     .about {
-        top: calc(100vw * 480 / 1280 + 50px + 268px);
+        top: calc(100vw * 480 / 1280 + 159px);
         left: 100px;
         right: 100px;
     }

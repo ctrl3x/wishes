@@ -1,0 +1,162 @@
+/* Базовые стили */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  color: #fff;
+  min-width: 320px;
+}
+
+/* Frame 646, 630, 647, 644, 648 */
+.frame {
+  position: relative;
+  width: 100%;
+  max-width: 1920px;
+  height: 1080px;
+  margin: 0 auto;
+  background: #000000;
+}
+
+/* Ж — блок-обёртка для надписи на первом фрейме */
+.main .wish-title-block {
+  position: absolute;
+  width: 702px;
+  height: 175.87px;
+  left: calc(50% - 702px / 2);
+  top: calc(50% - 175.87px / 2 - 392.06px);
+}
+
+/* ЖЕЛАЙ — надпись */
+.main .wish-title {
+  position: absolute;
+  width: 702px;
+  height: 117px;
+  left: calc(50% - 702px / 2);
+  top: calc(50% - 117px / 2 - 384.21px);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 187.674px;
+  line-height: 227px;
+  leading-trim: both;
+  text-edge: cap;
+  text-align: right;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+/* snake (image1_Glass) */
+.main__snake {
+  position: absolute;
+  width: 465px;
+  height: 730px;
+  left: calc(50% - 465px / 2 - 0.5px);
+  top: calc(50% - 730px / 2 + 121px);
+  background: url(../assets/1/snake.png) no-repeat center / contain;
+}
+
+/* bet × 5 */
+.main__bet {
+  position: absolute;
+  background: url(../assets/1/bet.png) no-repeat center / contain;
+}
+
+.main__bet--1 {
+  width: 116.04px;
+  height: 119.08px;
+  left: 176px;
+  top: 583px;
+  transform: rotate(63.79deg);
+}
+
+.main__bet--2 {
+  width: 118.56px;
+  height: 126.11px;
+  left: 227px;
+  top: 770px;
+  transform: rotate(-100.48deg);
+}
+
+.main__bet--3 {
+  width: 117.63px;
+  height: 111.49px;
+  left: 341px;
+  top: 770px;
+  transform: rotate(-40.48deg);
+}
+
+.main__bet--4 {
+  width: 118.97px;
+  height: 110.87px;
+  left: 1581px;
+  top: 199px;
+  transform: rotate(12.49deg);
+}
+
+.main__bet--5 {
+  width: 117.63px;
+  height: 111.49px;
+  left: 1659px;
+  top: 324px;
+  transform: rotate(-40.48deg);
+}
+
+/* the running line (с белой обводкой) */
+.running-line {
+  position: relative;
+  width: 100%;
+  max-width: 1920px;
+  height: 160px;
+  margin: 0 auto;
+  background: #000000;
+  border-width: 2px 0;
+  border-style: solid;
+  border-color: #ffffff;
+}
+
+/* the running line (белый фон) */
+.running-line--white {
+  background: #ffffff;
+  border: none;
+}
+
+/* Frame 648 — контейнер с абсолютными блоками */
+.frame-648 {
+  overflow: hidden;
+}
+
+/* пики (♠), черви (♥), бубны (♦) и трефы (♣) */
+.suits-block {
+  position: absolute;
+  width: 2238.27px;
+  height: 248.31px;
+  right: -159.14px;
+  top: 748.69px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8rem;
+  letter-spacing: 0.5em;
+  color: #fff;
+}
+
+/* footer */
+.footer-block {
+  position: absolute;
+  width: 100%;
+  max-width: 1920px;
+  height: 83px;
+  left: 0;
+  bottom: 0;
+  background: #000000;
+}
+
+* {
+    border: 1px solid red; /* для отладки */
+}
