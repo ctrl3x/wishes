@@ -38,7 +38,6 @@ body {
   width: 702px;
   height: 117px;
   left: calc(50% - 702px / 2);
-  top: calc(50% - 117px / 2 - 384.21px);
   font-family: 'Cormorant Garamond', serif;
   font-style: normal;
   font-weight: 600;
@@ -58,13 +57,13 @@ body {
   height: 730px;
   left: calc(50% - 465px / 2 - 0.5px);
   top: calc(50% - 730px / 2 + 121px);
-  background: url(../assets/1/snake.png) no-repeat center / contain;
+  background: url(../img/1/snake.png) no-repeat center / contain;
 }
 
 /* bet × 5 */
 .main__bet {
   position: absolute;
-  background: url(../assets/1/bet.png) no-repeat center / contain;
+  background: url(../img/1/bet.png) no-repeat center / contain;
 }
 
 .main__bet--1 {
@@ -118,12 +117,72 @@ body {
   border-width: 2px 0;
   border-style: solid;
   border-color: #ffffff;
+  overflow: hidden;
+}
+
+/* бегущая строка: обрезка по границам и анимация */
+.get-it {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.get-it .marquee-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  animation: marquee-scroll 25s linear infinite;
+  will-change: transform;
+}
+
+.get-it .marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.get-it .marquee-item {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 40px;
+}
+
+.get-it .get-it-arrows {
+  height: auto;
+  max-height: 100px;
+  width: auto;
+}
+
+.get-it .get-it-centre {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 1.2;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
+  white-space: pre-line;
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 /* the running line (белый фон) */
 .running-line--white {
   background: #ffffff;
   border: none;
+}
+
+.running-line--white.get-it .get-it-centre {
+  color: #000;
 }
 
 /* Frame 648 — контейнер с абсолютными блоками */
@@ -155,6 +214,321 @@ body {
   left: 0;
   bottom: 0;
   background: #000000;
+}
+
+/* footer как в v1: логотип ВШЭ слева + бегущая строка автора (инвертировано: белый текст на чёрном) */
+.footer {
+  display: flex;
+  width: 100%;
+  max-width: 1920px;
+  height: 80px;
+  margin: 0 auto;
+  overflow: hidden;
+  background: #000000;
+}
+
+.hse-lable {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 15px 46px;
+  gap: 10px;
+  width: 212px;
+  height: 80px;
+  flex-shrink: 0;
+  background: #FFFFFF;
+}
+
+.hse-lable img {
+  display: block;
+  height: auto;
+  width: auto;
+  max-height: 50px;
+}
+
+.author-run-line {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  height: 80px;
+  background: #000000;
+}
+
+.author-run-line h1 {
+  margin: 0;
+  padding: 0;
+  line-height: 80px;
+  white-space: nowrap;
+  animation: run-text 7s linear infinite;
+  color: #ffffff;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: max-content;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.author-run-line h1:hover {
+  animation-play-state: paused;
+}
+
+.author-run-line h1 span {
+  display: inline-block;
+  margin-right: 5em;
+}
+
+@keyframes run-text {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ========== Секция 3 (Frame 647) ========== */
+.frame.sec-3 {
+  position: relative;
+  width: 100%;
+  max-width: 1920px;
+  height: 1080px;
+  margin: 0 auto;
+  background: #000000;
+}
+
+/* image 285 — фон (скрыт) */
+.sec-3__image {
+  position: absolute;
+  visibility: hidden;
+  width: 1906px;
+  height: 1080px;
+  left: calc(50% - 1906px / 2);
+  top: calc(50% - 1080px / 2);
+  background: url(../img/3/image.jpg) no-repeat center / cover;
+}
+
+/* card */
+.sec-3__card {
+  box-sizing: border-box;
+  position: absolute;
+  width: 151.52px;
+  height: 215.55px;
+  left: calc(50% - 151.52px / 2 - 15.24px);
+  top: 143px;
+  background: #ffffff;
+  border: 0.322588px solid #000000;
+  border-radius: 10.33px;
+  transform: rotate(-8.49deg);
+}
+
+/* Vector — чёрный большой квадрат */
+.sec-3__vector-big {
+  position: absolute;
+  width: 289.94px;
+  height: 289.94px;
+  left: -17px;
+  top: calc(50% - 289.94px / 2 - 9.81px);
+  background: #000000;
+  border: 0.333887px solid #000000;
+  transform: rotate(-8.49deg);
+}
+
+/* В_1 1 */
+.sec-3__v1--1 {
+  position: absolute;
+  width: 117.63px;
+  height: 111.49px;
+  left: 1085px;
+  top: 920px;
+  background: url(../img/1/В_1.png) no-repeat center / contain;
+  transform: rotate(-142.66deg);
+}
+
+/* В_1 2 */
+.sec-3__v1--2 {
+  position: absolute;
+  width: 118.94px;
+  height: 117.72px;
+  left: 350px;
+  top: 868px;
+  background: url(../img/1/В_1.png) no-repeat center / contain;
+  transform: rotate(-142.66deg);
+}
+
+/* А_1 1 */
+.sec-3__a1 {
+  position: absolute;
+  width: 118.56px;
+  height: 126.11px;
+  left: calc(50% - 118.56px / 2 - 471.72px);
+  top: calc(50% - 126.11px / 2 + 437.05px);
+  background: url(../img/1/А_1.png) no-repeat center / contain;
+  transform: rotate(157.34deg);
+}
+
+/* Две белые градиентные полосы (Group 826) */
+.sec-3__vector-gradient {
+  position: absolute;
+  width: 379px;
+  height: 238.85px;
+  left: calc(50% - 379px / 2 - 158.95px);
+  bottom: 841.16px;
+  background: linear-gradient(0deg, #ffffff, #ffffff), rgba(255, 255, 255, 0.7);
+}
+
+.sec-3__vector-gradient--right {
+  left: calc(50% - 379px / 2 + 299.04px);
+  transform: rotate(-90deg);
+}
+
+.sec-3__vector-gradient--left {
+  transform: matrix(0, -1, -1, 0, 0, 0);
+}
+
+/* Rectangle 10–15 */
+.sec-3__rect {
+  box-sizing: border-box;
+  position: absolute;
+  width: 211.81px;
+  height: 151.71px;
+  border: 1px solid #ffffff;
+  border-radius: 10.3281px;
+}
+
+.sec-3__rect--10 {
+  left: calc(50% - 211.81px / 2 + 732.53px);
+  top: calc(50% - 151.71px / 2 - 124.64px);
+  transform: matrix(0.75, 0.66, 0.66, -0.75, 0, 0);
+}
+
+.sec-3__rect--11 {
+  left: calc(50% - 211.81px / 2 - 781.48px);
+  top: calc(50% - 151.71px / 2 - 127.64px);
+  transform: rotate(139deg);
+}
+
+.sec-3__rect--12 {
+  left: calc(50% - 211.81px / 2 - 522.49px);
+  top: calc(50% - 151.71px / 2 + 67.63px);
+  transform: rotate(118deg);
+}
+
+.sec-3__rect--13 {
+  left: calc(50% - 211.81px / 2 + 500.74px);
+  top: calc(50% - 151.71px / 2 + 72.92px);
+  transform: matrix(0.47, 0.88, 0.88, -0.47, 0, 0);
+}
+
+.sec-3__rect--14 {
+  left: calc(50% - 211.81px / 2 + 176.9px);
+  top: calc(50% - 151.71px / 2 + 196.12px);
+  background: #ffffff;
+  border: 1px solid #ffffff;
+  transform: matrix(0.16, 0.99, 0.99, -0.16, 0, 0);
+}
+
+.sec-3__rect--15 {
+  left: calc(50% - 211.81px / 2 - 160.08px);
+  top: calc(50% - 151.71px / 2 + 196.12px);
+  background: #ffffff;
+  border: 1px solid #ffffff;
+  transform: rotate(99deg);
+}
+
+/* Group — надпись «ДЕЛИ ЖЕЛАНИЯ НА ДВА» */
+.sec-3__title-group {
+  position: absolute;
+  width: 593.7px;
+  height: 125.75px;
+  left: 631.4px;
+  top: calc(50% - 125.75px / 2 - 35.05px);
+}
+
+.sec-3__letter {
+  position: absolute;
+  font-family: 'Cormorant Infant', serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 33.05px;
+  line-height: 40px;
+  color: #ffffff;
+}
+
+.sec-3__letter[data-char="Д"]:first-of-type { left: calc(50% - 34.34px / 2 - 311.43px); top: calc(50% - 57.23px / 2 - 69.31px); transform: rotate(25.56deg); width: 34.34px; height: 57.23px; }
+.sec-3__letter[data-char="Е"]:nth-of-type(2) { left: calc(50% - 27.18px / 2 - 283.16px); top: calc(50% - 57.23px / 2 - 56.08px); transform: rotate(22.89deg); width: 27.18px; height: 57.23px; }
+.sec-3__letter[data-char="Л"]:nth-of-type(3) { left: calc(50% - 34.34px / 2 - 250.52px); top: calc(50% - 57.23px / 2 - 45.41px); transform: rotate(20.49deg); width: 34.34px; height: 57.23px; }
+.sec-3__letter[data-char="И"]:nth-of-type(4) { left: calc(50% - 37.2px / 2 - 216.29px); top: calc(50% - 57.23px / 2 - 34.89px); transform: rotate(17.83deg); width: 37.2px; height: 57.23px; }
+.sec-3__letter[data-char=" "]:nth-of-type(5) { left: calc(50% - 0px / 2 - 199.42px); top: calc(50% - 57.23px / 2 - 25.23px); transform: rotate(15deg); width: 0; height: 57.23px; }
+.sec-3__letter[data-char="Ж"] { left: calc(50% - 48.65px / 2 - 162.69px); top: calc(50% - 57.23px / 2 - 22.28px); transform: rotate(14.02deg); width: 48.65px; height: 57.23px; }
+.sec-3__letter[data-char="Е"]:nth-of-type(7) { left: calc(50% - 27.18px / 2 - 128.6px); top: calc(50% - 57.23px / 2 - 13.27px); transform: rotate(10.5deg); width: 27.18px; height: 57.23px; }
+.sec-3__letter[data-char="Л"]:nth-of-type(8) { left: calc(50% - 34.34px / 2 - 94.16px); top: calc(50% - 57.23px / 2 - 8.61px); transform: rotate(8.11deg); width: 34.34px; height: 57.23px; }
+.sec-3__letter[data-char="А"]:nth-of-type(9) { left: calc(50% - 34.34px / 2 - 59.68px); top: calc(50% - 57.23px / 2 - 4.82px); transform: rotate(5.45deg); width: 34.34px; height: 57.23px; }
+.sec-3__letter[data-char="Н"]:nth-of-type(10) { left: calc(50% - 37.2px / 2 - 21.37px); top: calc(50% - 57.23px / 2 - 2.43px); transform: rotate(2.61deg); width: 37.2px; height: 57.23px; }
+.sec-3__letter[data-char="И"]:nth-of-type(11) { left: calc(50% - 37.2px / 2 + 15.39px); top: calc(50% - 57.23px / 2 - 1.85px); transform: rotate(-0.22deg); width: 37.2px; height: 57.23px; }
+.sec-3__letter[data-char="Я"] { left: calc(50% - 30.05px / 2 + 45.94px); top: calc(50% - 57.23px / 2 - 4.28px); transform: rotate(-3.05deg); width: 30.05px; height: 57.23px; }
+.sec-3__letter[data-char=" "]:nth-of-type(13) { left: calc(50% - 0px / 2 + 62.36px); top: calc(50% - 57.23px / 2 - 5.09px); transform: rotate(-5.67deg); width: 0; height: 57.23px; }
+.sec-3__letter[data-char="Н"]:nth-of-type(14) { left: calc(50% - 37.2px / 2 + 92.72px); top: calc(50% - 57.23px / 2 - 10.66px); transform: rotate(-6.65deg); width: 37.2px; height: 57.23px; }
+.sec-3__letter[data-char="А"]:nth-of-type(15) { left: calc(50% - 34.34px / 2 + 125.09px); top: calc(50% - 57.23px / 2 - 16.8px); transform: rotate(-9.48deg); width: 34.34px; height: 57.23px; }
+.sec-3__letter[data-char=" "]:nth-of-type(16) { left: calc(50% - 0px / 2 + 141.45px); top: calc(50% - 57.23px / 2 - 17.6px); transform: rotate(-12.32deg); width: 0; height: 57.23px; }
+.sec-3__letter[data-char="Д"]:nth-of-type(17) { left: calc(50% - 34.34px / 2 + 170.15px); top: calc(50% - 57.23px / 2 - 28.12px); transform: rotate(-13.3deg); width: 34.34px; height: 57.23px; }
+.sec-3__letter[data-char="В"] { left: calc(50% - 28.62px / 2 + 198.5px); top: calc(50% - 57.23px / 2 - 36.24px); transform: rotate(-15.97deg); width: 28.62px; height: 57.23px; }
+.sec-3__letter[data-char="А"]:last-of-type { left: calc(50% - 34.34px / 2 + 231.47px); top: calc(50% - 57.23px / 2 - 48.69px); transform: rotate(-18.59deg); width: 34.34px; height: 57.23px; }
+
+/* Ellipse 21 */
+.sec-3__ellipse {
+  box-sizing: border-box;
+  position: absolute;
+  width: 420.66px;
+  height: 1279.71px;
+  left: calc(50% - 420.66px / 2 - 435.03px);
+  top: calc(50% - 1279.71px / 2 + 285.86px);
+  border: 1px solid #ffffff;
+  transform: matrix(0, 1, 1, 0, 0, 0);
+}
+
+/* Vector — белые квадраты */
+.sec-3__vector-white {
+  position: absolute;
+  width: 49.09px;
+  height: 49.26px;
+  background: #ffffff;
+  transform: matrix(0, 1, 1, 0, 0, 0);
+}
+
+.sec-3__vector-white--1 {
+  left: calc(50% - 49.09px / 2 - 382.4px);
+  top: calc(50% - 49.26px / 2 - 104.5px);
+}
+
+.sec-3__vector-white--2 {
+  left: calc(50% - 49.09px / 2 + 310.16px);
+  top: calc(50% - 49.26px / 2 - 79.96px);
+}
+
+/* Vector — чёрные малые квадраты */
+.sec-3__vector-dot--1 {
+  position: absolute;
+  width: 44px;
+  height: 40px;
+  left: calc(50% - 44px / 2 + 160px);
+  top: calc(50% - 40px / 2 + 233.88px);
+  background: #000000;
+  transform: rotate(-8deg);
+}
+
+.sec-3__vector-dot--2 {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  left: calc(50% - 40px / 2 - 178.32px);
+  top: calc(50% - 40px / 2 + 233px);
+  background: #000000;
+  transform: rotate(12deg);
 }
 
 * {
