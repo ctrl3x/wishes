@@ -13,8 +13,8 @@ body {
   min-width: 320px;
 }
 
-/* Frame 646, 630, 647, 644, 648 */
-.frame {
+/* Общий контейнер экранов */
+.screen {
   position: relative;
   width: 100%;
   max-width: 1920px;
@@ -23,8 +23,8 @@ body {
   background: #000000;
 }
 
-/* Ж — блок-обёртка для надписи на первом фрейме */
-.main .wish-title-block {
+/* Hero — обёртка заголовка */
+.hero .hero-title-wrap {
   position: absolute;
   width: 702px;
   height: 175.87px;
@@ -32,8 +32,7 @@ body {
   top: calc(50% - 175.87px / 2 - 392.06px);
 }
 
-/* ЖЕЛАЙ — надпись */
-.main .wish-title {
+.hero .hero-title {
   position: absolute;
   width: 702px;
   height: 117px;
@@ -50,8 +49,7 @@ body {
   color: #fff;
 }
 
-/* snake (image1_Glass) */
-.main__snake {
+.hero-snake {
   position: absolute;
   width: 465px;
   height: 730px;
@@ -60,13 +58,19 @@ body {
   background: url(../img/1/snake.png) no-repeat center / contain;
 }
 
-/* bet × 5 */
-.main__bet {
+.hero-bet {
   position: absolute;
   background: url(../img/1/bet.png) no-repeat center / contain;
+  cursor: grab;
+  touch-action: none;
 }
 
-.main__bet--1 {
+.hero-bet:active,
+.hero-bet.hero-bet-dragging {
+  cursor: grabbing;
+}
+
+.hero-bet-1 {
   width: 116.04px;
   height: 119.08px;
   left: 176px;
@@ -74,7 +78,7 @@ body {
   transform: rotate(63.79deg);
 }
 
-.main__bet--2 {
+.hero-bet-2 {
   width: 118.56px;
   height: 126.11px;
   left: 227px;
@@ -82,7 +86,7 @@ body {
   transform: rotate(-100.48deg);
 }
 
-.main__bet--3 {
+.hero-bet-3 {
   width: 117.63px;
   height: 111.49px;
   left: 341px;
@@ -90,7 +94,7 @@ body {
   transform: rotate(-40.48deg);
 }
 
-.main__bet--4 {
+.hero-bet-4 {
   width: 118.97px;
   height: 110.87px;
   left: 1581px;
@@ -98,7 +102,7 @@ body {
   transform: rotate(12.49deg);
 }
 
-.main__bet--5 {
+.hero-bet-5 {
   width: 117.63px;
   height: 111.49px;
   left: 1659px;
@@ -106,29 +110,27 @@ body {
   transform: rotate(-40.48deg);
 }
 
-/* the running line (с белой обводкой) */
-.running-line {
+/* Бегущая строка */
+.marquee {
   position: relative;
   width: 100%;
   max-width: 1920px;
   height: 160px;
   margin: 0 auto;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.marquee-bordered {
   background: #000000;
   border-width: 2px 0;
   border-style: solid;
   border-color: #ffffff;
-  overflow: hidden;
 }
 
-/* бегущая строка: обрезка по границам и анимация */
-.get-it {
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.get-it .marquee-track {
+.marquee .marquee-track {
   display: flex;
   width: max-content;
   align-items: center;
@@ -136,11 +138,11 @@ body {
   will-change: transform;
 }
 
-.get-it .marquee-track:hover {
+.marquee .marquee-track:hover {
   animation-play-state: paused;
 }
 
-.get-it .marquee-item {
+.marquee .marquee-item {
   flex: 0 0 auto;
   display: flex;
   align-items: center;
@@ -148,13 +150,13 @@ body {
   padding: 0 40px;
 }
 
-.get-it .get-it-arrows {
+.marquee .marquee-arrow {
   height: auto;
   max-height: 100px;
   width: auto;
 }
 
-.get-it .get-it-centre {
+.marquee .marquee-text {
   font-family: 'Cormorant Garamond', serif;
   font-style: normal;
   font-weight: 400;
@@ -175,23 +177,21 @@ body {
   }
 }
 
-/* the running line (белый фон) */
-.running-line--white {
+.marquee-light {
   background: #ffffff;
   border: none;
 }
 
-.running-line--white.get-it .get-it-centre {
+.marquee-light .marquee-text {
   color: #000;
 }
 
-/* Frame 648 — контейнер с абсолютными блоками */
-.frame-648 {
+.section-suits {
   overflow: hidden;
 }
 
-/* пики (♠), черви (♥), бубны (♦) и трефы (♣) */
-.suits-block {
+/* Масти карт */
+.suits {
   position: absolute;
   width: 2238.27px;
   height: 248.31px;
@@ -205,8 +205,7 @@ body {
   color: #fff;
 }
 
-/* footer */
-.footer-block {
+.section-footer {
   position: absolute;
   width: 100%;
   max-width: 1920px;
@@ -216,8 +215,8 @@ body {
   background: #000000;
 }
 
-/* footer как в v1: логотип ВШЭ слева + бегущая строка автора (инвертировано: белый текст на чёрном) */
-.footer {
+/* Подвал страницы: логотип ВШЭ + автор */
+.page-footer {
   display: flex;
   width: 100%;
   max-width: 1920px;
@@ -227,7 +226,7 @@ body {
   background: #000000;
 }
 
-.hse-lable {
+.hse-logo {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -241,14 +240,14 @@ body {
   background: #FFFFFF;
 }
 
-.hse-lable img {
+.hse-logo img {
   display: block;
   height: auto;
   width: auto;
   max-height: 50px;
 }
 
-.author-run-line {
+.author-line {
   flex: 1;
   position: relative;
   overflow: hidden;
@@ -256,7 +255,7 @@ body {
   background: #000000;
 }
 
-.author-run-line h1 {
+.author-line h1 {
   margin: 0;
   padding: 0;
   line-height: 80px;
@@ -273,11 +272,11 @@ body {
   font-size: 16px;
 }
 
-.author-run-line h1:hover {
+.author-line h1:hover {
   animation-play-state: paused;
 }
 
-.author-run-line h1 span {
+.author-line h1 span {
   display: inline-block;
   margin-right: 5em;
 }
@@ -291,8 +290,8 @@ body {
   }
 }
 
-/* ========== Секция 3 (Frame 647) ========== */
-.frame.sec-3 {
+/* Декоративная секция */
+.screen.section-decor {
   position: relative;
   width: 100%;
   max-width: 1920px;
@@ -301,8 +300,7 @@ body {
   background: #000000;
 }
 
-/* image 285 — фон (скрыт) */
-.sec-3__image {
+.decor-bg {
   position: absolute;
   visibility: hidden;
   width: 1906px;
@@ -312,8 +310,7 @@ body {
   background: url(../img/3/image.jpg) no-repeat center / cover;
 }
 
-/* card */
-.sec-3__card {
+.decor-card {
   box-sizing: border-box;
   position: absolute;
   width: 151.52px;
@@ -326,8 +323,7 @@ body {
   transform: rotate(-8.49deg);
 }
 
-/* Vector — чёрный большой квадрат */
-.sec-3__vector-big {
+.decor-square-big {
   position: absolute;
   width: 289.94px;
   height: 289.94px;
@@ -338,8 +334,7 @@ body {
   transform: rotate(-8.49deg);
 }
 
-/* В_1 1 */
-.sec-3__v1--1 {
+.decor-chip-1 {
   position: absolute;
   width: 117.63px;
   height: 111.49px;
@@ -349,8 +344,7 @@ body {
   transform: rotate(-142.66deg);
 }
 
-/* В_1 2 */
-.sec-3__v1--2 {
+.decor-chip-2 {
   position: absolute;
   width: 118.94px;
   height: 117.72px;
@@ -360,8 +354,7 @@ body {
   transform: rotate(-142.66deg);
 }
 
-/* А_1 1 */
-.sec-3__a1 {
+.decor-chip-a {
   position: absolute;
   width: 118.56px;
   height: 126.11px;
@@ -371,8 +364,7 @@ body {
   transform: rotate(157.34deg);
 }
 
-/* Две белые градиентные полосы (Group 826) */
-.sec-3__vector-gradient {
+.decor-stripe {
   position: absolute;
   width: 379px;
   height: 238.85px;
@@ -381,17 +373,16 @@ body {
   background: linear-gradient(0deg, #ffffff, #ffffff), rgba(255, 255, 255, 0.7);
 }
 
-.sec-3__vector-gradient--right {
+.decor-stripe-right {
   left: calc(50% - 379px / 2 + 299.04px);
   transform: rotate(-90deg);
 }
 
-.sec-3__vector-gradient--left {
+.decor-stripe-left {
   transform: matrix(0, -1, -1, 0, 0, 0);
 }
 
-/* Rectangle 10–15 */
-.sec-3__rect {
+.decor-frame {
   box-sizing: border-box;
   position: absolute;
   width: 211.81px;
@@ -400,31 +391,31 @@ body {
   border-radius: 10.3281px;
 }
 
-.sec-3__rect--10 {
+.decor-frame-10 {
   left: calc(50% - 211.81px / 2 + 732.53px);
   top: calc(50% - 151.71px / 2 - 124.64px);
   transform: matrix(0.75, 0.66, 0.66, -0.75, 0, 0);
 }
 
-.sec-3__rect--11 {
+.decor-frame-11 {
   left: calc(50% - 211.81px / 2 - 781.48px);
   top: calc(50% - 151.71px / 2 - 127.64px);
   transform: rotate(139deg);
 }
 
-.sec-3__rect--12 {
+.decor-frame-12 {
   left: calc(50% - 211.81px / 2 - 522.49px);
   top: calc(50% - 151.71px / 2 + 67.63px);
   transform: rotate(118deg);
 }
 
-.sec-3__rect--13 {
+.decor-frame-13 {
   left: calc(50% - 211.81px / 2 + 500.74px);
   top: calc(50% - 151.71px / 2 + 72.92px);
   transform: matrix(0.47, 0.88, 0.88, -0.47, 0, 0);
 }
 
-.sec-3__rect--14 {
+.decor-frame-14 {
   left: calc(50% - 211.81px / 2 + 176.9px);
   top: calc(50% - 151.71px / 2 + 196.12px);
   background: #ffffff;
@@ -432,7 +423,7 @@ body {
   transform: matrix(0.16, 0.99, 0.99, -0.16, 0, 0);
 }
 
-.sec-3__rect--15 {
+.decor-frame-15 {
   left: calc(50% - 211.81px / 2 - 160.08px);
   top: calc(50% - 151.71px / 2 + 196.12px);
   background: #ffffff;
@@ -440,8 +431,8 @@ body {
   transform: rotate(99deg);
 }
 
-/* Group — надпись «ДЕЛИ ЖЕЛАНИЯ НА ДВА» */
-.sec-3__title-group {
+/* Стили для букв (если появятся в разметке) */
+.decor-title-group {
   position: absolute;
   width: 593.7px;
   height: 125.75px;
@@ -449,7 +440,7 @@ body {
   top: calc(50% - 125.75px / 2 - 35.05px);
 }
 
-.sec-3__letter {
+.decor-letter {
   position: absolute;
   font-family: 'Cormorant Infant', serif;
   font-style: normal;
@@ -459,28 +450,27 @@ body {
   color: #ffffff;
 }
 
-.sec-3__letter[data-char="Д"]:first-of-type { left: calc(50% - 34.34px / 2 - 311.43px); top: calc(50% - 57.23px / 2 - 69.31px); transform: rotate(25.56deg); width: 34.34px; height: 57.23px; }
-.sec-3__letter[data-char="Е"]:nth-of-type(2) { left: calc(50% - 27.18px / 2 - 283.16px); top: calc(50% - 57.23px / 2 - 56.08px); transform: rotate(22.89deg); width: 27.18px; height: 57.23px; }
-.sec-3__letter[data-char="Л"]:nth-of-type(3) { left: calc(50% - 34.34px / 2 - 250.52px); top: calc(50% - 57.23px / 2 - 45.41px); transform: rotate(20.49deg); width: 34.34px; height: 57.23px; }
-.sec-3__letter[data-char="И"]:nth-of-type(4) { left: calc(50% - 37.2px / 2 - 216.29px); top: calc(50% - 57.23px / 2 - 34.89px); transform: rotate(17.83deg); width: 37.2px; height: 57.23px; }
-.sec-3__letter[data-char=" "]:nth-of-type(5) { left: calc(50% - 0px / 2 - 199.42px); top: calc(50% - 57.23px / 2 - 25.23px); transform: rotate(15deg); width: 0; height: 57.23px; }
-.sec-3__letter[data-char="Ж"] { left: calc(50% - 48.65px / 2 - 162.69px); top: calc(50% - 57.23px / 2 - 22.28px); transform: rotate(14.02deg); width: 48.65px; height: 57.23px; }
-.sec-3__letter[data-char="Е"]:nth-of-type(7) { left: calc(50% - 27.18px / 2 - 128.6px); top: calc(50% - 57.23px / 2 - 13.27px); transform: rotate(10.5deg); width: 27.18px; height: 57.23px; }
-.sec-3__letter[data-char="Л"]:nth-of-type(8) { left: calc(50% - 34.34px / 2 - 94.16px); top: calc(50% - 57.23px / 2 - 8.61px); transform: rotate(8.11deg); width: 34.34px; height: 57.23px; }
-.sec-3__letter[data-char="А"]:nth-of-type(9) { left: calc(50% - 34.34px / 2 - 59.68px); top: calc(50% - 57.23px / 2 - 4.82px); transform: rotate(5.45deg); width: 34.34px; height: 57.23px; }
-.sec-3__letter[data-char="Н"]:nth-of-type(10) { left: calc(50% - 37.2px / 2 - 21.37px); top: calc(50% - 57.23px / 2 - 2.43px); transform: rotate(2.61deg); width: 37.2px; height: 57.23px; }
-.sec-3__letter[data-char="И"]:nth-of-type(11) { left: calc(50% - 37.2px / 2 + 15.39px); top: calc(50% - 57.23px / 2 - 1.85px); transform: rotate(-0.22deg); width: 37.2px; height: 57.23px; }
-.sec-3__letter[data-char="Я"] { left: calc(50% - 30.05px / 2 + 45.94px); top: calc(50% - 57.23px / 2 - 4.28px); transform: rotate(-3.05deg); width: 30.05px; height: 57.23px; }
-.sec-3__letter[data-char=" "]:nth-of-type(13) { left: calc(50% - 0px / 2 + 62.36px); top: calc(50% - 57.23px / 2 - 5.09px); transform: rotate(-5.67deg); width: 0; height: 57.23px; }
-.sec-3__letter[data-char="Н"]:nth-of-type(14) { left: calc(50% - 37.2px / 2 + 92.72px); top: calc(50% - 57.23px / 2 - 10.66px); transform: rotate(-6.65deg); width: 37.2px; height: 57.23px; }
-.sec-3__letter[data-char="А"]:nth-of-type(15) { left: calc(50% - 34.34px / 2 + 125.09px); top: calc(50% - 57.23px / 2 - 16.8px); transform: rotate(-9.48deg); width: 34.34px; height: 57.23px; }
-.sec-3__letter[data-char=" "]:nth-of-type(16) { left: calc(50% - 0px / 2 + 141.45px); top: calc(50% - 57.23px / 2 - 17.6px); transform: rotate(-12.32deg); width: 0; height: 57.23px; }
-.sec-3__letter[data-char="Д"]:nth-of-type(17) { left: calc(50% - 34.34px / 2 + 170.15px); top: calc(50% - 57.23px / 2 - 28.12px); transform: rotate(-13.3deg); width: 34.34px; height: 57.23px; }
-.sec-3__letter[data-char="В"] { left: calc(50% - 28.62px / 2 + 198.5px); top: calc(50% - 57.23px / 2 - 36.24px); transform: rotate(-15.97deg); width: 28.62px; height: 57.23px; }
-.sec-3__letter[data-char="А"]:last-of-type { left: calc(50% - 34.34px / 2 + 231.47px); top: calc(50% - 57.23px / 2 - 48.69px); transform: rotate(-18.59deg); width: 34.34px; height: 57.23px; }
+.decor-letter[data-char="Д"]:first-of-type { left: calc(50% - 34.34px / 2 - 311.43px); top: calc(50% - 57.23px / 2 - 69.31px); transform: rotate(25.56deg); width: 34.34px; height: 57.23px; }
+.decor-letter[data-char="Е"]:nth-of-type(2) { left: calc(50% - 27.18px / 2 - 283.16px); top: calc(50% - 57.23px / 2 - 56.08px); transform: rotate(22.89deg); width: 27.18px; height: 57.23px; }
+.decor-letter[data-char="Л"]:nth-of-type(3) { left: calc(50% - 34.34px / 2 - 250.52px); top: calc(50% - 57.23px / 2 - 45.41px); transform: rotate(20.49deg); width: 34.34px; height: 57.23px; }
+.decor-letter[data-char="И"]:nth-of-type(4) { left: calc(50% - 37.2px / 2 - 216.29px); top: calc(50% - 57.23px / 2 - 34.89px); transform: rotate(17.83deg); width: 37.2px; height: 57.23px; }
+.decor-letter[data-char=" "]:nth-of-type(5) { left: calc(50% - 0px / 2 - 199.42px); top: calc(50% - 57.23px / 2 - 25.23px); transform: rotate(15deg); width: 0; height: 57.23px; }
+.decor-letter[data-char="Ж"] { left: calc(50% - 48.65px / 2 - 162.69px); top: calc(50% - 57.23px / 2 - 22.28px); transform: rotate(14.02deg); width: 48.65px; height: 57.23px; }
+.decor-letter[data-char="Е"]:nth-of-type(7) { left: calc(50% - 27.18px / 2 - 128.6px); top: calc(50% - 57.23px / 2 - 13.27px); transform: rotate(10.5deg); width: 27.18px; height: 57.23px; }
+.decor-letter[data-char="Л"]:nth-of-type(8) { left: calc(50% - 34.34px / 2 - 94.16px); top: calc(50% - 57.23px / 2 - 8.61px); transform: rotate(8.11deg); width: 34.34px; height: 57.23px; }
+.decor-letter[data-char="А"]:nth-of-type(9) { left: calc(50% - 34.34px / 2 - 59.68px); top: calc(50% - 57.23px / 2 - 4.82px); transform: rotate(5.45deg); width: 34.34px; height: 57.23px; }
+.decor-letter[data-char="Н"]:nth-of-type(10) { left: calc(50% - 37.2px / 2 - 21.37px); top: calc(50% - 57.23px / 2 - 2.43px); transform: rotate(2.61deg); width: 37.2px; height: 57.23px; }
+.decor-letter[data-char="И"]:nth-of-type(11) { left: calc(50% - 37.2px / 2 + 15.39px); top: calc(50% - 57.23px / 2 - 1.85px); transform: rotate(-0.22deg); width: 37.2px; height: 57.23px; }
+.decor-letter[data-char="Я"] { left: calc(50% - 30.05px / 2 + 45.94px); top: calc(50% - 57.23px / 2 - 4.28px); transform: rotate(-3.05deg); width: 30.05px; height: 57.23px; }
+.decor-letter[data-char=" "]:nth-of-type(13) { left: calc(50% - 0px / 2 + 62.36px); top: calc(50% - 57.23px / 2 - 5.09px); transform: rotate(-5.67deg); width: 0; height: 57.23px; }
+.decor-letter[data-char="Н"]:nth-of-type(14) { left: calc(50% - 37.2px / 2 + 92.72px); top: calc(50% - 57.23px / 2 - 10.66px); transform: rotate(-6.65deg); width: 37.2px; height: 57.23px; }
+.decor-letter[data-char="А"]:nth-of-type(15) { left: calc(50% - 34.34px / 2 + 125.09px); top: calc(50% - 57.23px / 2 - 16.8px); transform: rotate(-9.48deg); width: 34.34px; height: 57.23px; }
+.decor-letter[data-char=" "]:nth-of-type(16) { left: calc(50% - 0px / 2 + 141.45px); top: calc(50% - 57.23px / 2 - 17.6px); transform: rotate(-12.32deg); width: 0; height: 57.23px; }
+.decor-letter[data-char="Д"]:nth-of-type(17) { left: calc(50% - 34.34px / 2 + 170.15px); top: calc(50% - 57.23px / 2 - 28.12px); transform: rotate(-13.3deg); width: 34.34px; height: 57.23px; }
+.decor-letter[data-char="В"] { left: calc(50% - 28.62px / 2 + 198.5px); top: calc(50% - 57.23px / 2 - 36.24px); transform: rotate(-15.97deg); width: 28.62px; height: 57.23px; }
+.decor-letter[data-char="А"]:last-of-type { left: calc(50% - 34.34px / 2 + 231.47px); top: calc(50% - 57.23px / 2 - 48.69px); transform: rotate(-18.59deg); width: 34.34px; height: 57.23px; }
 
-/* Ellipse 21 */
-.sec-3__ellipse {
+.decor-ellipse {
   box-sizing: border-box;
   position: absolute;
   width: 420.66px;
@@ -491,8 +481,7 @@ body {
   transform: matrix(0, 1, 1, 0, 0, 0);
 }
 
-/* Vector — белые квадраты */
-.sec-3__vector-white {
+.decor-square-white {
   position: absolute;
   width: 49.09px;
   height: 49.26px;
@@ -500,18 +489,17 @@ body {
   transform: matrix(0, 1, 1, 0, 0, 0);
 }
 
-.sec-3__vector-white--1 {
+.decor-square-white-1 {
   left: calc(50% - 49.09px / 2 - 382.4px);
   top: calc(50% - 49.26px / 2 - 104.5px);
 }
 
-.sec-3__vector-white--2 {
+.decor-square-white-2 {
   left: calc(50% - 49.09px / 2 + 310.16px);
   top: calc(50% - 49.26px / 2 - 79.96px);
 }
 
-/* Vector — чёрные малые квадраты */
-.sec-3__vector-dot--1 {
+.decor-dot-1 {
   position: absolute;
   width: 44px;
   height: 40px;
@@ -521,7 +509,7 @@ body {
   transform: rotate(-8deg);
 }
 
-.sec-3__vector-dot--2 {
+.decor-dot-2 {
   position: absolute;
   width: 40px;
   height: 40px;
@@ -531,6 +519,173 @@ body {
   transform: rotate(12deg);
 }
 
-* {
-    border: 1px solid red; /* для отладки */
+/* Секция «Предсказание» */
+.screen.section-prediction {
+  position: relative;
+  width: 100%;
+  max-width: 1920px;
+  height: 1080px;
+  margin: 0 auto;
+  background: #000000;
+}
+
+.prediction-bg {
+  position: absolute;
+  visibility: hidden;
+  width: 1908px;
+  height: 1080px;
+  left: 6px;
+  top: 0;
+  background: url(../img/whishes-logo.svg) no-repeat center / cover;
+}
+
+/* Обёртка «лотерейной» карточки: контент + слой для стирки */
+.prediction-scratch-wrap {
+  position: absolute;
+  width: 824px;
+  height: 430px;
+  left: calc(50% - 430px / 2 - 197px);
+  top: calc(50% - 824px / 2 + 197px);
+  border-radius: 15px;
+  overflow: hidden;
+  border: 1px solid #ffffff;
+}
+
+.prediction-card {
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(0deg, #ffffff, #ffffff), rgba(255, 255, 255, 0.4);
+  border: none;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 20px;
+}
+
+/* Слой «стирки» — рисуется в JS, стирается курсором при нажатии */
+.prediction-scratch-canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  cursor: crosshair;
+  pointer-events: auto;
+  touch-action: none;
+}
+
+.prediction-quote {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 720px;
+  max-width: 90%;
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 44px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #000000;
+}
+
+.prediction-caption {
+  position: absolute;
+  width: 131px;
+  height: 29px;
+  left: 346px;
+  bottom: 13px;
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  text-align: center;
+  text-transform: lowercase;
+  color: #000000;
+}
+
+.prediction-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 80px;
+  background: url(../img/whishes-logo.svg) no-repeat center / contain;
+  border: 1px solid #ffffff;
+  border-radius: 50%;
+}
+
+.prediction-dice {
+  position: absolute;
+  border: 0.728337px solid #000000;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.prediction-dice img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.prediction-dice-tl {
+  width: 162.13px;
+  height: 162.13px;
+  left: calc(50% - 162.13px / 2 - 595.93px);
+  top: 11.11%;
+  transform: rotate(180deg);
+}
+
+.prediction-dice-br {
+  width: 162.13px;
+  height: 162.13px;
+  left: calc(50% - 162.13px / 2 + 580.06px);
+  top: 76.76%;
+}
+
+.prediction-dice-left {
+  width: 163.67px;
+  height: 163.67px;
+  left: calc(50% - 163.67px / 2 - 745.16px);
+  top: 41.76%;
+  transform: matrix(-1, 0, 0, 1, 0, 0);
+}
+
+.prediction-dice-tr {
+  width: 163.67px;
+  height: 163.67px;
+  left: calc(50% - 163.67px / 2 + 591.84px);
+  top: 10.65%;
+}
+
+.prediction-dice-bl {
+  width: 162.13px;
+  height: 162.13px;
+  left: calc(50% - 162.13px / 2 - 539.94px);
+  top: 75.09%;
+  transform: matrix(1, 0, 0, -1, 0, 0);
+}
+
+.prediction-dice-right {
+  width: 162.13px;
+  height: 162.13px;
+  left: calc(50% - 162.13px / 2 + 724.07px);
+  top: 42.69%;
+  transform: matrix(-1, 0, 0, 1, 0, 0);
 }
