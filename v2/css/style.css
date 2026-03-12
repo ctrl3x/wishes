@@ -311,15 +311,14 @@ body {
 }
 
 .decor-card {
-  box-sizing: border-box;
   position: absolute;
   width: 151.52px;
   height: 215.55px;
-  left: calc(50% - 151.52px / 2 - 15.24px);
+  /* По центру между руками: центр промежутка 50% + 70.045px */
+  left: calc(50% - 151.52px / 2 + 70.045px - 75.76px);
   top: 143px;
-  background: #ffffff;
-  border: 0.322588px solid #000000;
-  border-radius: 10.33px;
+  object-fit: contain;
+  display: block;
   transform: rotate(-8.49deg);
 }
 
@@ -366,20 +365,19 @@ body {
 
 .decor-stripe {
   position: absolute;
-  width: 379px;
-  height: 238.85px;
-  left: calc(50% - 379px / 2 - 158.95px);
-  bottom: 841.16px;
-  background: linear-gradient(0deg, #ffffff, #ffffff), rgba(255, 255, 255, 0.7);
+  width: 238.85px;
+  height: 379px;
+  left: calc(50% - 238.85px / 2 - 158.95px);
+  top: 0;
+  object-fit: contain;
+  display: block;
 }
 
 .decor-stripe-right {
-  left: calc(50% - 379px / 2 + 299.04px);
-  transform: rotate(-90deg);
+  left: calc(50% - 238.85px / 2 + 299.04px);
 }
 
 .decor-stripe-left {
-  transform: matrix(0, -1, -1, 0, 0, 0);
 }
 
 .decor-frame {
@@ -503,9 +501,10 @@ body {
   position: absolute;
   width: 44px;
   height: 40px;
-  left: calc(50% - 44px / 2 + 160px);
-  top: calc(50% - 40px / 2 + 233.88px);
-  background: #000000;
+  /* Центр совпадает с центром decor-frame-14 */
+  left: calc(50% - 44px / 2 + 176.9px);
+  top: calc(50% - 40px / 2 + 196.12px);
+  background: url(../img/table/whish-dollar.svg) no-repeat center / contain;
   transform: rotate(-8deg);
 }
 
@@ -513,9 +512,10 @@ body {
   position: absolute;
   width: 40px;
   height: 40px;
-  left: calc(50% - 40px / 2 - 178.32px);
-  top: calc(50% - 40px / 2 + 233px);
-  background: #000000;
+  /* Центр совпадает с центром decor-frame-15 */
+  left: calc(50% - 40px / 2 - 160.08px);
+  top: calc(50% - 40px / 2 + 196.12px);
+  background: url(../img/table/whish-heart.svg) no-repeat center / contain;
   transform: rotate(12deg);
 }
 
@@ -688,4 +688,8 @@ body {
   left: calc(50% - 162.13px / 2 + 724.07px);
   top: 42.69%;
   transform: matrix(-1, 0, 0, 1, 0, 0);
+}
+
+* {
+  border: 1px solid red;
 }
