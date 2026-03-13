@@ -234,7 +234,11 @@
 
   <!-- Секция с мастями карт -->
   <section class="screen section-suits">
-    <div class="suits">♠ ♥ ♦ ♣</div>
+    <p class="suits-caption">Время загадывать по-крупному.<br> Ты здесь уже:</p>
+    <div class="suits-stopwatch" aria-live="polite">
+      <span class="suits-stopwatch-value">00:00:00</span>
+    </div>
+    <div class="suits" id="suits-pool" aria-hidden="true"></div>
     <footer class="section-footer"></footer>
   </section>
 

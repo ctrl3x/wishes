@@ -190,19 +190,66 @@ body {
   overflow: hidden;
 }
 
-/* Масти карт */
+/* Надпись над секундомером */
+.suits-caption {
+  position: absolute;
+  width: 629px;
+  height: 108px;
+  left: calc(50% - 629px / 2 + 0.5px);
+  top: 149px;
+  margin: 0;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 44px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+/* Большой секундомер по центру */
+.suits-stopwatch {
+  position: absolute;
+  left: 50%;
+  top: 340px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 320px;
+}
+
+.suits-stopwatch-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: 120px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  text-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+}
+
+/* Масти карт — «бассейн» с частицами */
 .suits {
   position: absolute;
   width: 2238.27px;
   height: 248.31px;
   right: -159.14px;
   top: 748.69px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 8rem;
-  letter-spacing: 0.5em;
+  overflow: hidden;
+}
+
+.suits-particle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 18px;
+  line-height: 1;
   color: #fff;
+  pointer-events: none;
+  will-change: transform;
+  user-select: none;
 }
 
 .section-footer {
@@ -690,6 +737,6 @@ body {
   transform: matrix(-1, 0, 0, 1, 0, 0);
 }
 
-* {
+/* * {
   border: 1px solid red;
-}
+} */

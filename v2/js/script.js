@@ -3,6 +3,8 @@
 document.addEventListener('DOMContentLoaded', () => {
   initHeroBetDrag();
   initScratchCard();
+  initSuitsStopwatch();
+  initSuitsPool();
 });
 
 /**
@@ -176,4 +178,213 @@ function initScratchCard() {
   canvas.addEventListener('touchend', endDraw, { passive: false });
 
   drawScratchLayer();
+}
+
+/**
+ * Секундомер в секции с мастями: запускается при загрузке, формат ЧЧ:ММ:СС.
+ */
+function initSuitsStopwatch() {
+  const el = document.querySelector('.suits-stopwatch-value');
+  if (!el) return;
+  const startedAt = Date.now();
+  function pad(n) {
+    return String(n).padStart(2, '0');
+  }
+  function tick() {
+    const totalSeconds = Math.floor((Date.now() - startedAt) / 1000);
+    const h = Math.floor(totalSeconds / 3600);
+    const m = Math.floor((totalSeconds % 3600) / 60);
+    const s = totalSeconds % 60;
+    el.textContent = `${pad(h)}:${pad(m)}:${pad(s)}`;
+  }
+  tick();
+  setInterval(tick, 1000);
+}
+
+/**
+ * «Бассейн» мастей: частицы ♠ ♥ ♦ ♣ с физикой, отталкиваются от курсора.
+ */
+function initSuitsPool() {
+  const pool = document.getElementById('suits-pool');
+  const section = document.querySelector('.section-suits');
+  if (!pool) return;
+
+  const SUITS = ['♠', '♥', '♦', '♣'];
+  const RED_SUITS = ['♥', '♦'];
+  const PARTICLE_COUNT = 800;
+  const DAMPING = 0.99;
+  const REPULSION_RADIUS = 90;
+  const REPULSION_STRENGTH = 0.35;
+  const PARTICLE_RADIUS = 10;
+  const WALL_BOUNCE = 0.55;
+  const COLLISION_ITERATIONS = 3;
+
+  let poolRect = { left: 0, top: 0, width: 0, height: 0 };
+  let wallLeftX = 0;
+  let wallRightX = 0;
+  let mouseX = null;
+  let mouseY = null;
+
+  function updateRect() {
+    const r = pool.getBoundingClientRect();
+    poolRect = { left: r.left, top: r.top, width: r.width, height: r.height };
+    if (section) {
+      const sr = section.getBoundingClientRect();
+      wallLeftX = sr.left - r.left;
+      wallRightX = sr.right - r.left;
+    } else {
+      wallLeftX = PARTICLE_RADIUS;
+      wallRightX = r.width - PARTICLE_RADIUS;
+    }
+  }
+
+  const particles = [];
+
+  function createParticle() {
+    const symbol = SUITS[Math.floor(Math.random() * SUITS.length)];
+    const span = document.createElement('span');
+    span.className = 'suits-particle ' + (RED_SUITS.includes(symbol) ? 'suit-red' : 'suit-black');
+    span.textContent = symbol;
+    pool.appendChild(span);
+
+    const x = wallLeftX + PARTICLE_RADIUS + Math.random() * (wallRightX - wallLeftX - PARTICLE_RADIUS * 2);
+    const y = PARTICLE_RADIUS + Math.random() * (poolRect.height - PARTICLE_RADIUS * 2);
+    const vx = (Math.random() - 0.5) * 1.5;
+    const vy = (Math.random() - 0.5) * 1.5;
+
+    return { el: span, x, y, vx, vy };
+  }
+
+  function initParticles() {
+    updateRect();
+    pool.innerHTML = '';
+    particles.length = 0;
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      particles.push(createParticle());
+    }
+  }
+
+  function step() {
+    const w = poolRect.width;
+    const h = poolRect.height;
+    const twoR = PARTICLE_RADIUS * 2;
+
+    for (const p of particles) {
+      if (mouseX != null && mouseY != null) {
+        const dx = p.x - mouseX;
+        const dy = p.y - mouseY;
+        const dist = Math.sqrt(dx * dx + dy * dy) || 0.001;
+        if (dist < REPULSION_RADIUS) {
+          const force = (REPULSION_RADIUS - dist) / REPULSION_RADIUS * REPULSION_STRENGTH;
+          p.vx += (dx / dist) * force;
+          p.vy += (dy / dist) * force;
+        }
+      }
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vx *= DAMPING;
+      p.vy *= DAMPING;
+
+      if (p.x < wallLeftX + PARTICLE_RADIUS) {
+        p.x = wallLeftX + PARTICLE_RADIUS;
+        p.vx *= -WALL_BOUNCE;
+      }
+      if (p.x > wallRightX - PARTICLE_RADIUS) {
+        p.x = wallRightX - PARTICLE_RADIUS;
+        p.vx *= -WALL_BOUNCE;
+      }
+      if (p.y < PARTICLE_RADIUS) {
+        p.y = PARTICLE_RADIUS;
+        p.vy *= -WALL_BOUNCE;
+      }
+      if (p.y > h - PARTICLE_RADIUS) {
+        p.y = h - PARTICLE_RADIUS;
+        p.vy *= -WALL_BOUNCE;
+      }
+    }
+
+    for (let iter = 0; iter < COLLISION_ITERATIONS; iter++) {
+      for (let i = 0; i < particles.length; i++) {
+        const a = particles[i];
+        for (let j = i + 1; j < particles.length; j++) {
+          const b = particles[j];
+          const dx = b.x - a.x;
+          const dy = b.y - a.y;
+          const dist = Math.sqrt(dx * dx + dy * dy) || 0.001;
+          if (dist < twoR) {
+            const overlap = twoR - dist;
+            const nx = dx / dist;
+            const ny = dy / dist;
+            a.x -= nx * overlap * 0.5;
+            a.y -= ny * overlap * 0.5;
+            b.x += nx * overlap * 0.5;
+            b.y += ny * overlap * 0.5;
+            const vRel = (a.vx - b.vx) * nx + (a.vy - b.vy) * ny;
+            if (vRel < 0) {
+              a.vx -= vRel * nx;
+              a.vy -= vRel * ny;
+              b.vx += vRel * nx;
+              b.vy += vRel * ny;
+            }
+          }
+        }
+      }
+    }
+
+    for (const p of particles) {
+      if (p.x < wallLeftX + PARTICLE_RADIUS) {
+        p.x = wallLeftX + PARTICLE_RADIUS;
+        p.vx *= -WALL_BOUNCE;
+      }
+      if (p.x > wallRightX - PARTICLE_RADIUS) {
+        p.x = wallRightX - PARTICLE_RADIUS;
+        p.vx *= -WALL_BOUNCE;
+      }
+      if (p.y < PARTICLE_RADIUS) {
+        p.y = PARTICLE_RADIUS;
+        p.vy *= -WALL_BOUNCE;
+      }
+      if (p.y > h - PARTICLE_RADIUS) {
+        p.y = h - PARTICLE_RADIUS;
+        p.vy *= -WALL_BOUNCE;
+      }
+    }
+
+    for (const p of particles) {
+      p.el.style.transform = `translate(${p.x}px, ${p.y}px)`;
+    }
+  }
+
+  function loop() {
+    step();
+    requestAnimationFrame(loop);
+  }
+
+  function onMouseMove(e) {
+    updateRect();
+    const x = e.clientX - poolRect.left;
+    const y = e.clientY - poolRect.top;
+    if (x >= 0 && x <= poolRect.width && y >= 0 && y <= poolRect.height) {
+      mouseX = x;
+      mouseY = y;
+    } else {
+      mouseX = null;
+      mouseY = null;
+    }
+  }
+
+  function onMouseLeave() {
+    mouseX = null;
+    mouseY = null;
+  }
+
+  window.addEventListener('resize', () => {
+    updateRect();
+  });
+
+  pool.addEventListener('mousemove', onMouseMove);
+  pool.addEventListener('mouseleave', onMouseLeave);
+
+  initParticles();
+  requestAnimationFrame(loop);
 }
