@@ -212,12 +212,14 @@ function initSuitsPool() {
   const SUITS = ['♠', '♥', '♦', '♣'];
   const RED_SUITS = ['♥', '♦'];
   const PARTICLE_COUNT = 800;
-  const DAMPING = 0.99;
-  const REPULSION_RADIUS = 90;
-  const REPULSION_STRENGTH = 0.35;
+  const DAMPING = 0.995;
+  const REPULSION_RADIUS = 110;
+  const REPULSION_STRENGTH = 0.58;
   const PARTICLE_RADIUS = 10;
-  const WALL_BOUNCE = 0.55;
+  const WALL_BOUNCE = 0.72;
   const COLLISION_ITERATIONS = 3;
+  const PARTICLE_REPEL_RADIUS = 28;
+  const PARTICLE_REPEL_STRENGTH = 0.06;
 
   let poolRect = { left: 0, top: 0, width: 0, height: 0 };
   let wallLeftX = 0;
@@ -249,8 +251,8 @@ function initSuitsPool() {
 
     const x = wallLeftX + PARTICLE_RADIUS + Math.random() * (wallRightX - wallLeftX - PARTICLE_RADIUS * 2);
     const y = PARTICLE_RADIUS + Math.random() * (poolRect.height - PARTICLE_RADIUS * 2);
-    const vx = (Math.random() - 0.5) * 1.5;
-    const vy = (Math.random() - 0.5) * 1.5;
+    const vx = (Math.random() - 0.5) * 2.8;
+    const vy = (Math.random() - 0.5) * 2.8;
 
     return { el: span, x, y, vx, vy };
   }
@@ -280,6 +282,28 @@ function initSuitsPool() {
           p.vy += (dy / dist) * force;
         }
       }
+    }
+
+    for (let i = 0; i < particles.length; i++) {
+      const a = particles[i];
+      for (let j = i + 1; j < particles.length; j++) {
+        const b = particles[j];
+        const dx = b.x - a.x;
+        const dy = b.y - a.y;
+        const dist = Math.sqrt(dx * dx + dy * dy) || 0.001;
+        if (dist < PARTICLE_REPEL_RADIUS && dist > 0.001) {
+          const force = (PARTICLE_REPEL_RADIUS - dist) / PARTICLE_REPEL_RADIUS * PARTICLE_REPEL_STRENGTH;
+          const nx = dx / dist;
+          const ny = dy / dist;
+          a.vx -= nx * force;
+          a.vy -= ny * force;
+          b.vx += nx * force;
+          b.vy += ny * force;
+        }
+      }
+    }
+
+    for (const p of particles) {
       p.x += p.vx;
       p.y += p.vy;
       p.vx *= DAMPING;
@@ -292,10 +316,6 @@ function initSuitsPool() {
       if (p.x > wallRightX - PARTICLE_RADIUS) {
         p.x = wallRightX - PARTICLE_RADIUS;
         p.vx *= -WALL_BOUNCE;
-      }
-      if (p.y < PARTICLE_RADIUS) {
-        p.y = PARTICLE_RADIUS;
-        p.vy *= -WALL_BOUNCE;
       }
       if (p.y > h - PARTICLE_RADIUS) {
         p.y = h - PARTICLE_RADIUS;
@@ -340,10 +360,6 @@ function initSuitsPool() {
         p.x = wallRightX - PARTICLE_RADIUS;
         p.vx *= -WALL_BOUNCE;
       }
-      if (p.y < PARTICLE_RADIUS) {
-        p.y = PARTICLE_RADIUS;
-        p.vy *= -WALL_BOUNCE;
-      }
       if (p.y > h - PARTICLE_RADIUS) {
         p.y = h - PARTICLE_RADIUS;
         p.vy *= -WALL_BOUNCE;
@@ -362,28 +378,15 @@ function initSuitsPool() {
 
   function onMouseMove(e) {
     updateRect();
-    const x = e.clientX - poolRect.left;
-    const y = e.clientY - poolRect.top;
-    if (x >= 0 && x <= poolRect.width && y >= 0 && y <= poolRect.height) {
-      mouseX = x;
-      mouseY = y;
-    } else {
-      mouseX = null;
-      mouseY = null;
-    }
-  }
-
-  function onMouseLeave() {
-    mouseX = null;
-    mouseY = null;
+    mouseX = e.clientX - poolRect.left;
+    mouseY = e.clientY - poolRect.top;
   }
 
   window.addEventListener('resize', () => {
     updateRect();
   });
 
-  pool.addEventListener('mousemove', onMouseMove);
-  pool.addEventListener('mouseleave', onMouseLeave);
+  document.addEventListener('mousemove', onMouseMove);
 
   initParticles();
   requestAnimationFrame(loop);
