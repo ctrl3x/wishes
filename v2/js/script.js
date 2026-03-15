@@ -300,201 +300,242 @@ function initSuitsStopwatch() {
 }
 
 function initSuitsPool() {
-  const pool = document.getElementById('suits-pool');
-  const section = document.querySelector('.section-suits');
+  var pool = document.getElementById('suits-pool');
   if (!pool) return;
 
-  const SUITS = ['♠', '♥', '♦', '♣'];
-  const RED_SUITS = ['♥', '♦'];
-  const PARTICLE_COUNT_MAX = 800;
-  const PARTICLE_COUNT_MIN = 80;
-  const REFERENCE_WIDTH = 1920;
-  const DAMPING = 0.995;
-  const REPULSION_RADIUS = 110;
-  const REPULSION_STRENGTH = 0.58;
-  const PARTICLE_RADIUS = 10;
-  const WALL_BOUNCE = 0.72;
-  const COLLISION_ITERATIONS = 3;
-  const PARTICLE_REPEL_RADIUS = 28;
-  const PARTICLE_REPEL_STRENGTH = 0.06;
+  var section = document.querySelector('.section-suits');
 
-  let poolRect = { left: 0, top: 0, width: 0, height: 0 };
-  let wallLeftX = 0;
-  let wallRightX = 0;
-  let wallTopY = 0;
-  let wallBottomY = 0;
-  let mouseX = null;
-  let mouseY = null;
+  var suits = ['♠', '♥', '♦', '♣'];
 
-  function updateRect() {
-    const r = pool.getBoundingClientRect();
-    poolRect = { left: r.left, top: r.top, width: r.width, height: r.height };
-    const w = r.width;
-    const h = r.height;
-    const R = PARTICLE_RADIUS;
+  // координаты относительно pool, не viewport
+  var poolLeft = 0;
+  var poolTop = 0;
+  var poolWidth = 0;
+  var poolHeight = 0;
+  var wallLeft = 0;
+  var wallRight = 0;
+  var wallTop = 0;
+  var wallBottom = 0;
+  var mouseX = null;
+  var mouseY = null;
+
+  var particles = [];
+
+  function updateBounds() {
+    var rect = pool.getBoundingClientRect();
+    poolLeft = rect.left;
+    poolTop = rect.top;
+    poolWidth = rect.width;
+    poolHeight = rect.height;
+
     if (section) {
-      const sr = section.getBoundingClientRect();
-      wallLeftX = sr.left - r.left;
-      wallRightX = sr.right - r.left;
-      wallTopY = sr.top - r.top;
-      wallBottomY = sr.bottom - r.top;
+      var sectRect = section.getBoundingClientRect();
+      // стенки в координатах pool
+      wallLeft = sectRect.left - poolLeft;
+      wallRight = sectRect.right - poolLeft;
+      wallTop = sectRect.top - poolTop;
+      wallBottom = sectRect.bottom - poolTop;
     } else {
-      wallLeftX = R;
-      wallRightX = w - R;
-      wallTopY = R;
-      wallBottomY = h - R;
+      wallLeft = 10;
+      wallRight = poolWidth - 10;
+      wallTop = 10;
+      wallBottom = poolHeight - 10;
     }
   }
 
-  const particles = [];
+  function getParticleCount() {
+    var width = window.innerWidth;
+    // меньше мастей на узком экране
+    if (width < 400) return 80;
+    if (width < 800) return 150;
+    if (width < 1200) return 300;
+    if (width < 1600) return 500;
+    return 800;
+  }
 
   function createParticle() {
-    const symbol = SUITS[Math.floor(Math.random() * SUITS.length)];
-    const span = document.createElement('span');
-    span.className = 'suits-particle ' + (RED_SUITS.includes(symbol) ? 'suit-red' : 'suit-black');
+    var index = Math.floor(Math.random() * 4);
+    var symbol = suits[index];
+
+    var span = document.createElement('span');
     span.textContent = symbol;
+    if (symbol === '♥' || symbol === '♦') {
+      span.className = 'suits-particle suit-red';
+    } else {
+      span.className = 'suits-particle suit-black';
+    }
     pool.appendChild(span);
 
-    const w = poolRect.width;
-    const h = poolRect.height;
-    const R = PARTICLE_RADIUS;
-    const xMin = Math.max(R, wallLeftX + R);
-    const xMax = Math.min(w - R, wallRightX - R);
-    const yMin = Math.max(R, wallTopY + R);
-    const yMax = Math.min(h - R, wallBottomY - R);
-    const x = xMin + Math.random() * Math.max(0, xMax - xMin) || R;
-    const y = yMin + Math.random() * Math.max(0, yMax - yMin) || R;
-    const vx = (Math.random() - 0.5) * 2.8;
-    const vy = (Math.random() - 0.5) * 2.8;
+    var zoneWidth = wallRight - wallLeft;
+    var zoneHeight = wallBottom - wallTop;
+    if (zoneWidth < 24) zoneWidth = 24;
+    if (zoneHeight < 24) zoneHeight = 24;
+    var minX = wallLeft + 12;
+    var maxX = wallRight - 12;
+    if (maxX < minX) maxX = minX;
+    // спавн только внизу (нижние 30%)
+    var bottomEdge = wallBottom - zoneHeight * 0.3;
+    var minY = bottomEdge + 12;
+    var maxY = wallBottom - 12;
+    if (maxY < minY) maxY = minY;
 
-    return { el: span, x, y, vx, vy };
+    var startX = minX + Math.random() * (maxX - minX);
+    var startY = minY + Math.random() * (maxY - minY);
+    if (isNaN(startX)) startX = 50;
+    if (isNaN(startY)) startY = 50;
+
+    var vx = (Math.random() - 0.5) * 2.8;
+    var vy = (Math.random() - 0.5) * 2.8;
+
+    return {
+      element: span,
+      x: startX,
+      y: startY,
+      vx: vx,
+      vy: vy
+    };
   }
 
-  function getParticleCount() {
-    const w = typeof window !== 'undefined' ? window.innerWidth : REFERENCE_WIDTH;
-    return Math.min(PARTICLE_COUNT_MAX, Math.max(PARTICLE_COUNT_MIN, Math.round((w / REFERENCE_WIDTH) * PARTICLE_COUNT_MAX)));
-  }
-
-  function initParticles() {
-    updateRect();
-    const count = getParticleCount();
+  function fillPool() {
+    updateBounds();
+    var count = getParticleCount();
     pool.innerHTML = '';
-    particles.length = 0;
-    for (let i = 0; i < count; i++) {
+    particles = [];
+
+    var i = 0;
+    while (i < count) {
       particles.push(createParticle());
+      i = i + 1;
     }
   }
 
   function step() {
-    const w = poolRect.width;
-    const h = poolRect.height;
-    const twoR = PARTICLE_RADIUS * 2;
+    var i, j;
+    var p, q;
+    var dist;
+    var dx, dy;
+    var force;
+    var nx, ny;
+    var particleRadius = 10;
+    var particleDiameter = particleRadius * 2; // диаметр для столкновений
 
-    for (const p of particles) {
-      if (mouseX != null && mouseY != null) {
-        const dx = p.x - mouseX;
-        const dy = p.y - mouseY;
-        const dist = Math.sqrt(dx * dx + dy * dy) || 0.001;
-        if (dist < REPULSION_RADIUS) {
-          const force = (REPULSION_RADIUS - dist) / REPULSION_RADIUS * REPULSION_STRENGTH;
-          p.vx += (dx / dist) * force;
-          p.vy += (dy / dist) * force;
+    if (mouseX !== null && mouseY !== null) {
+      for (i = 0; i < particles.length; i++) {
+        p = particles[i];
+        dx = p.x - mouseX;
+        dy = p.y - mouseY;
+        dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 0.01) dist = 0.01; // иначе /0
+        if (dist < 110) {
+          force = (110 - dist) / 110 * 0.75;
+          p.vx = p.vx + (dx / dist) * force;
+          p.vy = p.vy + (dy / dist) * force;
         }
       }
     }
 
-    for (let i = 0; i < particles.length; i++) {
-      const a = particles[i];
-      for (let j = i + 1; j < particles.length; j++) {
-        const b = particles[j];
-        const dx = b.x - a.x;
-        const dy = b.y - a.y;
-        const dist = Math.sqrt(dx * dx + dy * dy) || 0.001;
-        if (dist < PARTICLE_REPEL_RADIUS && dist > 0.001) {
-          const force = (PARTICLE_REPEL_RADIUS - dist) / PARTICLE_REPEL_RADIUS * PARTICLE_REPEL_STRENGTH;
-          const nx = dx / dist;
-          const ny = dy / dist;
-          a.vx -= nx * force;
-          a.vy -= ny * force;
-          b.vx += nx * force;
-          b.vy += ny * force;
+    // отталкивание мастей друг от друга
+    for (i = 0; i < particles.length; i++) {
+      for (j = i + 1; j < particles.length; j++) {
+        p = particles[i];
+        q = particles[j];
+        dx = q.x - p.x;
+        dy = q.y - p.y;
+        dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 0.01) dist = 0.01;
+        if (dist < 28) {
+          force = (28 - dist) / 28 * 0.11;
+          nx = dx / dist;
+          ny = dy / dist;
+          p.vx = p.vx - nx * force;
+          p.vy = p.vy - ny * force;
+          q.vx = q.vx + nx * force;
+          q.vy = q.vy + ny * force;
         }
       }
     }
 
-    for (const p of particles) {
-      p.x += p.vx;
-      p.y += p.vy;
-      p.vx *= DAMPING;
-      p.vy *= DAMPING;
+    for (i = 0; i < particles.length; i++) {
+      p = particles[i];
+      p.vy = p.vy + 0.01;
+      p.x = p.x + p.vx;
+      p.y = p.y + p.vy;
+      p.vx = p.vx * 0.995;
+      p.vy = p.vy * 0.995;
 
-      if (p.x < wallLeftX + PARTICLE_RADIUS) {
-        p.x = wallLeftX + PARTICLE_RADIUS;
-        p.vx *= -WALL_BOUNCE;
+      // отскок от границ
+      if (p.x < wallLeft + particleRadius) {
+        p.x = wallLeft + particleRadius;
+        p.vx = p.vx * -0.72;
       }
-      if (p.x > wallRightX - PARTICLE_RADIUS) {
-        p.x = wallRightX - PARTICLE_RADIUS;
-        p.vx *= -WALL_BOUNCE;
+      if (p.x > wallRight - particleRadius) {
+        p.x = wallRight - particleRadius;
+        p.vx = p.vx * -0.72;
       }
-      if (p.y < wallTopY) {
-        p.y = wallTopY;
-        p.vy *= -WALL_BOUNCE;
+      if (p.y < wallTop) {
+        p.y = wallTop;
+        p.vy = p.vy * -0.72;
       }
-      if (p.y > wallBottomY - PARTICLE_RADIUS) {
-        p.y = wallBottomY - PARTICLE_RADIUS;
-        p.vy *= -WALL_BOUNCE;
+      if (p.y > wallBottom - particleRadius) {
+        p.y = wallBottom - particleRadius;
+        p.vy = p.vy * -0.72;
       }
     }
 
-    for (let iter = 0; iter < COLLISION_ITERATIONS; iter++) {
-      for (let i = 0; i < particles.length; i++) {
-        const a = particles[i];
-        for (let j = i + 1; j < particles.length; j++) {
-          const b = particles[j];
-          const dx = b.x - a.x;
-          const dy = b.y - a.y;
-          const dist = Math.sqrt(dx * dx + dy * dy) || 0.001;
-          if (dist < twoR) {
-            const overlap = twoR - dist;
-            const nx = dx / dist;
-            const ny = dy / dist;
-            a.x -= nx * overlap * 0.5;
-            a.y -= ny * overlap * 0.5;
-            b.x += nx * overlap * 0.5;
-            b.y += ny * overlap * 0.5;
-            const vRel = (a.vx - b.vx) * nx + (a.vy - b.vy) * ny;
-            if (vRel < 0) {
-              a.vx -= vRel * nx;
-              a.vy -= vRel * ny;
-              b.vx += vRel * nx;
-              b.vy += vRel * ny;
+    var iter;
+    // развести пересекающиеся, 5 прохода чтобы меньше склеивалось
+    for (iter = 0; iter < 5; iter++) {
+      for (i = 0; i < particles.length; i++) {
+        for (j = i + 1; j < particles.length; j++) {
+          p = particles[i];
+          q = particles[j];
+          dx = q.x - p.x;
+          dy = q.y - p.y;
+          dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 0.01) dist = 0.01;
+          if (dist < particleDiameter) {
+            var overlap = particleDiameter - dist;
+            nx = dx / dist;
+            ny = dy / dist;
+            p.x = p.x - nx * overlap * 0.5;
+            p.y = p.y - ny * overlap * 0.5;
+            q.x = q.x + nx * overlap * 0.5;
+            q.y = q.y + ny * overlap * 0.5;
+            var relVel = (p.vx - q.vx) * nx + (p.vy - q.vy) * ny;
+            if (relVel < 0) {
+              p.vx = p.vx - relVel * nx;
+              p.vy = p.vy - relVel * ny;
+              q.vx = q.vx + relVel * nx;
+              q.vy = q.vy + relVel * ny;
             }
           }
         }
       }
     }
 
-    for (const p of particles) {
-      if (p.x < wallLeftX + PARTICLE_RADIUS) {
-        p.x = wallLeftX + PARTICLE_RADIUS;
-        p.vx *= -WALL_BOUNCE;
+    for (i = 0; i < particles.length; i++) {
+      p = particles[i];
+      if (p.x < wallLeft + particleRadius) {
+        p.x = wallLeft + particleRadius;
+        p.vx = p.vx * -0.72;
       }
-      if (p.x > wallRightX - PARTICLE_RADIUS) {
-        p.x = wallRightX - PARTICLE_RADIUS;
-        p.vx *= -WALL_BOUNCE;
+      if (p.x > wallRight - particleRadius) {
+        p.x = wallRight - particleRadius;
+        p.vx = p.vx * -0.72;
       }
-      if (p.y < wallTopY) {
-        p.y = wallTopY;
-        p.vy *= -WALL_BOUNCE;
+      if (p.y < wallTop) {
+        p.y = wallTop;
+        p.vy = p.vy * -0.72;
       }
-      if (p.y > wallBottomY - PARTICLE_RADIUS) {
-        p.y = wallBottomY - PARTICLE_RADIUS;
-        p.vy *= -WALL_BOUNCE;
+      if (p.y > wallBottom - particleRadius) {
+        p.y = wallBottom - particleRadius;
+        p.vy = p.vy * -0.72;
       }
     }
 
-    for (const p of particles) {
-      p.el.style.transform = `translate(${p.x}px, ${p.y}px)`;
+    for (i = 0; i < particles.length; i++) {
+      p = particles[i];
+      p.element.style.transform = 'translate(' + p.x + 'px, ' + p.y + 'px)';
     }
   }
 
@@ -504,20 +545,20 @@ function initSuitsPool() {
   }
 
   function onMouseMove(e) {
-    updateRect();
-    mouseX = e.clientX - poolRect.left;
-    mouseY = e.clientY - poolRect.top;
+    updateBounds();
+    mouseX = e.clientX - poolLeft;
+    mouseY = e.clientY - poolTop;
   }
 
-  let resizeTimeout = null;
-  window.addEventListener('resize', () => {
-    updateRect();
-    if (resizeTimeout) clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(initParticles, 200);
+  var resizeTimer = null;
+  window.addEventListener('resize', function () {
+    updateBounds();
+    if (resizeTimer) clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(fillPool, 200); // debounce
   });
 
   document.addEventListener('mousemove', onMouseMove);
 
-  initParticles();
-  requestAnimationFrame(loop);
+  fillPool();
+  loop();
 }
