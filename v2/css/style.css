@@ -417,6 +417,21 @@ body {
   border-radius: 10.3281px;
 }
 
+#screen-second {
+  cursor: pointer;
+  overflow: hidden;
+}
+
+#screen-second .screen-spacer-img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
 .decor-frame-10 {
   left: calc(50% - 211.81px / 2 + 732.53px);
   top: calc(50% - 151.71px / 2 - 124.64px);

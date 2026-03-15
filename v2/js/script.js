@@ -1,102 +1,146 @@
 'use strict';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function () {
   initHeroBetDrag();
   initScratchCard();
   initSuitsStopwatch();
   initSuitsPool();
+  initDecorFrameSecond();
 });
 
-function initHeroBetDrag() {
-  const container = document.querySelector('.hero');
-  const bets = document.querySelectorAll('.hero .hero-bet');
-  if (!container || !bets.length) return;
+function initDecorFrameSecond() {
+  var screen = document.getElementById('screen-second');
+  if (screen === null) return;
 
-  bets.forEach((el) => {
-    let isDragging = false;
-    let startX = 0;
-    let startY = 0;
-    let startLeft = 0;
-    let startTop = 0;
+  var img = screen.querySelector('.screen-spacer-img');
+  if (img === null) return;
 
-    function getRect() {
-      return el.getBoundingClientRect();
+  var picture1 = 'img/frame/thorns1.svg';
+  var picture2 = 'img/frame/thorns2.svg';
+  var picture3 = 'img/frame/thorns3.svg';
+
+  var whichPicture = 1;
+
+  function whenUserClicks() {
+    console.log('Клик по второму экрану (screen-spacer)');
+
+    if (whichPicture === 1) {
+      img.src = picture1;
+      img.alt = 'Шипы терновника 1';
+      whichPicture = 2;
+    } else if (whichPicture === 2) {
+      img.src = picture2;
+      img.alt = 'Шипы терновника 2';
+      whichPicture = 3;
+    } else {
+      img.src = picture3;
+      img.alt = 'Шипы терновника 3';
+      whichPicture = 1;
     }
 
-    function clamp(value, min, max) {
-      return Math.max(min, Math.min(max, value));
-    }
+    img.hidden = false;
+  }
 
-    function onPointerDown(e) {
-      if (e.button !== 0 && e.type === 'mousedown') return;
+  screen.addEventListener('click', whenUserClicks);
+
+  screen.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
       e.preventDefault();
-      isDragging = true;
-      const rect = el.getBoundingClientRect();
-      const containerRect = container.getBoundingClientRect();
-      startX = e.touches ? e.touches[0].clientX : e.clientX;
-      startY = e.touches ? e.touches[0].clientY : e.clientY;
-      startLeft = rect.left - containerRect.left + container.scrollLeft;
-      startTop = rect.top - containerRect.top + container.scrollTop;
-      el.classList.add('hero-bet-dragging');
+      whenUserClicks();
     }
-
-    function onPointerMove(e) {
-      if (!isDragging) return;
+    if (e.key === ' ') {
       e.preventDefault();
-      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-      const containerRect = container.getBoundingClientRect();
-      const dx = clientX - startX;
-      const dy = clientY - startY;
-      let newLeft = startLeft + dx;
-      let newTop = startTop + dy;
-      const w = el.offsetWidth;
-      const h = el.offsetHeight;
-      const maxW = containerRect.width;
-      const maxH = containerRect.height;
-      newLeft = clamp(newLeft, 0, maxW - w);
-      newTop = clamp(newTop, 0, maxH - h);
-      el.style.left = newLeft + 'px';
-      el.style.top = newTop + 'px';
+      whenUserClicks();
     }
-
-    function onPointerUp() {
-      if (!isDragging) return;
-      isDragging = false;
-      el.classList.remove('hero-bet-dragging');
-    }
-
-    el.addEventListener('mousedown', onPointerDown);
-    el.addEventListener('touchstart', onPointerDown, { passive: false });
-
-    document.addEventListener('mousemove', onPointerMove);
-    document.addEventListener('mouseup', onPointerUp);
-    document.addEventListener('touchmove', onPointerMove, { passive: false });
-    document.addEventListener('touchend', onPointerUp);
   });
 }
 
-/**
- * Лотерейная стирка: слой стирается только при перетаскивании фишки по билету.
- */
+function initHeroBetDrag() {
+  var container = document.querySelector('.hero');
+  var bets = document.querySelectorAll('.hero .hero-bet');
+  if (container === null || bets.length === 0) return;
+
+  for (var i = 0; i < bets.length; i++) {
+    (function (el) {
+      var isDragging = false;
+      var startX = 0;
+      var startY = 0;
+      var startLeft = 0;
+      var startTop = 0;
+
+      function clamp(value, min, max) {
+        if (value < min) return min;
+        if (value > max) return max;
+        return value;
+      }
+
+      function onPointerDown(e) {
+        if (e.button !== 0 && e.type === 'mousedown') return;
+        e.preventDefault();
+        isDragging = true;
+        var rect = el.getBoundingClientRect();
+        var containerRect = container.getBoundingClientRect();
+        startX = e.touches ? e.touches[0].clientX : e.clientX;
+        startY = e.touches ? e.touches[0].clientY : e.clientY;
+        startLeft = rect.left - containerRect.left + container.scrollLeft;
+        startTop = rect.top - containerRect.top + container.scrollTop;
+        el.classList.add('hero-bet-dragging');
+      }
+
+      function onPointerMove(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        var clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        var containerRect = container.getBoundingClientRect();
+        var dx = clientX - startX;
+        var dy = clientY - startY;
+        var newLeft = startLeft + dx;
+        var newTop = startTop + dy;
+        var w = el.offsetWidth;
+        var h = el.offsetHeight;
+        var maxW = containerRect.width;
+        var maxH = containerRect.height;
+        newLeft = clamp(newLeft, 0, maxW - w);
+        newTop = clamp(newTop, 0, maxH - h);
+        el.style.left = newLeft + 'px';
+        el.style.top = newTop + 'px';
+      }
+
+      function onPointerUp() {
+        if (!isDragging) return;
+        isDragging = false;
+        el.classList.remove('hero-bet-dragging');
+      }
+
+      el.addEventListener('mousedown', onPointerDown);
+      el.addEventListener('touchstart', onPointerDown, { passive: false });
+      document.addEventListener('mousemove', onPointerMove);
+      document.addEventListener('mouseup', onPointerUp);
+      document.addEventListener('touchmove', onPointerMove, { passive: false });
+      document.addEventListener('touchend', onPointerUp);
+    })(bets[i]);
+  }
+}
+
 function initScratchCard() {
-  const section = document.querySelector('.section-prediction');
-  const wrap = document.querySelector('.prediction-scratch-wrap');
-  const canvas = document.querySelector('.prediction-scratch-canvas');
-  const chip = document.querySelector('.prediction-chip');
-  if (!section || !wrap || !canvas || !chip) return;
+  var section = document.querySelector('.section-prediction');
+  var wrap = document.querySelector('.prediction-scratch-wrap');
+  var canvas = document.querySelector('.prediction-scratch-canvas');
+  var chip = document.querySelector('.prediction-chip');
+  if (section === null || wrap === null || canvas === null || chip === null) return;
 
-  const ctx = canvas.getContext('2d', { alpha: true });
-  if (!ctx) return;
+  var ctx = canvas.getContext('2d', { alpha: true });
+  if (ctx === null) return;
 
-  const width = canvas.width;
-  const height = canvas.height;
-  const radius = 28;
+  var width = canvas.width;
+  var height = canvas.height;
+  var radius = 28;
 
-  const scratchBg = new Image();
+  var scratchBg = new Image();
 
   function drawScratchLayer() {
-    if (scratchBg.complete && scratchBg.naturalWidth) {
+    if (scratchBg.complete && scratchBg.naturalWidth > 0) {
       ctx.drawImage(scratchBg, 0, 0, width, height);
     } else {
       ctx.fillStyle = '#1a1a1a';
@@ -116,19 +160,20 @@ function initScratchCard() {
     ctx.globalCompositeOperation = 'source-over';
   }
 
-  const scratchStep = Math.max(4, radius / 2);
+  var scratchStep = Math.max(4, radius / 2);
+
   function scratchLine(x0, y0, x1, y1) {
-    const dx = x1 - x0;
-    const dy = y1 - y0;
-    const dist = Math.hypot(dx, dy);
+    var dx = x1 - x0;
+    var dy = y1 - y0;
+    var dist = Math.sqrt(dx * dx + dy * dy);
     if (dist < scratchStep) {
       scratch(x1, y1);
       return;
     }
-    const steps = Math.ceil(dist / scratchStep);
-    const inv = 1 / steps;
-    for (let i = 1; i <= steps; i++) {
-      const t = i * inv;
+    var steps = Math.ceil(dist / scratchStep);
+    var inv = 1 / steps;
+    for (var i = 1; i <= steps; i++) {
+      var t = i * inv;
       scratch(x0 + dx * t, y0 + dy * t);
     }
   }
@@ -232,19 +277,24 @@ function initScratchCard() {
 }
 
 function initSuitsStopwatch() {
-  const el = document.querySelector('.suits-stopwatch-value');
-  if (!el) return;
-  const startedAt = Date.now();
+  var el = document.querySelector('.suits-stopwatch-value');
+  if (el === null) return;
+
+  var startedAt = Date.now();
+
   function pad(n) {
-    return String(n).padStart(2, '0');
+    if (n < 10) return '0' + n;
+    return String(n);
   }
+
   function tick() {
-    const totalSeconds = Math.floor((Date.now() - startedAt) / 1000);
-    const h = Math.floor(totalSeconds / 3600);
-    const m = Math.floor((totalSeconds % 3600) / 60);
-    const s = totalSeconds % 60;
-    el.textContent = `${pad(h)}:${pad(m)}:${pad(s)}`;
+    var totalSeconds = Math.floor((Date.now() - startedAt) / 1000);
+    var h = Math.floor(totalSeconds / 3600);
+    var m = Math.floor((totalSeconds % 3600) / 60);
+    var s = totalSeconds % 60;
+    el.textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
   }
+
   tick();
   setInterval(tick, 1000);
 }
