@@ -1,4 +1,3 @@
-/* Базовые стили */
 *,
 *::before,
 *::after {
@@ -13,7 +12,6 @@ body {
   min-width: 320px;
 }
 
-/* Общий контейнер экранов */
 .screen {
   position: relative;
   width: 100%;
@@ -23,7 +21,6 @@ body {
   background: #000000;
 }
 
-/* Hero — обёртка заголовка */
 .hero .hero-title-wrap {
   position: absolute;
   width: 702px;
@@ -110,7 +107,6 @@ body {
   transform: rotate(-40.48deg);
 }
 
-/* Бегущая строка */
 .marquee {
   position: relative;
   width: 100%;
@@ -190,7 +186,17 @@ body {
   overflow: visible;
 }
 
-/* Надпись над секундомером */
+.suits-stopwatch {
+  position: absolute;
+  left: 50%;
+  top: 340px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 320px;
+}
+
 .suits-caption {
   position: absolute;
   width: 629px;
@@ -208,17 +214,6 @@ body {
   color: #ffffff;
 }
 
-/* Большой секундомер по центру */
-.suits-stopwatch {
-  position: absolute;
-  left: 50%;
-  top: 340px;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 320px;
-}
 
 .suits-stopwatch-value {
   font-family: 'Cormorant Garamond', serif;
@@ -230,13 +225,12 @@ body {
   text-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
 }
 
-/* Масти карт — «бассейн» с частицами (overflow: visible — масти видны вне контейнера) */
 .suits {
   position: absolute;
   width: 2238.27px;
   height: 248.31px;
   right: -159.14px;
-  top: 748.69px;
+  bottom: 0;
   overflow: visible;
 }
 
@@ -252,17 +246,6 @@ body {
   user-select: none;
 }
 
-.section-footer {
-  position: absolute;
-  width: 100%;
-  max-width: 1920px;
-  height: 83px;
-  left: 0;
-  bottom: 0;
-  background: #000000;
-}
-
-/* Подвал страницы: логотип ВШЭ + автор */
 .page-footer {
   display: flex;
   width: 100%;
@@ -337,7 +320,6 @@ body {
   }
 }
 
-/* Декоративная секция */
 .screen.section-decor {
   position: relative;
   width: 100%;
@@ -361,7 +343,6 @@ body {
   position: absolute;
   width: 151.52px;
   height: 215.55px;
-  /* По центру между руками: центр промежутка 50% + 70.045px */
   left: calc(50% - 151.52px / 2 + 70.045px - 75.76px);
   top: 143px;
   object-fit: contain;
@@ -476,7 +457,6 @@ body {
   transform: rotate(99deg);
 }
 
-/* Стили для букв (если появятся в разметке) */
 .decor-title-group {
   position: absolute;
   width: 593.7px;
@@ -548,7 +528,6 @@ body {
   position: absolute;
   width: 44px;
   height: 40px;
-  /* Центр совпадает с центром decor-frame-14 */
   left: calc(50% - 44px / 2 + 176.9px);
   top: calc(50% - 40px / 2 + 196.12px);
   background: url(../img/table/whish-dollar.svg) no-repeat center / contain;
@@ -559,14 +538,12 @@ body {
   position: absolute;
   width: 40px;
   height: 40px;
-  /* Центр совпадает с центром decor-frame-15 */
   left: calc(50% - 40px / 2 - 160.08px);
   top: calc(50% - 40px / 2 + 196.12px);
   background: url(../img/table/whish-heart.svg) no-repeat center / contain;
   transform: rotate(12deg);
 }
 
-/* Секция «Предсказание» */
 .screen.section-prediction {
   position: relative;
   width: 100%;
@@ -586,7 +563,6 @@ body {
   background: url(../img/whishes-logo.svg) no-repeat center / cover;
 }
 
-/* Обёртка «лотерейной» карточки: контент + слой для стирки */
 .prediction-scratch-wrap {
   position: absolute;
   width: 824px;
@@ -615,7 +591,6 @@ body {
   padding-top: 20px;
 }
 
-/* Слой «стирки» — рисуется в JS, стирается курсором при нажатии */
 .prediction-scratch-canvas {
   position: absolute;
   left: 0;
@@ -737,6 +712,49 @@ body {
   transform: matrix(-1, 0, 0, 1, 0, 0);
 }
 
+.prediction-chip {
+  position: absolute;
+  width: 117.63px;
+  height: 111.49px;
+  left: calc(50% + 412px + 28px);
+  top: calc(50% - 111.49px / 2);
+  background: url(../img/1/bet.png) no-repeat center / contain;
+  transform: rotate(-25deg);
+  cursor: grab;
+  touch-action: none;
+  z-index: 10;
+}
+
+.prediction-chip:active,
+.prediction-chip.prediction-chip-dragging {
+  cursor: grabbing;
+}
+
+.prediction-scratch-hint {
+  position: absolute;
+  left: calc(50% + 412px + 28px + 117.63px / 2 - 140px / 2);
+  top: calc(50% + 70px);
+  margin: 0;
+  width: 140px;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.3;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: lowercase;
+  pointer-events: none;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.section-prediction:has(.prediction-chip.prediction-chip-dragging) .prediction-scratch-hint,
+.section-prediction.section-prediction--hint-hidden .prediction-scratch-hint {
+  opacity: 0;
+  visibility: hidden;
+}
 * {
   border: 1px solid red;
 }

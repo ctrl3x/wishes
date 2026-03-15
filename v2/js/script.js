@@ -7,9 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initSuitsPool();
 });
 
-/**
- * Перетаскивание hero-bet в рамках первого экрана (hero).
- */
 function initHeroBetDrag() {
   const container = document.querySelector('.hero');
   const bets = document.querySelectorAll('.hero .hero-bet');
@@ -80,20 +77,22 @@ function initHeroBetDrag() {
 }
 
 /**
- * Лотерейная стирка: верхний слой карточки предсказания стирается курсором при нажатии и движении.
+ * Лотерейная стирка: слой стирается только при перетаскивании фишки по билету.
  */
 function initScratchCard() {
+  const section = document.querySelector('.section-prediction');
   const wrap = document.querySelector('.prediction-scratch-wrap');
   const canvas = document.querySelector('.prediction-scratch-canvas');
-  if (!wrap || !canvas) return;
+  const chip = document.querySelector('.prediction-chip');
+  if (!section || !wrap || !canvas || !chip) return;
 
   const ctx = canvas.getContext('2d', { alpha: true });
   if (!ctx) return;
 
   const width = canvas.width;
   const height = canvas.height;
+  const radius = 28;
 
-  /** Рисует верхний слой «стирки» (как на лотерейном билете). */
   function drawScratchLayer() {
     const gradient = ctx.createLinearGradient(0, 0, width, height);
     gradient.addColorStop(0, '#c0c0c0');
@@ -104,7 +103,6 @@ function initScratchCard() {
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, width, height);
 
-    // Лёгкая текстура «металлика»
     ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
     for (let i = 0; i < 80; i++) {
       const x = Math.random() * width;
@@ -115,33 +113,14 @@ function initScratchCard() {
       ctx.fill();
     }
 
-    // Подсказка
     ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
     ctx.font = '18px Cormorant Garamond, serif';
     ctx.textAlign = 'center';
-    ctx.fillText('Потрите, чтобы увидеть предсказание', width / 2, height - 30);
-  }
-
-  let isDrawing = false;
-  const radius = 28;
-
-  function getCoords(e) {
-    const rect = canvas.getBoundingClientRect();
-    const scaleX = width / rect.width;
-    const scaleY = height / rect.height;
-    if (e.touches) {
-      return {
-        x: (e.touches[0].clientX - rect.left) * scaleX,
-        y: (e.touches[0].clientY - rect.top) * scaleY
-      };
-    }
-    return {
-      x: (e.clientX - rect.left) * scaleX,
-      y: (e.clientY - rect.top) * scaleY
-    };
+    ctx.fillText('Потрите фишкой, чтобы увидеть предсказание', width / 2, height - 30);
   }
 
   function scratch(x, y) {
+    if (x < -radius || x > width + radius || y < -radius || y > height + radius) return;
     ctx.globalCompositeOperation = 'destination-out';
     ctx.beginPath();
     ctx.arc(x, y, radius, 0, Math.PI * 2);
@@ -149,40 +128,121 @@ function initScratchCard() {
     ctx.globalCompositeOperation = 'source-over';
   }
 
-  function startDraw(e) {
-    e.preventDefault();
-    isDrawing = true;
-    const { x, y } = getCoords(e);
-    scratch(x, y);
+  const scratchStep = Math.max(4, radius / 2);
+  function scratchLine(x0, y0, x1, y1) {
+    const dx = x1 - x0;
+    const dy = y1 - y0;
+    const dist = Math.hypot(dx, dy);
+    if (dist < scratchStep) {
+      scratch(x1, y1);
+      return;
+    }
+    const steps = Math.ceil(dist / scratchStep);
+    const inv = 1 / steps;
+    for (let i = 1; i <= steps; i++) {
+      const t = i * inv;
+      scratch(x0 + dx * t, y0 + dy * t);
+    }
   }
 
-  function moveDraw(e) {
-    e.preventDefault();
-    if (!isDrawing) return;
-    const { x, y } = getCoords(e);
-    scratch(x, y);
+  function chipCenterToCanvas() {
+    const chipRect = chip.getBoundingClientRect();
+    const canvasRect = canvas.getBoundingClientRect();
+    const centerX = chipRect.left + chipRect.width / 2;
+    const centerY = chipRect.top + chipRect.height / 2;
+    const scaleX = width / canvasRect.width;
+    const scaleY = height / canvasRect.height;
+    const x = (centerX - canvasRect.left) * scaleX;
+    const y = (centerY - canvasRect.top) * scaleY;
+    return { x, y, over: centerX >= canvasRect.left && centerX <= canvasRect.right && centerY >= canvasRect.top && centerY <= canvasRect.bottom };
   }
 
-  function endDraw(e) {
-    e.preventDefault();
-    isDrawing = false;
+  let isDragging = false;
+  let startX = 0;
+  let startY = 0;
+  let startLeft = 0;
+  let startTop = 0;
+  let lastScratchX = null;
+  let lastScratchY = null;
+
+  function getChipPosition() {
+    const l = parseFloat(chip.style.left);
+    const t = parseFloat(chip.style.top);
+    return { left: isNaN(l) ? null : l, top: isNaN(t) ? null : t };
   }
 
-  canvas.addEventListener('mousedown', startDraw);
-  canvas.addEventListener('mousemove', moveDraw);
-  canvas.addEventListener('mouseup', endDraw);
-  canvas.addEventListener('mouseleave', endDraw);
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+  }
 
-  canvas.addEventListener('touchstart', startDraw, { passive: false });
-  canvas.addEventListener('touchmove', moveDraw, { passive: false });
-  canvas.addEventListener('touchend', endDraw, { passive: false });
+  function onChipPointerDown(e) {
+    if (e.button !== 0 && e.type === 'mousedown') return;
+    e.preventDefault();
+    isDragging = true;
+    lastScratchX = null;
+    lastScratchY = null;
+    section.classList.add('section-prediction--hint-hidden');
+    chip.classList.add('prediction-chip-dragging');
+    const chipRect = chip.getBoundingClientRect();
+    const sectionRect = section.getBoundingClientRect();
+    startX = e.touches ? e.touches[0].clientX : e.clientX;
+    startY = e.touches ? e.touches[0].clientY : e.clientY;
+    startLeft = chipRect.left - sectionRect.left + section.scrollLeft;
+    startTop = chipRect.top - sectionRect.top + section.scrollTop;
+  }
 
+  function onChipPointerMove(e) {
+    if (!isDragging) return;
+    e.preventDefault();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    const sectionRect = section.getBoundingClientRect();
+    const dx = clientX - startX;
+    const dy = clientY - startY;
+    let newLeft = clamp(startLeft + dx, 0, sectionRect.width - chip.offsetWidth);
+    let newTop = clamp(startTop + dy, 0, sectionRect.height - chip.offsetHeight);
+    chip.style.left = newLeft + 'px';
+    chip.style.top = newTop + 'px';
+    startLeft = newLeft;
+    startTop = newTop;
+    startX = clientX;
+    startY = clientY;
+
+    const { x, y, over } = chipCenterToCanvas();
+    if (over) {
+      if (lastScratchX != null && lastScratchY != null) {
+        scratchLine(lastScratchX, lastScratchY, x, y);
+      } else {
+        scratch(x, y);
+      }
+      lastScratchX = x;
+      lastScratchY = y;
+    } else {
+      lastScratchX = null;
+      lastScratchY = null;
+    }
+  }
+
+  function onChipPointerUp(e) {
+    if (!isDragging) return;
+    e.preventDefault();
+    isDragging = false;
+    lastScratchX = null;
+    lastScratchY = null;
+    chip.classList.remove('prediction-chip-dragging');
+  }
+
+  chip.addEventListener('mousedown', onChipPointerDown);
+  chip.addEventListener('touchstart', onChipPointerDown, { passive: false });
+  document.addEventListener('mousemove', onChipPointerMove);
+  document.addEventListener('mouseup', onChipPointerUp);
+  document.addEventListener('touchmove', onChipPointerMove, { passive: false });
+  document.addEventListener('touchend', onChipPointerUp, { passive: false });
+
+  canvas.style.pointerEvents = 'none';
   drawScratchLayer();
 }
 
-/**
- * Секундомер в секции с мастями: запускается при загрузке, формат ЧЧ:ММ:СС.
- */
 function initSuitsStopwatch() {
   const el = document.querySelector('.suits-stopwatch-value');
   if (!el) return;
@@ -201,9 +261,6 @@ function initSuitsStopwatch() {
   setInterval(tick, 1000);
 }
 
-/**
- * «Бассейн» мастей: частицы ♠ ♥ ♦ ♣ с физикой, отталкиваются от курсора.
- */
 function initSuitsPool() {
   const pool = document.getElementById('suits-pool');
   const section = document.querySelector('.section-suits');
@@ -211,7 +268,9 @@ function initSuitsPool() {
 
   const SUITS = ['♠', '♥', '♦', '♣'];
   const RED_SUITS = ['♥', '♦'];
-  const PARTICLE_COUNT = 800;
+  const PARTICLE_COUNT_MAX = 800;
+  const PARTICLE_COUNT_MIN = 80;
+  const REFERENCE_WIDTH = 1920;
   const DAMPING = 0.995;
   const REPULSION_RADIUS = 110;
   const REPULSION_STRENGTH = 0.58;
@@ -224,19 +283,28 @@ function initSuitsPool() {
   let poolRect = { left: 0, top: 0, width: 0, height: 0 };
   let wallLeftX = 0;
   let wallRightX = 0;
+  let wallTopY = 0;
+  let wallBottomY = 0;
   let mouseX = null;
   let mouseY = null;
 
   function updateRect() {
     const r = pool.getBoundingClientRect();
     poolRect = { left: r.left, top: r.top, width: r.width, height: r.height };
+    const w = r.width;
+    const h = r.height;
+    const R = PARTICLE_RADIUS;
     if (section) {
       const sr = section.getBoundingClientRect();
       wallLeftX = sr.left - r.left;
       wallRightX = sr.right - r.left;
+      wallTopY = sr.top - r.top;
+      wallBottomY = sr.bottom - r.top;
     } else {
-      wallLeftX = PARTICLE_RADIUS;
-      wallRightX = r.width - PARTICLE_RADIUS;
+      wallLeftX = R;
+      wallRightX = w - R;
+      wallTopY = R;
+      wallBottomY = h - R;
     }
   }
 
@@ -249,19 +317,32 @@ function initSuitsPool() {
     span.textContent = symbol;
     pool.appendChild(span);
 
-    const x = wallLeftX + PARTICLE_RADIUS + Math.random() * (wallRightX - wallLeftX - PARTICLE_RADIUS * 2);
-    const y = PARTICLE_RADIUS + Math.random() * (poolRect.height - PARTICLE_RADIUS * 2);
+    const w = poolRect.width;
+    const h = poolRect.height;
+    const R = PARTICLE_RADIUS;
+    const xMin = Math.max(R, wallLeftX + R);
+    const xMax = Math.min(w - R, wallRightX - R);
+    const yMin = Math.max(R, wallTopY + R);
+    const yMax = Math.min(h - R, wallBottomY - R);
+    const x = xMin + Math.random() * Math.max(0, xMax - xMin) || R;
+    const y = yMin + Math.random() * Math.max(0, yMax - yMin) || R;
     const vx = (Math.random() - 0.5) * 2.8;
     const vy = (Math.random() - 0.5) * 2.8;
 
     return { el: span, x, y, vx, vy };
   }
 
+  function getParticleCount() {
+    const w = typeof window !== 'undefined' ? window.innerWidth : REFERENCE_WIDTH;
+    return Math.min(PARTICLE_COUNT_MAX, Math.max(PARTICLE_COUNT_MIN, Math.round((w / REFERENCE_WIDTH) * PARTICLE_COUNT_MAX)));
+  }
+
   function initParticles() {
     updateRect();
+    const count = getParticleCount();
     pool.innerHTML = '';
     particles.length = 0;
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
+    for (let i = 0; i < count; i++) {
       particles.push(createParticle());
     }
   }
@@ -317,8 +398,12 @@ function initSuitsPool() {
         p.x = wallRightX - PARTICLE_RADIUS;
         p.vx *= -WALL_BOUNCE;
       }
-      if (p.y > h - PARTICLE_RADIUS) {
-        p.y = h - PARTICLE_RADIUS;
+      if (p.y < wallTopY) {
+        p.y = wallTopY;
+        p.vy *= -WALL_BOUNCE;
+      }
+      if (p.y > wallBottomY - PARTICLE_RADIUS) {
+        p.y = wallBottomY - PARTICLE_RADIUS;
         p.vy *= -WALL_BOUNCE;
       }
     }
@@ -360,8 +445,12 @@ function initSuitsPool() {
         p.x = wallRightX - PARTICLE_RADIUS;
         p.vx *= -WALL_BOUNCE;
       }
-      if (p.y > h - PARTICLE_RADIUS) {
-        p.y = h - PARTICLE_RADIUS;
+      if (p.y < wallTopY) {
+        p.y = wallTopY;
+        p.vy *= -WALL_BOUNCE;
+      }
+      if (p.y > wallBottomY - PARTICLE_RADIUS) {
+        p.y = wallBottomY - PARTICLE_RADIUS;
         p.vy *= -WALL_BOUNCE;
       }
     }
@@ -382,8 +471,11 @@ function initSuitsPool() {
     mouseY = e.clientY - poolRect.top;
   }
 
+  let resizeTimeout = null;
   window.addEventListener('resize', () => {
     updateRect();
+    if (resizeTimeout) clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(initParticles, 200);
   });
 
   document.addEventListener('mousemove', onMouseMove);
