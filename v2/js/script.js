@@ -93,31 +93,19 @@ function initScratchCard() {
   const height = canvas.height;
   const radius = 28;
 
+  const scratchBg = new Image();
+
   function drawScratchLayer() {
-    const gradient = ctx.createLinearGradient(0, 0, width, height);
-    gradient.addColorStop(0, '#c0c0c0');
-    gradient.addColorStop(0.25, '#e8e8e8');
-    gradient.addColorStop(0.5, '#a0a0a0');
-    gradient.addColorStop(0.75, '#d0d0d0');
-    gradient.addColorStop(1, '#b0b0b0');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, width, height);
-
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
-    for (let i = 0; i < 80; i++) {
-      const x = Math.random() * width;
-      const y = Math.random() * height;
-      const r = 1 + Math.random() * 2;
-      ctx.beginPath();
-      ctx.arc(x, y, r, 0, Math.PI * 2);
-      ctx.fill();
+    if (scratchBg.complete && scratchBg.naturalWidth) {
+      ctx.drawImage(scratchBg, 0, 0, width, height);
+    } else {
+      ctx.fillStyle = '#1a1a1a';
+      ctx.fillRect(0, 0, width, height);
     }
-
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
-    ctx.font = '18px Cormorant Garamond, serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('Потрите фишкой, чтобы увидеть предсказание', width / 2, height - 30);
   }
+
+  scratchBg.onload = drawScratchLayer;
+  scratchBg.src = 'img/scratch-bg.png';
 
   function scratch(x, y) {
     if (x < -radius || x > width + radius || y < -radius || y > height + radius) return;
