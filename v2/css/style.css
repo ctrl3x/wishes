@@ -428,6 +428,38 @@ body {
   transform: rotate(157.34deg);
 }
 
+.blackjack-chip {
+  position: absolute;
+  width: 88px;
+  height: 88px;
+  background: url(../img/1/bet.png) no-repeat center / contain;
+  cursor: grab;
+  touch-action: none;
+}
+
+.blackjack-chip:active,
+.blackjack-chip.blackjack-chip-dragging {
+  cursor: grabbing;
+}
+
+.blackjack-chip-3 {
+  left: 236px;
+  top: 760px;
+  transform: rotate(-26deg);
+}
+
+.blackjack-chip-4 {
+  left: 694px;
+  top: 808px;
+  transform: rotate(14deg);
+}
+
+.blackjack-chip-5 {
+  left: 1178px;
+  top: 742px;
+  transform: rotate(33deg);
+}
+
 .blackjack-stripe {
   position: absolute;
   width: 180px;
@@ -511,6 +543,69 @@ body {
   height: 100%;
   object-fit: cover;
   pointer-events: none;
+}
+
+#screen-second .screen-spacer-hint {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(1120px, 92%);
+  margin: 0;
+  transform: translate(-50%, -50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 1.08;
+  text-align: center;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow: 0 0 30px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+#screen-second.screen-spacer--hint-hidden .screen-spacer-hint {
+  opacity: 0;
+  visibility: hidden;
+}
+
+#screen-second .screen-spacer-final-text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(900px, 90%);
+  margin: 0;
+  transform: translate(-50%, -50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 1.25;
+  text-align: center;
+  color: #000000;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#screen-second.screen-spacer--finale {
+  background: #ffffff;
+}
+
+#screen-second.screen-spacer--finale .wish-cloud,
+#screen-second.screen-spacer--finale .screen-spacer-hint {
+  opacity: 0;
+  visibility: hidden;
+}
+
+#screen-second.screen-spacer--finale.screen-spacer--finale-text-visible .screen-spacer-final-text {
+  opacity: 1;
+  visibility: visible;
+}
+
+#screen-second.screen-spacer--inverted-thorns .screen-spacer-img {
+  filter: invert(1);
 }
 
 .blackjack-card-slot-1 {

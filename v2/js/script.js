@@ -2,6 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', function () {
   initHeroBetDrag();
+  initBlackjackChipDrag();
   initScratchCard();
   initSuitsStopwatch();
   initSuitsPool();
@@ -14,31 +15,100 @@ function initDecorFrameSecond() {
 
   var img = screen.querySelector('.screen-spacer-img');
   if (img === null) return;
+  var hint = screen.querySelector('.screen-spacer-hint');
 
-  var picture1 = 'img/frame/thorns1.svg';
-  var picture2 = 'img/frame/thorns2.svg';
-  var picture3 = 'img/frame/thorns3.svg';
+  var clicks = 0;
+  var thorns = [
+    'img/frame/thorns1.svg',
+    'img/frame/thorns2.svg',
+    'img/frame/thorns3.svg'
+  ];
 
-  var whichPicture = 1;
+  function showStartLook() {
+    screen.classList.remove('screen-spacer--hint-hidden');
+    screen.classList.remove('screen-spacer--finale');
+    screen.classList.remove('screen-spacer--inverted-thorns');
+    screen.classList.remove('screen-spacer--finale-text-visible');
+    img.hidden = true;
+    img.src = '';
+    img.alt = '';
+  }
+
+  function showWhiteTextScreen() {
+    screen.classList.add('screen-spacer--hint-hidden');
+    screen.classList.add('screen-spacer--finale');
+    screen.classList.remove('screen-spacer--inverted-thorns');
+    screen.classList.add('screen-spacer--finale-text-visible');
+    img.hidden = true;
+  }
+
+  function showThorn(number, blackMode) {
+    screen.classList.add('screen-spacer--hint-hidden');
+    screen.classList.remove('screen-spacer--finale-text-visible');
+
+    if (blackMode) {
+      screen.classList.add('screen-spacer--finale');
+      screen.classList.add('screen-spacer--inverted-thorns');
+    } else {
+      screen.classList.remove('screen-spacer--finale');
+      screen.classList.remove('screen-spacer--inverted-thorns');
+    }
+
+    img.src = thorns[number - 1];
+    img.alt = 'Шипы терновника ' + number;
+    img.hidden = false;
+  }
 
   function whenUserClicks() {
     console.log('Клик по второму экрану (screen-spacer)');
 
-    if (whichPicture === 1) {
-      img.src = picture1;
-      img.alt = 'Шипы терновника 1';
-      whichPicture = 2;
-    } else if (whichPicture === 2) {
-      img.src = picture2;
-      img.alt = 'Шипы терновника 2';
-      whichPicture = 3;
-    } else {
-      img.src = picture3;
-      img.alt = 'Шипы терновника 3';
-      whichPicture = 1;
+    clicks = clicks + 1;
+
+    // 8-й клик = возврат в начало цикла
+    if (clicks === 8) {
+      clicks = 0;
+      showStartLook();
+      return;
     }
 
-    img.hidden = false;
+    // 1-2-3 обычный тёрн
+    if (clicks === 1) {
+      showThorn(1, false);
+      return;
+    }
+    if (clicks === 2) {
+      showThorn(2, false);
+      return;
+    }
+    if (clicks === 3) {
+      showThorn(3, false);
+      return;
+    }
+
+    // 4 белый экран с фразой
+    if (clicks === 4) {
+      showWhiteTextScreen();
+      return;
+    }
+
+    // 5-6-7 чёрный тёрн на белом фоне
+    if (clicks === 5) {
+      showThorn(1, true);
+      return;
+    }
+    if (clicks === 6) {
+      showThorn(2, true);
+      return;
+    }
+    if (clicks === 7) {
+      showThorn(3, true);
+      return;
+    }
+  }
+
+  // если текстовый блок подсказки вдруг убрали из html — просто не ломаемся
+  if (hint === null) {
+    showStartLook();
   }
 
   screen.addEventListener('click', whenUserClicks);
@@ -120,6 +190,74 @@ function initHeroBetDrag() {
       document.addEventListener('touchmove', onPointerMove, { passive: false });
       document.addEventListener('touchend', onPointerUp);
     })(bets[i]);
+  }
+}
+
+function initBlackjackChipDrag() {
+  var container = document.querySelector('.section-blackjack');
+  var chips = document.querySelectorAll('.section-blackjack .blackjack-chip');
+  if (container === null || chips.length === 0) return;
+
+  for (var i = 0; i < chips.length; i++) {
+    (function (el) {
+      var isDragging = false;
+      var startX = 0;
+      var startY = 0;
+      var startLeft = 0;
+      var startTop = 0;
+
+      function clamp(value, min, max) {
+        if (value < min) return min;
+        if (value > max) return max;
+        return value;
+      }
+
+      function onPointerDown(e) {
+        if (e.button !== 0 && e.type === 'mousedown') return;
+        e.preventDefault();
+        isDragging = true;
+        var rect = el.getBoundingClientRect();
+        var containerRect = container.getBoundingClientRect();
+        startX = e.touches ? e.touches[0].clientX : e.clientX;
+        startY = e.touches ? e.touches[0].clientY : e.clientY;
+        startLeft = rect.left - containerRect.left + container.scrollLeft;
+        startTop = rect.top - containerRect.top + container.scrollTop;
+        el.classList.add('blackjack-chip-dragging');
+      }
+
+      function onPointerMove(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        var clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        var containerRect = container.getBoundingClientRect();
+        var dx = clientX - startX;
+        var dy = clientY - startY;
+        var newLeft = startLeft + dx;
+        var newTop = startTop + dy;
+        var w = el.offsetWidth;
+        var h = el.offsetHeight;
+        var maxW = containerRect.width;
+        var maxH = containerRect.height;
+        newLeft = clamp(newLeft, 0, maxW - w);
+        newTop = clamp(newTop, 0, maxH - h);
+        el.style.left = newLeft + 'px';
+        el.style.top = newTop + 'px';
+      }
+
+      function onPointerUp() {
+        if (!isDragging) return;
+        isDragging = false;
+        el.classList.remove('blackjack-chip-dragging');
+      }
+
+      el.addEventListener('mousedown', onPointerDown);
+      el.addEventListener('touchstart', onPointerDown, { passive: false });
+      document.addEventListener('mousemove', onPointerMove);
+      document.addEventListener('mouseup', onPointerUp);
+      document.addEventListener('touchmove', onPointerMove, { passive: false });
+      document.addEventListener('touchend', onPointerUp);
+    })(chips[i]);
   }
 }
 
