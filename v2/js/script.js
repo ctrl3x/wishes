@@ -3,6 +3,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   initHeroBetDrag();
   initBlackjackChipDrag();
+  initBlackjackDealerCards();
   initScratchCard();
   initSuitsStopwatch();
   initSuitsPool();
@@ -259,6 +260,42 @@ function initBlackjackChipDrag() {
       document.addEventListener('touchend', onPointerUp);
     })(chips[i]);
   }
+}
+
+function initBlackjackDealerCards() {
+  var section = document.querySelector('.section-blackjack');
+  if (section === null) return;
+
+  var dealerCard = section.querySelector('.blackjack-card');
+  if (dealerCard === null) return;
+
+  var slots = section.querySelectorAll('.blackjack-card-slot');
+  if (slots.length === 0) return;
+
+  var nextCardIndex = 1;
+  var maxCards = Math.min(slots.length, 6);
+
+  function putCardToSlot(slot, cardIndex) {
+    if (slot === null) return;
+
+    var card = slot.querySelector('.blackjack-slot-card');
+    if (card === null) {
+      card = document.createElement('img');
+      card.className = 'blackjack-slot-card';
+      card.alt = '';
+      card.setAttribute('role', 'presentation');
+      slot.appendChild(card);
+    }
+
+    card.src = 'img/table/card_' + cardIndex + '.svg';
+  }
+
+  dealerCard.addEventListener('click', function () {
+    if (nextCardIndex > maxCards) return;
+
+    putCardToSlot(slots[nextCardIndex - 1], nextCardIndex);
+    nextCardIndex = nextCardIndex + 1;
+  });
 }
 
 function initScratchCard() {
