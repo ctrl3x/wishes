@@ -1,58 +1,68 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wishes v2</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Cormorant+Infant:wght@600&family=Montserrat:wght@400&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
   <section class="screen hero">
-    <div class="hero-title-wrap"></div>
-    <span class="hero-title">ЖЕЛАЙ</span>
-    <div class="hero-snake"></div>
-    <div class="hero-bet hero-bet-1"></div>
-    <div class="hero-bet hero-bet-2"></div>
-    <div class="hero-bet hero-bet-3"></div>
-    <div class="hero-bet hero-bet-4"></div>
-    <div class="hero-bet hero-bet-5"></div>
+    <div class="hero-rotator">
+      <div class="hero-rotator-inner">
+        <div class="hero-title-wrap"></div>
+        <span class="hero-title">ЖЕЛАЙ</span>
+        <div class="hero-snake"></div>
+        <div class="hero-bet hero-bet-1"></div>
+        <div class="hero-bet hero-bet-2"></div>
+        <div class="hero-bet hero-bet-3"></div>
+        <div class="hero-bet hero-bet-4"></div>
+        <div class="hero-bet hero-bet-5"></div>
+      </div>
+    </div>
   </section>
 
   <section class="screen screen-spacer" id="screen-second" role="button" tabindex="0" aria-label="Нажмите, чтобы сменить изображение">
-    <div class="wish-cloud" aria-hidden="true">
-      <span class="wish-word w1">Желай</span>
-      <span class="wish-word w2">Желай</span>
-      <span class="wish-word w3">Желай</span>
-      <span class="wish-word w4">Желай</span>
-      <span class="wish-word w5">Желай</span>
-      <span class="wish-word w6">Желай</span>
-      <span class="wish-word w7">Желай</span>
-      <span class="wish-word w8">Желай</span>
-      <span class="wish-word w9">Желай</span>
-      <span class="wish-word w10">Желай</span>
-      <span class="wish-word w11">Желай</span>
-      <span class="wish-word w12">Желай</span>
-      <span class="wish-word w13">Желай</span>
-      <span class="wish-word w14">Желай</span>
-      <span class="wish-word w15">Желай</span>
-      <span class="wish-word w16">Желай</span>
-      <span class="wish-word w17">Желай</span>
-      <span class="wish-word w18">Желай</span>
-      <span class="wish-word w19">Желай</span>
-      <span class="wish-word w20">Желай</span>
-      <span class="wish-word w21">Желай</span>
-      <span class="wish-word w22">Желай</span>
-      <span class="wish-word w23">Желай</span>
-      <span class="wish-word w24">Желай</span>
-      <span class="wish-word w25">Желай</span>
-      <span class="wish-word w26">Желай</span>
+    <div class="screen-spacer-rotator">
+      <div class="screen-spacer-rotator-inner">
+        <div class="wish-cloud" aria-hidden="true">
+          <span class="wish-word w1">Желай</span>
+          <span class="wish-word w2">Желай</span>
+          <span class="wish-word w3">Желай</span>
+          <span class="wish-word w4">Желай</span>
+          <span class="wish-word w5">Желай</span>
+          <span class="wish-word w6">Желай</span>
+          <span class="wish-word w7">Желай</span>
+          <span class="wish-word w8">Желай</span>
+          <span class="wish-word w9">Желай</span>
+          <span class="wish-word w10">Желай</span>
+          <span class="wish-word w11">Желай</span>
+          <span class="wish-word w12">Желай</span>
+          <span class="wish-word w13">Желай</span>
+          <span class="wish-word w14">Желай</span>
+          <span class="wish-word w15">Желай</span>
+          <span class="wish-word w16">Желай</span>
+          <span class="wish-word w17">Желай</span>
+          <span class="wish-word w18">Желай</span>
+          <span class="wish-word w19">Желай</span>
+          <span class="wish-word w20">Желай</span>
+          <span class="wish-word w21">Желай</span>
+          <span class="wish-word w22">Желай</span>
+          <span class="wish-word w23">Желай</span>
+          <span class="wish-word w24">Желай</span>
+          <span class="wish-word w25">Желай</span>
+          <span class="wish-word w26">Желай</span>
+        </div>
+        <p class="screen-spacer-hint">Кликни, чтобы прорастить желание — тёрн проверит твою решимость!</p>
+        <p class="screen-spacer-final-text">Азарт — это шум. Желание — это шёпот.<br>Приходи послушать своё.</p>
+        <img class="screen-spacer-img" src="" alt="" hidden>
+      </div>
     </div>
-    <p class="screen-spacer-hint">Кликни, чтобы прорастить желание — тёрн проверит твою решимость!</p>
-    <p class="screen-spacer-final-text">Азарт — это шум. Желание — это шёпот.<br>Приходи послушать своё.</p>
-    <img class="screen-spacer-img" src="" alt="" hidden>
   </section>
 
   <section class="marquee marquee-light marquee-line-2">
@@ -72,20 +82,6 @@
       <div class="marquee-item">
         <img src="img/arrows/get-it-arrow.svg" class="marquee-arrow" alt="" />
       </div>
-      <!-- дубликат для бесшовного цикла -->
-      <div class="marquee-item marquee-item-text marquee-item-text-1">
-        <div class="marquee-text">ПЕРЕТАЩИ ФИШКУ И СДЕЛАЙ СТАВКУ</div>
-      </div>
-      <div class="marquee-item">
-        <img src="img/arrows/get-it-arrow.svg" class="marquee-arrow" alt="" />
-      </div>
-      <div class="marquee-item marquee-item-text marquee-item-text-2">
-        <div class="marquee-text">НАЖМИ НА ЦЕНТРАЛЬНУЮ КАРТУ - НАЧНЕТСЯ РАЗДАЧА</div>
-      </div>
-      <div class="marquee-item">
-        <img src="img/arrows/get-it-arrow.svg" class="marquee-arrow" alt="" />
-      </div>
-      <!-- второй дубликат для ровного цикла -->
       <div class="marquee-item marquee-item-text marquee-item-text-1">
         <div class="marquee-text">ПЕРЕТАЩИ ФИШКУ И СДЕЛАЙ СТАВКУ</div>
       </div>
@@ -154,7 +150,18 @@
       </div>
       <div class="marquee-item marquee-item-text marquee-item-text-2">
         <div class="marquee-text">НАЖМИ НА ЦЕНТРАЛЬНУЮ КАРТУ - НАЧНЕТСЯ РАЗДАЧА</div>
-        </div>
+      </div>
+      <div class="marquee-item">
+        <img src="img/arrows/get-it-arrow.svg" class="marquee-arrow" alt="" />
+      </div>
+      <div class="marquee-item marquee-item-text marquee-item-text-1">
+        <div class="marquee-text">ПЕРЕТАЩИ ФИШКУ И СДЕЛАЙ СТАВКУ</div>
+      </div>
+      <div class="marquee-item">
+        <img src="img/arrows/get-it-arrow.svg" class="marquee-arrow" alt="" />
+      </div>
+      <div class="marquee-item marquee-item-text marquee-item-text-2">
+        <div class="marquee-text">НАЖМИ НА ЦЕНТРАЛЬНУЮ КАРТУ - НАЧНЕТСЯ РАЗДАЧА</div>
       </div>
     </div>
   </section>
@@ -177,36 +184,44 @@
   </section>
 
   <section class="screen section-prediction">
-    <div class="prediction-bg" aria-hidden="true"></div>
-    <div class="prediction-scratch-wrap" aria-label="Сотрите слой, чтобы увидеть предсказание">
-      <div class="prediction-card">
-        <div class="prediction-logo" role="img" aria-hidden="true"></div>
-        <p class="prediction-quote">Любовь — не лотерея.<br> Но иногда кажется, что да.</p>
-        <p class="prediction-caption">Предсказание</p>
+    <div class="prediction-rotator">
+      <div class="prediction-rotator-inner">
+        <div class="prediction-bg" aria-hidden="true"></div>
+        <div class="prediction-scratch-wrap" aria-label="Сотрите слой, чтобы увидеть предсказание">
+          <div class="prediction-card">
+            <div class="prediction-logo" role="img" aria-hidden="true"></div>
+            <p class="prediction-quote">Любовь — не лотерея.<br> Но иногда кажется, что да.</p>
+            <p class="prediction-caption">Предсказание</p>
+          </div>
+          <canvas class="prediction-scratch-canvas" width="824" height="430"></canvas>
+        </div>
+        <div class="prediction-dice prediction-dice-tl" aria-hidden="true"><img src="img/prediction/cube1.png" alt=""></div>
+        <div class="prediction-dice prediction-dice-br" aria-hidden="true"><img src="img/prediction/cube2.png" alt=""></div>
+        <div class="prediction-dice prediction-dice-left" aria-hidden="true"><img src="img/prediction/cube1.png" alt=""></div>
+        <div class="prediction-dice prediction-dice-tr" aria-hidden="true"><img src="img/prediction/cube2.png" alt=""></div>
+        <div class="prediction-dice prediction-dice-bl" aria-hidden="true"><img src="img/prediction/cube1.png" alt=""></div>
+        <div class="prediction-dice prediction-dice-right" aria-hidden="true"><img src="img/prediction/cube2.png" alt=""></div>
+        <div class="prediction-chip" role="img" aria-hidden="true"></div>
+        <p class="prediction-scratch-hint">Стирай именно ею</p>
       </div>
-      <canvas class="prediction-scratch-canvas" width="824" height="430"></canvas>
     </div>
-    <div class="prediction-dice prediction-dice-tl" aria-hidden="true"><img src="img/prediction/cube1.png" alt=""></div>
-    <div class="prediction-dice prediction-dice-br" aria-hidden="true"><img src="img/prediction/cube2.png" alt=""></div>
-    <div class="prediction-dice prediction-dice-left" aria-hidden="true"><img src="img/prediction/cube1.png" alt=""></div>
-    <div class="prediction-dice prediction-dice-tr" aria-hidden="true"><img src="img/prediction/cube2.png" alt=""></div>
-    <div class="prediction-dice prediction-dice-bl" aria-hidden="true"><img src="img/prediction/cube1.png" alt=""></div>
-    <div class="prediction-dice prediction-dice-right" aria-hidden="true"><img src="img/prediction/cube2.png" alt=""></div>
-    <div class="prediction-chip" role="img" aria-hidden="true"></div>
-    <p class="prediction-scratch-hint">Стирай именно ею</p>
   </section>
 
   <section class="screen section-suits">
-    <p class="suits-caption">Время загадывать по-крупному.<br> Ты здесь уже:</p>
-    <div class="suits-stopwatch" aria-live="polite">
-      <span class="suits-stopwatch-value">00:00:00</span>
+    <div class="suits-rotator">
+      <div class="suits-rotator-inner">
+        <p class="suits-caption">Время загадывать по-крупному.<br> Ты здесь уже:</p>
+        <div class="suits-stopwatch" aria-live="polite">
+          <span class="suits-stopwatch-value">00:00:00</span>
+        </div>
+        <div class="suits" id="suits-pool" aria-hidden="true"></div>
+      </div>
     </div>
-    <div class="suits" id="suits-pool" aria-hidden="true"></div>
   </section>
 
   <div class="page-footer">
     <div class="hse-logo">
-      <img src="img/hse-logo.svg" alt="НИУ ВШЭ" />
+      <img src="img/hse-logo.svg" alt="НИУ ВШЭ">
     </div>
     <div class="author-line">
       <h1>
@@ -226,6 +241,7 @@
     </div>
   </div>
 
-  <script src="js/script.js"></script>
+
+<script src="js/script.js"></script>
 </body>
 </html>

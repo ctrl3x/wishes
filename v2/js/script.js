@@ -12,10 +12,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function initDecorFrameSecond() {
   var screen = document.getElementById('screen-second');
-  if (screen === null) return;
+  if (screen == null) {
+    return;
+  }
 
   var img = screen.querySelector('.screen-spacer-img');
-  if (img === null) return;
+  if (img == null) return;
+
   var hint = screen.querySelector('.screen-spacer-hint');
 
   var clicks = 0;
@@ -45,7 +48,7 @@ function initDecorFrameSecond() {
 
   function showThorn(number, blackMode) {
     screen.classList.add('screen-spacer--hint-hidden');
-    screen.classList.remove('screen-spacer--finale-text-visible');
+    screen.classList.add('screen-spacer--finale-text-visible');
 
     if (blackMode) {
       screen.classList.add('screen-spacer--finale');
@@ -61,75 +64,70 @@ function initDecorFrameSecond() {
   }
 
   function whenUserClicks() {
-    console.log('Клик по второму экрану (screen-spacer)');
+    console.log('click: screen-second');
 
     clicks = clicks + 1;
 
-    // 8-й клик = возврат в начало цикла
-    if (clicks === 8) {
+    if (clicks == 8) {
       clicks = 0;
       showStartLook();
       return;
     }
 
-    // 1-2-3 обычный тёрн
-    if (clicks === 1) {
+    if (clicks == 1) {
       showThorn(1, false);
       return;
     }
-    if (clicks === 2) {
+    if (clicks == 2) {
       showThorn(2, false);
       return;
     }
-    if (clicks === 3) {
+    if (clicks == 3) {
       showThorn(3, false);
       return;
     }
 
-    // 4 белый экран с фразой
-    if (clicks === 4) {
+    if (clicks == 4) {
       showWhiteTextScreen();
       return;
     }
 
-    // 5-6-7 чёрный тёрн на белом фоне
-    if (clicks === 5) {
+    if (clicks == 5) {
       showThorn(1, true);
       return;
     }
-    if (clicks === 6) {
+    if (clicks == 6) {
       showThorn(2, true);
       return;
     }
-    if (clicks === 7) {
+    if (clicks == 7) {
       showThorn(3, true);
       return;
     }
   }
 
-  // если текстовый блок подсказки вдруг убрали из html — просто не ломаемся
-  if (hint === null) {
+  if (hint == null) {
     showStartLook();
   }
 
   screen.addEventListener('click', whenUserClicks);
 
-  screen.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      whenUserClicks();
-    }
-    if (e.key === ' ') {
-      e.preventDefault();
+  screen.addEventListener('keydown', function (evt) {
+    if (evt.key == 'Enter' || evt.key == ' ') {
+      evt.preventDefault();
       whenUserClicks();
     }
   });
 }
 
 function initHeroBetDrag() {
-  var container = document.querySelector('.hero');
+  var section = document.querySelector('.hero');
+  var mobileBoard = document.querySelector('.hero .hero-rotator-inner');
+  var container = mobileBoard || section;
   var bets = document.querySelectorAll('.hero .hero-bet');
-  if (container === null || bets.length === 0) return;
+  if (container == null || bets.length == 0) {
+    return;
+  }
 
   for (var i = 0; i < bets.length; i++) {
     (function (el) {
@@ -140,21 +138,25 @@ function initHeroBetDrag() {
       var startTop = 0;
 
       function clamp(value, min, max) {
-        if (value < min) return min;
-        if (value > max) return max;
+        if (value < min) {
+          return min;
+        }
+        if (value > max) {
+          return max;
+        }
         return value;
       }
 
       function onPointerDown(e) {
-        if (e.button !== 0 && e.type === 'mousedown') return;
+        if (e.button != 0 && e.type == 'mousedown') return;
         e.preventDefault();
         isDragging = true;
-        var rect = el.getBoundingClientRect();
-        var containerRect = container.getBoundingClientRect();
         startX = e.touches ? e.touches[0].clientX : e.clientX;
         startY = e.touches ? e.touches[0].clientY : e.clientY;
-        startLeft = rect.left - containerRect.left + container.scrollLeft;
-        startTop = rect.top - containerRect.top + container.scrollTop;
+        var inlineLeft = parseFloat(el.style.left);
+        var inlineTop = parseFloat(el.style.top);
+        startLeft = isNaN(inlineLeft) ? el.offsetLeft : inlineLeft;
+        startTop = isNaN(inlineTop) ? el.offsetTop : inlineTop;
         el.classList.add('hero-bet-dragging');
       }
 
@@ -163,19 +165,36 @@ function initHeroBetDrag() {
         e.preventDefault();
         var clientX = e.touches ? e.touches[0].clientX : e.clientX;
         var clientY = e.touches ? e.touches[0].clientY : e.clientY;
-        var containerRect = container.getBoundingClientRect();
-        var dx = clientX - startX;
-        var dy = clientY - startY;
+        var rawDx = clientX - startX;
+        var rawDy = clientY - startY;
+        var dx = rawDx;
+        var dy = rawDy;
+
+        if (
+          window.matchMedia('(max-width: 768px)').matches &&
+          mobileBoard != null &&
+          section != null
+        ) {
+          var sectionRect = section.getBoundingClientRect();
+          var scale = sectionRect.width / 1512;
+          if (scale > 0) {
+            dx = -rawDy / scale;
+            dy = rawDx / scale;
+          }
+        }
+
         var newLeft = startLeft + dx;
         var newTop = startTop + dy;
         var w = el.offsetWidth;
         var h = el.offsetHeight;
-        var maxW = containerRect.width;
-        var maxH = containerRect.height;
-        newLeft = clamp(newLeft, 0, maxW - w);
-        newTop = clamp(newTop, 0, maxH - h);
+        newLeft = clamp(newLeft, 0, container.clientWidth - w);
+        newTop = clamp(newTop, 0, container.clientHeight - h);
         el.style.left = newLeft + 'px';
         el.style.top = newTop + 'px';
+        startLeft = newLeft;
+        startTop = newTop;
+        startX = clientX;
+        startY = clientY;
       }
 
       function onPointerUp() {
@@ -195,17 +214,19 @@ function initHeroBetDrag() {
 }
 
 function initBlackjackChipDrag() {
-  var container = document.querySelector('.section-blackjack');
+  var section = document.querySelector('.section-blackjack');
+  var mobileBoard = document.querySelector('.section-blackjack .blackjack-rotator-inner');
+  var container = mobileBoard || section;
   var chips = document.querySelectorAll('.section-blackjack .blackjack-chip');
-  if (container === null || chips.length === 0) return;
+  if (container == null || chips.length == 0) return;
 
-  for (var i = 0; i < chips.length; i++) {
+  for (var j = 0; j < chips.length; j++) {
     (function (el) {
       var isDragging = false;
-      var startX = 0;
-      var startY = 0;
-      var startLeft = 0;
-      var startTop = 0;
+      var x0 = 0;
+      var y0 = 0;
+      var l0 = 0;
+      var t0 = 0;
 
       function clamp(value, min, max) {
         if (value < min) return min;
@@ -214,15 +235,15 @@ function initBlackjackChipDrag() {
       }
 
       function onPointerDown(e) {
-        if (e.button !== 0 && e.type === 'mousedown') return;
+        if (e.button != 0 && e.type == 'mousedown') return;
         e.preventDefault();
         isDragging = true;
-        var rect = el.getBoundingClientRect();
-        var containerRect = container.getBoundingClientRect();
-        startX = e.touches ? e.touches[0].clientX : e.clientX;
-        startY = e.touches ? e.touches[0].clientY : e.clientY;
-        startLeft = rect.left - containerRect.left + container.scrollLeft;
-        startTop = rect.top - containerRect.top + container.scrollTop;
+        x0 = e.touches ? e.touches[0].clientX : e.clientX;
+        y0 = e.touches ? e.touches[0].clientY : e.clientY;
+        var inlineLeft = parseFloat(el.style.left);
+        var inlineTop = parseFloat(el.style.top);
+        l0 = isNaN(inlineLeft) ? el.offsetLeft : inlineLeft;
+        t0 = isNaN(inlineTop) ? el.offsetTop : inlineTop;
         el.classList.add('blackjack-chip-dragging');
       }
 
@@ -231,19 +252,32 @@ function initBlackjackChipDrag() {
         e.preventDefault();
         var clientX = e.touches ? e.touches[0].clientX : e.clientX;
         var clientY = e.touches ? e.touches[0].clientY : e.clientY;
-        var containerRect = container.getBoundingClientRect();
-        var dx = clientX - startX;
-        var dy = clientY - startY;
-        var newLeft = startLeft + dx;
-        var newTop = startTop + dy;
+        var rawDx = clientX - x0;
+        var rawDy = clientY - y0;
+        var dx = rawDx;
+        var dy = rawDy;
+
+        if (window.matchMedia('(max-width: 768px)').matches && mobileBoard != null) {
+          var sectionRect = section.getBoundingClientRect();
+          var scale = sectionRect.width / 1512;
+          if (scale > 0) {
+            dx = -rawDy / scale;
+            dy = rawDx / scale;
+          }
+        }
+
+        var newLeft = l0 + dx;
+        var newTop = t0 + dy;
         var w = el.offsetWidth;
         var h = el.offsetHeight;
-        var maxW = containerRect.width;
-        var maxH = containerRect.height;
-        newLeft = clamp(newLeft, 0, maxW - w);
-        newTop = clamp(newTop, 0, maxH - h);
+        newLeft = clamp(newLeft, 0, container.clientWidth - w);
+        newTop = clamp(newTop, 0, container.clientHeight - h);
         el.style.left = newLeft + 'px';
         el.style.top = newTop + 'px';
+        l0 = newLeft;
+        t0 = newTop;
+        x0 = clientX;
+        y0 = clientY;
       }
 
       function onPointerUp() {
@@ -258,28 +292,28 @@ function initBlackjackChipDrag() {
       document.addEventListener('mouseup', onPointerUp);
       document.addEventListener('touchmove', onPointerMove, { passive: false });
       document.addEventListener('touchend', onPointerUp);
-    })(chips[i]);
+    })(chips[j]);
   }
 }
 
 function initBlackjackDealerCards() {
   var section = document.querySelector('.section-blackjack');
-  if (section === null) return;
+  if (section == null) return;
 
   var dealerCard = section.querySelector('.blackjack-card');
-  if (dealerCard === null) return;
+  if (dealerCard == null) return;
 
   var slots = section.querySelectorAll('.blackjack-card-slot');
-  if (slots.length === 0) return;
+  if (slots.length == 0) return;
 
   var nextCardIndex = 1;
   var maxCards = Math.min(slots.length, 6);
 
   function putCardToSlot(slot, cardIndex) {
-    if (slot === null) return;
+    if (slot == null) return;
 
     var card = slot.querySelector('.blackjack-slot-card');
-    if (card === null) {
+    if (card == null) {
       card = document.createElement('img');
       card.className = 'blackjack-slot-card';
       card.alt = '';
@@ -300,13 +334,17 @@ function initBlackjackDealerCards() {
 
 function initScratchCard() {
   var section = document.querySelector('.section-prediction');
+  var mobileBoard = document.querySelector('.section-prediction .prediction-rotator-inner');
+  var dragContainer = mobileBoard || section;
   var wrap = document.querySelector('.prediction-scratch-wrap');
   var canvas = document.querySelector('.prediction-scratch-canvas');
   var chip = document.querySelector('.prediction-chip');
-  if (section === null || wrap === null || canvas === null || chip === null) return;
+  if (section == null || dragContainer == null || wrap == null || canvas == null || chip == null) {
+    return;
+  }
 
   var ctx = canvas.getContext('2d', { alpha: true });
-  if (ctx === null) return;
+  if (ctx == null) return;
 
   var width = canvas.width;
   var height = canvas.height;
@@ -354,61 +392,72 @@ function initScratchCard() {
   }
 
   function chipCenterToCanvas() {
-    const chipRect = chip.getBoundingClientRect();
-    const canvasRect = canvas.getBoundingClientRect();
-    const centerX = chipRect.left + chipRect.width / 2;
-    const centerY = chipRect.top + chipRect.height / 2;
-    const scaleX = width / canvasRect.width;
-    const scaleY = height / canvasRect.height;
-    const x = (centerX - canvasRect.left) * scaleX;
-    const y = (centerY - canvasRect.top) * scaleY;
-    return { x, y, over: centerX >= canvasRect.left && centerX <= canvasRect.right && centerY >= canvasRect.top && centerY <= canvasRect.bottom };
+    var chipRect = chip.getBoundingClientRect();
+    var wrapRect = wrap.getBoundingClientRect();
+
+    var centerX = chipRect.left + chipRect.width / 2;
+    var centerY = chipRect.top + chipRect.height / 2;
+
+    var relX = centerX - wrapRect.left;
+    var relY = centerY - wrapRect.top;
+
+    var over =
+      relX >= 0 && relX <= wrapRect.width && relY >= 0 && relY <= wrapRect.height;
+
+    var x = relX * (width / wrapRect.width);
+    var y = relY * (height / wrapRect.height);
+    return { x: x, y: y, over: over };
   }
 
-  let isDragging = false;
-  let startX = 0;
-  let startY = 0;
-  let startLeft = 0;
-  let startTop = 0;
-  let lastScratchX = null;
-  let lastScratchY = null;
-
-  function getChipPosition() {
-    const l = parseFloat(chip.style.left);
-    const t = parseFloat(chip.style.top);
-    return { left: isNaN(l) ? null : l, top: isNaN(t) ? null : t };
-  }
+  var isDragging = false;
+  var startX = 0;
+  var startY = 0;
+  var startLeft = 0;
+  var startTop = 0;
+  var lastScratchX = null;
+  var lastScratchY = null;
 
   function clamp(value, min, max) {
     return Math.max(min, Math.min(max, value));
   }
 
   function onChipPointerDown(e) {
-    if (e.button !== 0 && e.type === 'mousedown') return;
+    if (e.button != 0 && e.type == 'mousedown') return;
     e.preventDefault();
     isDragging = true;
     lastScratchX = null;
     lastScratchY = null;
     section.classList.add('section-prediction--hint-hidden');
     chip.classList.add('prediction-chip-dragging');
-    const chipRect = chip.getBoundingClientRect();
-    const sectionRect = section.getBoundingClientRect();
     startX = e.touches ? e.touches[0].clientX : e.clientX;
     startY = e.touches ? e.touches[0].clientY : e.clientY;
-    startLeft = chipRect.left - sectionRect.left + section.scrollLeft;
-    startTop = chipRect.top - sectionRect.top + section.scrollTop;
+    var inlineLeft = parseFloat(chip.style.left);
+    var inlineTop = parseFloat(chip.style.top);
+    startLeft = isNaN(inlineLeft) ? chip.offsetLeft : inlineLeft;
+    startTop = isNaN(inlineTop) ? chip.offsetTop : inlineTop;
   }
 
   function onChipPointerMove(e) {
     if (!isDragging) return;
     e.preventDefault();
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    const sectionRect = section.getBoundingClientRect();
-    const dx = clientX - startX;
-    const dy = clientY - startY;
-    let newLeft = clamp(startLeft + dx, 0, sectionRect.width - chip.offsetWidth);
-    let newTop = clamp(startTop + dy, 0, sectionRect.height - chip.offsetHeight);
+    var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    var clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    var rawDx = clientX - startX;
+    var rawDy = clientY - startY;
+    var dx = rawDx;
+    var dy = rawDy;
+
+    if (window.matchMedia('(max-width: 768px)').matches && mobileBoard != null) {
+      var sectionRect = section.getBoundingClientRect();
+      var scale = sectionRect.width / 1512;
+      if (scale > 0) {
+        dx = -rawDy / scale;
+        dy = rawDx / scale;
+      }
+    }
+
+    var newLeft = clamp(startLeft + dx, 0, dragContainer.clientWidth - chip.offsetWidth);
+    var newTop = clamp(startTop + dy, 0, dragContainer.clientHeight - chip.offsetHeight);
     chip.style.left = newLeft + 'px';
     chip.style.top = newTop + 'px';
     startLeft = newLeft;
@@ -416,7 +465,10 @@ function initScratchCard() {
     startX = clientX;
     startY = clientY;
 
-    const { x, y, over } = chipCenterToCanvas();
+    var canvasPoint = chipCenterToCanvas();
+    var x = canvasPoint.x;
+    var y = canvasPoint.y;
+    var over = canvasPoint.over;
     if (over) {
       if (lastScratchX != null && lastScratchY != null) {
         scratchLine(lastScratchX, lastScratchY, x, y);
@@ -453,7 +505,7 @@ function initScratchCard() {
 
 function initSuitsStopwatch() {
   var el = document.querySelector('.suits-stopwatch-value');
-  if (el === null) return;
+  if (el == null) return;
 
   var startedAt = Date.now();
 
@@ -482,7 +534,6 @@ function initSuitsPool() {
 
   var suits = ['♠', '♥', '♦', '♣'];
 
-  // координаты относительно pool, не viewport
   var poolLeft = 0;
   var poolTop = 0;
   var poolWidth = 0;
@@ -505,7 +556,7 @@ function initSuitsPool() {
 
     if (section) {
       var sectRect = section.getBoundingClientRect();
-      // стенки в координатах pool
+      // walls in pool-local coordinates
       wallLeft = sectRect.left - poolLeft;
       wallRight = sectRect.right - poolLeft;
       wallTop = sectRect.top - poolTop;
@@ -520,7 +571,6 @@ function initSuitsPool() {
 
   function getParticleCount() {
     var width = window.innerWidth;
-    // меньше мастей на узком экране
     if (width < 400) return 80;
     if (width < 800) return 150;
     if (width < 1200) return 300;
@@ -548,7 +598,6 @@ function initSuitsPool() {
     var minX = wallLeft + 12;
     var maxX = wallRight - 12;
     if (maxX < minX) maxX = minX;
-    // спавн только внизу (нижние 30%)
     var bottomEdge = wallBottom - zoneHeight * 0.3;
     var minY = bottomEdge + 12;
     var maxY = wallBottom - 12;
@@ -592,7 +641,7 @@ function initSuitsPool() {
     var force;
     var nx, ny;
     var particleRadius = 10;
-    var particleDiameter = particleRadius * 2; // диаметр для столкновений
+    var particleDiameter = particleRadius * 2;
 
     if (mouseX !== null && mouseY !== null) {
       for (i = 0; i < particles.length; i++) {
@@ -600,7 +649,7 @@ function initSuitsPool() {
         dx = p.x - mouseX;
         dy = p.y - mouseY;
         dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 0.01) dist = 0.01; // иначе /0
+        if (dist < 0.01) dist = 0.01;
         if (dist < 110) {
           force = (110 - dist) / 110 * 0.75;
           p.vx = p.vx + (dx / dist) * force;
@@ -609,7 +658,6 @@ function initSuitsPool() {
       }
     }
 
-    // отталкивание мастей друг от друга
     for (i = 0; i < particles.length; i++) {
       for (j = i + 1; j < particles.length; j++) {
         p = particles[i];
@@ -638,7 +686,6 @@ function initSuitsPool() {
       p.vx = p.vx * 0.995;
       p.vy = p.vy * 0.995;
 
-      // отскок от границ
       if (p.x < wallLeft + particleRadius) {
         p.x = wallLeft + particleRadius;
         p.vx = p.vx * -0.72;
@@ -658,7 +705,6 @@ function initSuitsPool() {
     }
 
     var iter;
-    // развести пересекающиеся, 5 прохода чтобы меньше склеивалось
     for (iter = 0; iter < 5; iter++) {
       for (i = 0; i < particles.length; i++) {
         for (j = i + 1; j < particles.length; j++) {
@@ -729,7 +775,7 @@ function initSuitsPool() {
   window.addEventListener('resize', function () {
     updateBounds();
     if (resizeTimer) clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(fillPool, 200); // debounce
+    resizeTimer = setTimeout(fillPool, 200);
   });
 
   document.addEventListener('mousemove', onMouseMove);
