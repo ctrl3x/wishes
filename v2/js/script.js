@@ -702,7 +702,6 @@ function initSuitsPool() {
 
     for (var n = 0; n < count; n++) {
       particles.push(createParticle());
-      i = i + 1;
     }
   }
 
