@@ -313,11 +313,15 @@ function initBlackjackDealerCards() {
   var slots = section.querySelectorAll('.blackjack-card-slot');
   if (slots.length == 0) return;
 
-  var nextCardIndex = 1;
-  var maxCards = Math.min(slots.length, 6);
+  var maxCards = 6;
+  if (slots.length < maxCards) maxCards = slots.length;
 
+  var flyAnimating = false;
+  var flyingCard = null;
+
+  // index 1..6: word + pic_card_N.svg
   var slotLabels = [
-    '', // когда ничего нет - по-другому не придумала :( 
+    '',
     'комфорт',
     'удовольствие',
     'любовь',
@@ -326,68 +330,144 @@ function initBlackjackDealerCards() {
     'здоровье'
   ];
 
-  function putCardToSlot(slot, cardIndex) {
-    if (slot == null) return;
+  var dealOrder = [1, 2, 3, 4, 5, 6];
+  dealOrder.sort(function () {
+    return Math.random() - 0.5;
+  });
 
-    var card = slot.querySelector('.blackjack-slot-card');
-    if (card == null) {
-      card = document.createElement('div');
-      card.className = 'blackjack-slot-card';
+  var nextSlot = 0;
 
-      var glyphTopLeft = document.createElement('img');
-      glyphTopLeft.className = 'blackjack-slot-card-glyph blackjack-slot-card-glyph--tl';
-      glyphTopLeft.alt = '';
-      glyphTopLeft.setAttribute('role', 'presentation');
-
-      var labelSpan = document.createElement('span');
-      labelSpan.className = 'blackjack-slot-card-label';
-
-      var glyphBottomRight = document.createElement('img');
-      glyphBottomRight.className = 'blackjack-slot-card-glyph blackjack-slot-card-glyph--br';
-      glyphBottomRight.alt = '';
-      glyphBottomRight.setAttribute('role', 'presentation');
-
-      card.appendChild(glyphTopLeft);
-      card.appendChild(labelSpan);
-      card.appendChild(glyphBottomRight);
-      slot.appendChild(card);
-    }
-
-    var caption = slotLabels[cardIndex] || '';
-    var picSrc = 'img/table/pic_card_' + cardIndex + '.svg';
-
-    var topLeftImg = card.querySelector('.blackjack-slot-card-glyph--tl');
-    var bottomRightImg = card.querySelector('.blackjack-slot-card-glyph--br');
-    var captionEl = card.querySelector('.blackjack-slot-card-label');
-
-    if (topLeftImg != null) {
-      topLeftImg.src = picSrc;
-    }
-    if (bottomRightImg != null) {
-      bottomRightImg.src = picSrc;
-    }
-    if (captionEl != null) {
-      captionEl.textContent = caption;
-    }
-    card.setAttribute('aria-label', caption);
+  function createCardDiv() {
+    var card = document.createElement('div');
+    card.className = 'blackjack-slot-card';
+    var imgTl = document.createElement('img');
+    imgTl.className = 'blackjack-slot-card-glyph blackjack-slot-card-glyph--tl';
+    imgTl.alt = '';
+    imgTl.setAttribute('role', 'presentation');
+    var label = document.createElement('span');
+    label.className = 'blackjack-slot-card-label';
+    var imgBr = document.createElement('img');
+    imgBr.className = 'blackjack-slot-card-glyph blackjack-slot-card-glyph--br';
+    imgBr.alt = '';
+    imgBr.setAttribute('role', 'presentation');
+    card.appendChild(imgTl);
+    card.appendChild(label);
+    card.appendChild(imgBr);
+    return card;
   }
 
-  function clearDealerSlots() {
-    for (var s = 0; s < slots.length; s++) {
-      var existingCard = slots[s].querySelector('.blackjack-slot-card');
-      if (existingCard != null) existingCard.remove();
+  function putCardInSlot(slot, n) {
+    if (slot == null) return;
+    var card = slot.querySelector('.blackjack-slot-card');
+    if (card == null) {
+      card = createCardDiv();
+      slot.appendChild(card);
     }
+    var src = 'img/table/pic_card_' + n + '.svg';
+    card.querySelector('.blackjack-slot-card-glyph--tl').src = src;
+    card.querySelector('.blackjack-slot-card-glyph--br').src = src;
+    card.querySelector('.blackjack-slot-card-label').textContent = slotLabels[n] || '';
+    card.setAttribute('aria-label', slotLabels[n] || '');
   }
 
   dealerCard.addEventListener('click', function () {
-    if (nextCardIndex > maxCards) {
-      clearDealerSlots();
-      nextCardIndex = 1;
+    if (flyAnimating) return;
+
+    if (nextSlot >= maxCards) {
+      dealOrder = [1, 2, 3, 4, 5, 6];
+      dealOrder.sort(function () {
+        return Math.random() - 0.5;
+      });
+      nextSlot = 0;
+    }
+
+    var number = dealOrder[nextSlot];
+    var slot = slots[nextSlot];
+    nextSlot++;
+
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      putCardInSlot(slot, number);
       return;
     }
 
-    putCardToSlot(slots[nextCardIndex - 1], nextCardIndex);
-    nextCardIndex = nextCardIndex + 1;
+    flyAnimating = true;
+
+    var r0 = dealerCard.getBoundingClientRect();
+    var r1 = slot.getBoundingClientRect();
+    var x0 = r0.left + r0.width / 2;
+    var y0 = r0.top + r0.height / 2;
+    var x1 = r1.left + r1.width / 2;
+    var y1 = r1.top + r1.height / 2;
+
+    var sw = slot.offsetWidth;
+    var sh = slot.offsetHeight;
+    var transformStr = getComputedStyle(slot).transform;
+    var angle = 0;
+    if (transformStr != null && transformStr !== 'none') {
+      if (transformStr.indexOf('matrix') >= 0) {
+        var matrixParts = transformStr.replace('matrix(', '').replace(')', '').split(',');
+        angle = Math.atan2(parseFloat(matrixParts[1]), parseFloat(matrixParts[0]));
+      } else if (transformStr.indexOf('rotate') >= 0) {
+        var m = transformStr.match(/rotate\(([-0-9.eE]+)deg\)/);
+        if (m != null) angle = (parseFloat(m[1]) * Math.PI) / 180;
+      }
+    }
+    var boxW = Math.abs(sw * Math.cos(angle)) + Math.abs(sh * Math.sin(angle));
+    var boxH = Math.abs(sw * Math.sin(angle)) + Math.abs(sh * Math.cos(angle));
+    var scale = 1;
+    if (boxW > 0.0001 && boxH > 0.0001) {
+      scale = (r1.width / boxW + r1.height / boxH) / 2;
+    }
+    var cardW = sw * scale;
+    var cardH = sh * scale;
+
+    var fly = createCardDiv();
+    fly.classList.add('blackjack-slot-card--flying');
+    fly.querySelector('.blackjack-slot-card-glyph--tl').src = 'img/table/pic_card_' + number + '.svg';
+    fly.querySelector('.blackjack-slot-card-glyph--br').src = 'img/table/pic_card_' + number + '.svg';
+    fly.querySelector('.blackjack-slot-card-label').textContent = slotLabels[number] || '';
+    fly.setAttribute('aria-label', slotLabels[number] || '');
+
+    fly.style.position = 'fixed';
+    fly.style.zIndex = '10000';
+    fly.style.width = cardW + 'px';
+    fly.style.height = cardH + 'px';
+    fly.style.left = x0 - cardW / 2 + 'px';
+    fly.style.top = y0 - cardH / 2 + 'px';
+    fly.style.boxSizing = 'border-box';
+    fly.style.pointerEvents = 'none';
+    fly.style.transformOrigin = 'center center';
+    var dealerTransform = getComputedStyle(dealerCard).transform;
+    fly.style.transform = dealerTransform === 'none' ? '' : dealerTransform;
+
+    document.body.appendChild(fly);
+    flyingCard = fly;
+
+    var durationMs = 580;
+    var slotTransform = getComputedStyle(slot).transform;
+
+    window.setTimeout(function () {
+      fly.style.transition =
+        'left ' +
+        durationMs +
+        'ms ease-out, top ' +
+        durationMs +
+        'ms ease-out, transform ' +
+        durationMs +
+        'ms ease-out';
+      fly.style.left = x1 - cardW / 2 + 'px';
+      fly.style.top = y1 - cardH / 2 + 'px';
+      fly.style.transform = slotTransform === 'none' ? '' : slotTransform;
+    }, 20);
+
+    window.setTimeout(function () {
+      if (flyingCard != null && flyingCard.parentNode != null) {
+        flyingCard.parentNode.removeChild(flyingCard);
+      }
+      flyingCard = null;
+      putCardInSlot(slot, number);
+      flyAnimating = false;
+    }, durationMs + 80);
   });
 }
 
