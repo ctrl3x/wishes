@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', function () {
   initDecorFrameSecond();
 });
 
-
 function initDecorFrameSecond() {
   var screen = document.getElementById('screen-second');
   if (screen == null) {
@@ -67,9 +66,9 @@ function initDecorFrameSecond() {
   function whenUserClicks() {
     console.log('click: screen-second');
 
-    clicks++;
+    clicks = clicks + 1;
 
-    if (clicks === 8) {
+    if (clicks == 8) {
       clicks = 0;
       showStartLook();
       return;
@@ -113,9 +112,9 @@ function initDecorFrameSecond() {
 
   screen.addEventListener('click', whenUserClicks);
 
-  screen.addEventListener('keydown', function (ev) {
-    if (ev.key == 'Enter' || ev.key == ' ') {
-      ev.preventDefault();
+  screen.addEventListener('keydown', function (evt) {
+    if (evt.key == 'Enter' || evt.key == ' ') {
+      evt.preventDefault();
       whenUserClicks();
     }
   });
@@ -219,9 +218,7 @@ function initBlackjackChipDrag() {
   var mobileBoard = document.querySelector('.section-blackjack .blackjack-rotator-inner');
   var container = mobileBoard || section;
   var chips = document.querySelectorAll('.section-blackjack .blackjack-chip');
-  if (container == null || chips.length == 0) {
-    return;
-  }
+  if (container == null || chips.length == 0) return;
 
   for (var j = 0; j < chips.length; j++) {
     (function (el) {
@@ -232,12 +229,8 @@ function initBlackjackChipDrag() {
       var t0 = 0;
 
       function clamp(value, min, max) {
-        if (value < min) {
-          return min;
-        }
-        if (value > max) {
-          return max;
-        }
+        if (value < min) return min;
+        if (value > max) return max;
         return value;
       }
 
@@ -316,75 +309,23 @@ function initBlackjackDealerCards() {
   var nextCardIndex = 1;
   var maxCards = Math.min(slots.length, 6);
 
-  var slotLabels = [
-    '', // когда ничего нет - по-другому не придумала :( 
-    'комфорт',
-    'удовольствие',
-    'любовь',
-    'развитие',
-    'связи',
-    'здоровье'
-  ];
-
   function putCardToSlot(slot, cardIndex) {
     if (slot == null) return;
 
     var card = slot.querySelector('.blackjack-slot-card');
     if (card == null) {
-      card = document.createElement('div');
+      card = document.createElement('img');
       card.className = 'blackjack-slot-card';
-
-      var glyphTopLeft = document.createElement('img');
-      glyphTopLeft.className = 'blackjack-slot-card-glyph blackjack-slot-card-glyph--tl';
-      glyphTopLeft.alt = '';
-      glyphTopLeft.setAttribute('role', 'presentation');
-
-      var labelSpan = document.createElement('span');
-      labelSpan.className = 'blackjack-slot-card-label';
-
-      var glyphBottomRight = document.createElement('img');
-      glyphBottomRight.className = 'blackjack-slot-card-glyph blackjack-slot-card-glyph--br';
-      glyphBottomRight.alt = '';
-      glyphBottomRight.setAttribute('role', 'presentation');
-
-      card.appendChild(glyphTopLeft);
-      card.appendChild(labelSpan);
-      card.appendChild(glyphBottomRight);
+      card.alt = '';
+      card.setAttribute('role', 'presentation');
       slot.appendChild(card);
     }
 
-    var caption = slotLabels[cardIndex] || '';
-    var picSrc = 'img/table/pic_card_' + cardIndex + '.svg';
-
-    var topLeftImg = card.querySelector('.blackjack-slot-card-glyph--tl');
-    var bottomRightImg = card.querySelector('.blackjack-slot-card-glyph--br');
-    var captionEl = card.querySelector('.blackjack-slot-card-label');
-
-    if (topLeftImg != null) {
-      topLeftImg.src = picSrc;
-    }
-    if (bottomRightImg != null) {
-      bottomRightImg.src = picSrc;
-    }
-    if (captionEl != null) {
-      captionEl.textContent = caption;
-    }
-    card.setAttribute('aria-label', caption);
-  }
-
-  function clearDealerSlots() {
-    for (var s = 0; s < slots.length; s++) {
-      var existingCard = slots[s].querySelector('.blackjack-slot-card');
-      if (existingCard != null) existingCard.remove();
-    }
+    card.src = 'img/table/card_' + cardIndex + '.svg';
   }
 
   dealerCard.addEventListener('click', function () {
-    if (nextCardIndex > maxCards) {
-      clearDealerSlots();
-      nextCardIndex = 1;
-      return;
-    }
+    if (nextCardIndex > maxCards) return;
 
     putCardToSlot(slots[nextCardIndex - 1], nextCardIndex);
     nextCardIndex = nextCardIndex + 1;
@@ -403,9 +344,7 @@ function initScratchCard() {
   }
 
   var ctx = canvas.getContext('2d', { alpha: true });
-  if (ctx == null) {
-    return;
-  }
+  if (ctx == null) return;
 
   var width = canvas.width;
   var height = canvas.height;
@@ -426,9 +365,7 @@ function initScratchCard() {
   scratchBg.src = 'img/scratch-bg.png';
 
   function scratch(x, y) {
-    if (x < -radius || x > width + radius || y < -radius || y > height + radius) {
-      return;
-    }
+    if (x < -radius || x > width + radius || y < -radius || y > height + radius) return;
     ctx.globalCompositeOperation = 'destination-out';
     ctx.beginPath();
     ctx.arc(x, y, radius, 0, Math.PI * 2);
@@ -485,9 +422,7 @@ function initScratchCard() {
   }
 
   function onChipPointerDown(e) {
-    if (e.button != 0 && e.type == 'mousedown') {
-      return;
-    }
+    if (e.button != 0 && e.type == 'mousedown') return;
     e.preventDefault();
     isDragging = true;
     lastScratchX = null;
@@ -568,26 +503,19 @@ function initScratchCard() {
   drawScratchLayer();
 }
 
-
-
 function initSuitsStopwatch() {
   var el = document.querySelector('.suits-stopwatch-value');
-  if (el == null) {
-    return;
-  }
+  if (el == null) return;
 
   var startedAt = Date.now();
 
   function pad(n) {
-    if (n < 10) {
-      return '0' + n;
-    }
+    if (n < 10) return '0' + n;
     return String(n);
   }
 
   function tick() {
-    var now = Date.now();
-    var totalSeconds = Math.floor((now - startedAt) / 1000);
+    var totalSeconds = Math.floor((Date.now() - startedAt) / 1000);
     var h = Math.floor(totalSeconds / 3600);
     var m = Math.floor((totalSeconds % 3600) / 60);
     var s = totalSeconds % 60;
@@ -600,9 +528,7 @@ function initSuitsStopwatch() {
 
 function initSuitsPool() {
   var pool = document.getElementById('suits-pool');
-  if (pool == null) {
-    return;
-  }
+  if (!pool) return;
 
   var section = document.querySelector('.section-suits');
 
@@ -628,9 +554,9 @@ function initSuitsPool() {
     poolWidth = rect.width;
     poolHeight = rect.height;
 
-    if (section != null) {
+    if (section) {
       var sectRect = section.getBoundingClientRect();
-      // очередная попытка сделать нормально стены для пула
+      // walls in pool-local coordinates
       wallLeft = sectRect.left - poolLeft;
       wallRight = sectRect.right - poolLeft;
       wallTop = sectRect.top - poolTop;
@@ -700,7 +626,8 @@ function initSuitsPool() {
     pool.innerHTML = '';
     particles = [];
 
-    for (var n = 0; n < count; n++) {
+    var i = 0;
+    while (i < count) {
       particles.push(createParticle());
       i = i + 1;
     }

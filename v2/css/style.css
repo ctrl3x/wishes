@@ -534,10 +534,51 @@ body {
 }
 
 .blackjack-slot-card {
+  box-sizing: border-box;
+  position: relative;
   width: 100%;
   height: 100%;
-  object-fit: contain;
   display: block;
+  background: #ffffff;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.blackjack-slot-card-glyph {
+  position: absolute;
+  width: 22.35px;
+  height: 19px;
+  object-fit: contain;
+  pointer-events: none;
+  display: block;
+}
+
+.blackjack-slot-card-glyph--tl {
+  left: calc(50% - 22.35px / 2 - 34.43px);
+  top: calc(50% - 19px / 2 - 59.1px);
+}
+
+.blackjack-slot-card-glyph--br {
+  right: calc(50% - 22.35px / 2 - 34.43px);
+  bottom: calc(50% - 19px / 2 - 59.1px);
+  transform: rotate(180deg);
+}
+
+.blackjack-slot-card-label {
+  position: absolute;
+  left: calc(50% + 0.72px);
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: max-content;
+  max-width: calc(100% - 12px);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12.16px;
+  line-height: 15px;
+  text-align: center;
+  color: #000000;
+  pointer-events: none;
 }
 
 #screen-second {
@@ -689,19 +730,19 @@ body {
 .blackjack-card-slot-4 {
   left: calc(50% - 114px / 2 + 108.43px);
   top: calc(50% - 160px / 2 + 122.25px);
-  transform: matrix(0.98, -0.17, -0.17, -0.98, 0, 0);
+  transform: rotate(-10deg);
 }
 
 .blackjack-card-slot-5 {
   left: calc(50% - 114px / 2 + 314.71px);
   top: calc(50% - 160px / 2 + 31.5px);
-  transform: matrix(0.87, -0.5, -0.5, -0.87, 0, 0);
+  transform: rotate(-30deg);
 }
 
 .blackjack-card-slot-6 {
   left: calc(50% - 114px / 2 + 489.51px);
   top: calc(50% - 160px / 2 - 123px);
-  transform: matrix(0.64, -0.77, -0.77, -0.64, 0, 0);
+  transform: rotate(-50deg);
 }
 
 .blackjack-title-group {
