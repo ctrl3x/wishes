@@ -122,9 +122,8 @@ function initDecorFrameSecond() {
 }
 
 function initHeroBetDrag() {
-  var section = document.querySelector('.hero');
   var mobileBoard = document.querySelector('.hero .hero-rotator-inner');
-  var container = mobileBoard || section;
+  var container = mobileBoard || document.querySelector('.hero');
   var bets = document.querySelectorAll('.hero .hero-bet');
   if (container == null || bets.length == 0) {
     return;
@@ -168,21 +167,9 @@ function initHeroBetDrag() {
         var clientY = e.touches ? e.touches[0].clientY : e.clientY;
         var rawDx = clientX - startX;
         var rawDy = clientY - startY;
+        /* hero: .hero-rotator-inner без rotate на мобильных — экранные дельты = left/top */
         var dx = rawDx;
         var dy = rawDy;
-
-        if (
-          window.matchMedia('(max-width: 768px)').matches &&
-          mobileBoard != null &&
-          section != null
-        ) {
-          var sectionRect = section.getBoundingClientRect();
-          var scale = sectionRect.width / 1512;
-          if (scale > 0) {
-            dx = -rawDy / scale;
-            dy = rawDx / scale;
-          }
-        }
 
         var newLeft = startLeft + dx;
         var newTop = startTop + dy;
@@ -263,14 +250,10 @@ function initBlackjackChipDrag() {
         var rawDy = clientY - y0;
         var dx = rawDx;
         var dy = rawDy;
-
-        if (window.matchMedia('(max-width: 768px)').matches && mobileBoard != null) {
-          var sectionRect = section.getBoundingClientRect();
-          var scale = sectionRect.width / 1512;
-          if (scale > 0) {
-            dx = -rawDy / scale;
-            dy = rawDx / scale;
-          }
+        if (window.matchMedia('(max-width: 780px)').matches) {
+          /* .blackjack-board-wrap: rotate(-90deg) — экранный дельта → left/top */
+          dx = -rawDy;
+          dy = rawDx;
         }
 
         var newLeft = l0 + dx;
@@ -591,14 +574,10 @@ function initScratchCard() {
     var rawDy = clientY - startY;
     var dx = rawDx;
     var dy = rawDy;
-
-    if (window.matchMedia('(max-width: 768px)').matches && mobileBoard != null) {
-      var sectionRect = section.getBoundingClientRect();
-      var scale = sectionRect.width / 1512;
-      if (scale > 0) {
-        dx = -rawDy / scale;
-        dy = rawDx / scale;
-      }
+    if (window.matchMedia('(max-width: 780px)').matches) {
+      /* .prediction-board-wrap: rotate(-90deg) — экранный дельта → left/top */
+      dx = -rawDy;
+      dy = rawDx;
     }
 
     var newLeft = clamp(startLeft + dx, 0, dragContainer.clientWidth - chip.offsetWidth);

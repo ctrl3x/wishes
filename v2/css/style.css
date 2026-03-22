@@ -1,14 +1,28 @@
 /* === стили для веб-постера (wishes) ===
    часть значений из макета, часть на глаз */
 
+:root {
+  --poster-max-w: 1512px;
+  --poster-ratio-w: 1512;
+  --poster-ratio-h: 982;
+}
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
+html {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   margin: 0; /* reset */
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
   font-family: system-ui, -apple-system, sans-serif;
   line-height: 1.5;
   color: #fff;
@@ -17,19 +31,12 @@ body {
 
 .screen {
   position: relative;
-  width: 1512px;
-  max-width: 1512px;
-  height: 982px;
+  width: min(100%, var(--poster-max-w));
+  max-width: var(--poster-max-w);
+  height: auto;
+  aspect-ratio: var(--poster-ratio-w) / var(--poster-ratio-h);
   margin: 0 auto;
   background: #000; /* черный фон */
-}
-
-.screen.hero,
-#screen-second {
-  width: min(100vw, 1512px);
-  max-width: 1512px;
-  height: auto;
-  aspect-ratio: 1512 / 982;
 }
 
 .hero .hero-title-wrap {
@@ -219,8 +226,8 @@ body {
   top: auto;
   left: 50%;
   right: auto;
-  width: 1512px;
-  max-width: 1512px;
+  width: min(100%, var(--poster-max-w));
+  max-width: var(--poster-max-w);
   transform: translateX(-50%);
   z-index: 1;
   background: #ffffff;
@@ -321,8 +328,8 @@ body {
 
 .page-footer {
   display: flex;
-  width: 1512px;
-  max-width: 1512px;
+  width: min(100%, var(--poster-max-w));
+  max-width: var(--poster-max-w);
   height: 80px;
   margin: 0 auto;
   overflow: hidden;
@@ -395,11 +402,17 @@ body {
 
 .screen.section-blackjack {
   position: relative;
-  width: 1512px;
-  max-width: 1512px;
-  height: 982px;
   margin: 0 auto;
   background: #000000;
+}
+
+/* обёртка без поворота на широком экране; на телефоне — в @media */
+.blackjack-board-wrap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .blackjack-rotator {
@@ -451,7 +464,7 @@ body {
   width: 117px;
   height: 111px;
   left: 1085px;
-  top: 920px;
+  top: 932px;
   background: url(../img/1/В_1.png) no-repeat center / contain;
   transform: rotate(-142deg);
 }
@@ -815,11 +828,16 @@ body {
 
 .screen.section-prediction {
   position: relative;
-  width: 1512px;
-  max-width: 1512px;
-  height: 982px;
   margin: 0 auto;
   background: #000000;
+}
+
+.prediction-board-wrap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .prediction-rotator {
@@ -1052,7 +1070,16 @@ body {
 }
 
 /* телефоны — тут куча всего перепробовала */
-@media (max-width: 768px) {
+@media (max-width: 780px) {
+  :root {
+    --poster-max-w: 100%;
+    /* эталон iPhone-подобного кадра; секции масштабируются по ширине экрана */
+    --poster-ratio-w: 430;
+    --poster-ratio-h: 932;
+    --mobile-design-w: 430px;
+    --mobile-design-h: 932px;
+  }
+
   body {
     overflow-x: hidden;
   }
@@ -1060,17 +1087,17 @@ body {
   .screen,
   .marquee-line-2,
   .page-footer {
-    width: 1512px;
+    width: var(--mobile-design-w);
     max-width: none;
     margin-left: 0;
     margin-right: 0;
     transform-origin: top left;
-    transform: scale(calc(100vw / 1512));
+    transform: scale(calc(100vw / var(--mobile-design-w)));
   }
 
   .screen {
-    height: 982px;
-    min-height: 982px;
+    height: var(--mobile-design-h);
+    min-height: var(--mobile-design-h);
   }
 
   .screen.hero,
@@ -1082,7 +1109,7 @@ body {
     margin-left: auto;
     margin-right: auto;
     transform: none;
-    aspect-ratio: 1512 / 982;
+    aspect-ratio: var(--poster-ratio-w) / var(--poster-ratio-h);
   }
 
   .hero,
@@ -1092,21 +1119,21 @@ body {
 
   .hero-rotator,
   .screen-spacer-rotator {
-    width: 982px;
-    height: 1512px;
+    width: var(--mobile-design-h);
+    height: var(--mobile-design-w);
     left: 0;
     top: 0;
     position: absolute;
     transform-origin: top left;
-    transform: scale(calc(982 / 1512));
+    transform: scale(calc(var(--mobile-design-h) / var(--mobile-design-w)));
   }
 
   .hero-rotator-inner,
   .screen-spacer-rotator-inner {
-    width: 1512px;
-    height: 982px;
+    width: var(--mobile-design-w);
+    height: var(--mobile-design-h);
     transform-origin: top left;
-    transform: translateY(1512px) rotate(-90deg);
+    transform: translateY(var(--mobile-design-w)) rotate(-90deg);
   }
 
   .marquee-line-2 {
@@ -1122,20 +1149,20 @@ body {
   }
 
   .blackjack-rotator {
-    width: 982px;
-    height: 1512px;
+    width: var(--mobile-design-h);
+    height: var(--mobile-design-w);
     left: 0;
     top: 0;
     position: absolute;
     transform-origin: top left;
-    transform: scale(calc(982 / 1512));
+    transform: scale(calc(var(--mobile-design-h) / var(--mobile-design-w)));
   }
 
   .blackjack-rotator-inner {
-    width: 1512px;
-    height: 982px;
+    width: var(--mobile-design-w);
+    height: var(--mobile-design-h);
     transform-origin: top left;
-    transform: translateY(1512px) rotate(-90deg);
+    transform: translateY(var(--mobile-design-w)) rotate(-90deg);
   }
 
   .section-prediction {
@@ -1143,20 +1170,20 @@ body {
   }
 
   .prediction-rotator {
-    width: 982px;
-    height: 1512px;
+    width: var(--mobile-design-h);
+    height: var(--mobile-design-w);
     left: 0;
     top: 0;
     position: absolute;
     transform-origin: top left;
-    transform: scale(calc(982 / 1512));
+    transform: scale(calc(var(--mobile-design-h) / var(--mobile-design-w)));
   }
 
   .prediction-rotator-inner {
-    width: 1512px;
-    height: 982px;
+    width: var(--mobile-design-w);
+    height: var(--mobile-design-h);
     transform-origin: top left;
-    transform: translateY(1512px) rotate(-90deg);
+    transform: translateY(var(--mobile-design-w)) rotate(-90deg);
   }
 
   .prediction-scratch-wrap {
@@ -1177,7 +1204,7 @@ body {
     height: auto;
     min-height: 0;
     transform: none;
-    aspect-ratio: 1512 / 982;
+    aspect-ratio: var(--poster-ratio-w) / var(--poster-ratio-h);
   }
 
   .suits-caption {
@@ -1208,7 +1235,7 @@ body {
     height: auto;
     min-height: 0;
     transform: none;
-    aspect-ratio: 1512 / 982;
+    aspect-ratio: var(--poster-ratio-w) / var(--poster-ratio-h);
     overflow: hidden;
   }
 
@@ -1270,7 +1297,7 @@ body {
   .screen {
     height: auto;
     min-height: 0;
-    aspect-ratio: 1512 / 982;
+    aspect-ratio: var(--poster-ratio-w) / var(--poster-ratio-h);
   }
 
   .screen.hero,
@@ -1283,7 +1310,7 @@ body {
     height: auto;
     min-height: 0;
     transform: none;
-    aspect-ratio: 1512 / 982;
+    aspect-ratio: var(--poster-ratio-w) / var(--poster-ratio-h);
   }
 
   .hero-rotator,
@@ -1312,7 +1339,7 @@ body {
   }
 
   .prediction-scratch-wrap {
-    transform: translate(-50%, -50%) rotate(0deg);
+    transform: translate(-50%, -50%) rotate(90deg);
   }
 
   .prediction-chip {
@@ -1323,25 +1350,36 @@ body {
     top: calc(50% + 322.5px / 2 + 122px);
   }
 
+  /* узкий экран: как раньше делали для блэкджека/стирки — поворот + чуть меньше scale у стирки */
+  .blackjack-board-wrap {
+    transform: rotate(-90deg) scale(calc(982 / 1512));
+    transform-origin: center center;
+  }
+
+  .prediction-board-wrap {
+    transform: rotate(-90deg) scale(calc((982 / 1512) * 0.68));
+    transform-origin: center center;
+  }
+
   /* Блэкджек на мобильных снова в книжной раскладке */
   .section-blackjack {
     overflow: hidden;
   }
 
   .blackjack-rotator {
-    width: 982px;
-    height: 1512px;
+    width: var(--mobile-design-h);
+    height: var(--mobile-design-w);
     left: 0;
     top: 0;
     position: absolute;
     transform-origin: top left;
-    transform: scale(calc(982 / 1512));
+    transform: scale(calc(var(--mobile-design-h) / var(--mobile-design-w)));
   }
 
   .blackjack-rotator-inner {
-    width: 1512px;
-    height: 982px;
+    width: var(--mobile-design-w);
+    height: var(--mobile-design-h);
     transform-origin: top left;
-    transform: translateY(1512px) rotate(-90deg);
+    transform: translateY(var(--mobile-design-w)) rotate(-90deg);
   }
 }
