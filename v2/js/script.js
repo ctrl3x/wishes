@@ -21,6 +21,62 @@ function initDecorFrameSecond() {
   if (img == null) return;
 
   var hint = screen.querySelector('.screen-spacer-hint');
+  var wishWords = screen.querySelectorAll('.wish-word');
+  var minWishSize = 10;
+  var maxWishSize = 28;
+  var stickyWishIndexes = null;
+
+  function resetWishWordsScale() {
+    var i;
+    for (i = 0; i < wishWords.length; i++) {
+      wishWords[i].style.setProperty('--wish-size', String(minWishSize));
+    }
+    stickyWishIndexes = null;
+  }
+
+  function pickRandomWishIndexes() {
+    if (wishWords.length == 0) {
+      return [];
+    }
+
+    var amount = 3 + Math.floor(Math.random() * 5); // 3..7 слов за клик
+    if (amount > wishWords.length) amount = wishWords.length;
+
+    var selected = {};
+    var picked = 0;
+    while (picked < amount) {
+      var idx = Math.floor(Math.random() * wishWords.length);
+      if (selected[idx]) continue;
+      selected[idx] = true;
+      picked++;
+    }
+
+    var indexes = [];
+    var key;
+    for (key in selected) {
+      if (selected.hasOwnProperty(key)) {
+        indexes.push(parseInt(key, 10));
+      }
+    }
+    return indexes;
+  }
+
+  function growWishWordsByIndexes(indexes) {
+    var i;
+    for (i = 0; i < indexes.length; i++) {
+      var word = wishWords[indexes[i]];
+      if (!word) continue;
+      var currentSize = parseFloat(word.style.getPropertyValue('--wish-size'));
+      if (isNaN(currentSize) || currentSize <= 0) {
+        currentSize = minWishSize;
+      }
+      var nextSize = currentSize + 2.4;
+      if (nextSize > maxWishSize) {
+        nextSize = maxWishSize;
+      }
+      word.style.setProperty('--wish-size', String(nextSize));
+    }
+  }
 
   var clicks = 0;
   var thorns = [
@@ -34,6 +90,7 @@ function initDecorFrameSecond() {
     screen.classList.remove('screen-spacer--finale');
     screen.classList.remove('screen-spacer--inverted-thorns');
     screen.classList.remove('screen-spacer--finale-text-visible');
+    resetWishWordsScale();
     img.hidden = true;
     img.src = '';
     img.alt = '';
@@ -66,6 +123,14 @@ function initDecorFrameSecond() {
 
   function whenUserClicks() {
     console.log('click: screen-second');
+    if (clicks <= 2) {
+      if (stickyWishIndexes == null || stickyWishIndexes.length == 0) {
+        stickyWishIndexes = pickRandomWishIndexes();
+      }
+      growWishWordsByIndexes(stickyWishIndexes);
+    } else {
+      growWishWordsByIndexes(pickRandomWishIndexes());
+    }
 
     clicks++;
 
