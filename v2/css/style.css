@@ -5,6 +5,9 @@
   --poster-max-w: 1512px;
   --poster-ratio-w: 1512;
   --poster-ratio-h: 982;
+  /* фишки hero: эталон 430px viewport → 60×56px */
+  --hero-bet-w: min(60px, calc(100vw * 60 / 430));
+  --hero-bet-h: min(56px, calc(100vw * 56 / 430));
 }
 
 *,
@@ -78,13 +81,15 @@ body {
   color: #ffffff;
 }
 
+/* змейка: макет image1_Glass, эталон кадра 430×932 */
 .hero-snake {
   position: absolute;
-  width: 22.2996%;
-  height: 53.9715%;
-  left: 38.8386%;
-  top: 37.169%;
-  background: url(../img/1/snake.png) no-repeat center / contain;
+  /* 248×390 px; left: 50% − 248/2 − 1; top: 50% − 390/2 + 59 → промежуточные через calc */
+  width: calc(248 * 100% / 430);
+  height: calc(390 * 100% / 932);
+  left: calc(50% - 125 * 100% / 430);
+  top: calc(50% - 136 * 100% / 932);
+  background: url(../img/1/image1_Glass.png) no-repeat center / contain;
 }
 
 .hero-bet {
@@ -99,41 +104,40 @@ body {
   cursor: grabbing;
 }
 
+.hero .hero-bet-1,
+.hero .hero-bet-2,
+.hero .hero-bet-3,
+.hero .hero-bet-4,
+.hero .hero-bet-5 {
+  width: var(--hero-bet-w);
+  height: var(--hero-bet-h);
+}
+
 .hero-bet-1 {
-  width: 5.754%;
-  height: 9.0631%;
   left: 9.1931%;
   top: 63.8493%;
   transform: rotate(63deg);
 }
 
 .hero-bet-2 {
-  width: 5.881%;
-  height: 9.6314%;
   left: 11.7229%;
   top: 78.1314%;
   transform: rotate(-100deg);
 }
 
 .hero-bet-3 {
-  width: 5.834%;
-  height: 8.5153%;
   left: 17.3776%;
   top: 78.1314%;
   transform: rotate(-40deg);
 }
 
 .hero-bet-4 {
-  width: 5.901%;
-  height: 8.4674%;
   left: 78.8856%;
   top: 31.8737%;
   transform: rotate(12deg);
 }
 
 .hero-bet-5 {
-  width: 5.834%;
-  height: 8.5153%;
   left: 82.7546%;
   top: 41.4206%;
   transform: rotate(-40deg);
@@ -1155,11 +1159,6 @@ body {
     transform: translateY(var(--mobile-design-w)) rotate(-90deg);
   }
 
-  .hero-snake {
-    transform: scale(1.22);
-    transform-origin: center center;
-  }
-
   .marquee-line-2 {
     height: 120px;
   }
@@ -1376,8 +1375,23 @@ body {
 
   /* узкий экран: как раньше делали для блэкджека/стирки — поворот + чуть меньше scale у стирки */
   .blackjack-board-wrap {
-    transform: rotate(-90deg) scale(calc(982 / 1512));
+    transform: rotate(-90deg) scale(calc(982 / 1512 * 0.92));
     transform-origin: center center;
+  }
+
+  .section-blackjack .blackjack-chip-3 {
+    left: 252.47px;
+    top: 689.87px;
+  }
+
+  .section-blackjack .blackjack-chip-4 {
+    left: 314.47px;
+    top: 671.87px;
+  }
+
+  .section-blackjack .blackjack-chip-5 {
+    left: 376.47px;
+    top: 695.87px;
   }
 
   .prediction-board-wrap {

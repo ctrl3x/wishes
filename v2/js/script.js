@@ -268,86 +268,137 @@ function initHeroBetDrag() {
 
 function initBlackjackChipDrag() {
   var section = document.querySelector('.section-blackjack');
-  var mobileBoard = document.querySelector('.section-blackjack .blackjack-rotator-inner');
-  var container = mobileBoard || section;
+  var boardWrap = document.querySelector('.section-blackjack .blackjack-board-wrap');
+  var rotatorInner = document.querySelector('.section-blackjack .blackjack-rotator-inner');
+  var dragBox = rotatorInner || boardWrap || section;
   var chips = document.querySelectorAll('.section-blackjack .blackjack-chip');
-  if (container == null || chips.length == 0) {
+  if (!section || !dragBox || chips.length === 0) {
     return;
   }
 
-  for (var j = 0; j < chips.length; j++) {
-    (function (el) {
-      var isDragging = false;
-      var x0 = 0;
-      var y0 = 0;
-      var l0 = 0;
-      var t0 = 0;
-
-      function clamp(value, min, max) {
-        if (value < min) {
-          return min;
-        }
-        if (value > max) {
-          return max;
-        }
-        return value;
-      }
+  for (var i = 0; i < chips.length; i++) {
+    (function (chip) {
+      var dragging = false;
+      var lastPointerX = 0;
+      var lastPointerY = 0;
+      var chipLeft = 0;
+      var chipTop = 0;
 
       function onPointerDown(e) {
-        if (e.button != 0 && e.type == 'mousedown') return;
+        if (e.button != 0 && e.type == 'mousedown') {
+          return;
+        }
         e.preventDefault();
-        isDragging = true;
-        x0 = e.touches ? e.touches[0].clientX : e.clientX;
-        y0 = e.touches ? e.touches[0].clientY : e.clientY;
-        var inlineLeft = parseFloat(el.style.left);
-        var inlineTop = parseFloat(el.style.top);
-        l0 = isNaN(inlineLeft) ? el.offsetLeft : inlineLeft;
-        t0 = isNaN(inlineTop) ? el.offsetTop : inlineTop;
-        el.classList.add('blackjack-chip-dragging');
+        dragging = true;
+        lastPointerX = e.touches ? e.touches[0].clientX : e.clientX;
+        lastPointerY = e.touches ? e.touches[0].clientY : e.clientY;
+        var fromStyleLeft = parseFloat(chip.style.left);
+        var fromStyleTop = parseFloat(chip.style.top);
+        chipLeft = isNaN(fromStyleLeft) ? chip.offsetLeft : fromStyleLeft;
+        chipTop = isNaN(fromStyleTop) ? chip.offsetTop : fromStyleTop;
+        chip.classList.add('blackjack-chip-dragging');
       }
 
       function onPointerMove(e) {
-        if (!isDragging) return;
+        if (!dragging) {
+          return;
+        }
         e.preventDefault();
-        var clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        var clientY = e.touches ? e.touches[0].clientY : e.clientY;
-        var rawDx = clientX - x0;
-        var rawDy = clientY - y0;
-        var dx = rawDx;
-        var dy = rawDy;
-        if (window.matchMedia('(max-width: 780px)').matches) {
-          /* .blackjack-board-wrap: rotate(-90deg) — экранный дельта → left/top */
-          dx = -rawDy;
-          dy = rawDx;
+        var x = e.touches ? e.touches[0].clientX : e.clientX;
+        var y = e.touches ? e.touches[0].clientY : e.clientY;
+        var fingerDx = x - lastPointerX;
+        var fingerDy = y - lastPointerY;
+
+        var dLeft = fingerDx;
+        var dTop = fingerDy;
+        var narrowScreen = window.matchMedia('(max-width: 780px)').matches;
+        if (narrowScreen) {
+          dLeft = -fingerDy;
+          dTop = fingerDx;
         }
 
-        var newLeft = l0 + dx;
-        var newTop = t0 + dy;
-        var w = el.offsetWidth;
-        var h = el.offsetHeight;
-        newLeft = clamp(newLeft, 0, container.clientWidth - w);
-        newTop = clamp(newTop, 0, container.clientHeight - h);
-        el.style.left = newLeft + 'px';
-        el.style.top = newTop + 'px';
-        l0 = newLeft;
-        t0 = newTop;
-        x0 = clientX;
-        y0 = clientY;
+        var left = chipLeft + dLeft;
+        var top = chipTop + dTop;
+
+        if (narrowScreen) {
+          var k;
+          var sectionRect;
+          var chipRect;
+          var nudgeX;
+          var nudgeY;
+          for (k = 0; k < 8; k++) {
+            chip.style.left = left + 'px';
+            chip.style.top = top + 'px';
+            sectionRect = section.getBoundingClientRect();
+            chipRect = chip.getBoundingClientRect();
+            nudgeX = 0;
+            nudgeY = 0;
+            if (chipRect.left < sectionRect.left) {
+              nudgeX += sectionRect.left - chipRect.left;
+            }
+            if (chipRect.right > sectionRect.right) {
+              nudgeX -= chipRect.right - sectionRect.right;
+            }
+            if (chipRect.top < sectionRect.top) {
+              nudgeY += sectionRect.top - chipRect.top;
+            }
+            if (chipRect.bottom > sectionRect.bottom) {
+              nudgeY -= chipRect.bottom - sectionRect.bottom;
+            }
+            if (Math.abs(nudgeX) < 0.25 && Math.abs(nudgeY) < 0.25) {
+              break;
+            }
+            left = left - nudgeY;
+            top = top + nudgeX;
+          }
+        } else {
+          var chipW = chip.offsetWidth;
+          var chipH = chip.offsetHeight;
+          var maxLeft = dragBox.clientWidth - chipW;
+          var maxTop = dragBox.clientHeight - chipH;
+          if (maxLeft < 0) {
+            maxLeft = 0;
+          }
+          if (maxTop < 0) {
+            maxTop = 0;
+          }
+          if (left < 0) {
+            left = 0;
+          }
+          if (left > maxLeft) {
+            left = maxLeft;
+          }
+          if (top < 0) {
+            top = 0;
+          }
+          if (top > maxTop) {
+            top = maxTop;
+          }
+        }
+
+        chip.style.left = left + 'px';
+        chip.style.top = top + 'px';
+        chipLeft = left;
+        chipTop = top;
+        lastPointerX = x;
+        lastPointerY = y;
       }
 
       function onPointerUp() {
-        if (!isDragging) return;
-        isDragging = false;
-        el.classList.remove('blackjack-chip-dragging');
+        if (!dragging) {
+          return;
+        }
+        dragging = false;
+        chip.classList.remove('blackjack-chip-dragging');
       }
 
-      el.addEventListener('mousedown', onPointerDown);
-      el.addEventListener('touchstart', onPointerDown, { passive: false });
+      chip.addEventListener('mousedown', onPointerDown);
+      chip.addEventListener('touchstart', onPointerDown, { passive: false });
       document.addEventListener('mousemove', onPointerMove);
       document.addEventListener('mouseup', onPointerUp);
       document.addEventListener('touchmove', onPointerMove, { passive: false });
       document.addEventListener('touchend', onPointerUp);
-    })(chips[j]);
+    })(chips[i]);
   }
 }
 
