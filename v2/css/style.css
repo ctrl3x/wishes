@@ -1155,6 +1155,11 @@ body {
     transform: translateY(var(--mobile-design-w)) rotate(-90deg);
   }
 
+  .hero-snake {
+    transform: scale(1.22);
+    transform-origin: center center;
+  }
+
   .marquee-line-2 {
     height: 120px;
   }
