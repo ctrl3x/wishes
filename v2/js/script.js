@@ -1,6 +1,8 @@
-'use strict';
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 document.addEventListener('DOMContentLoaded', function () {
+  initHeroSnakeModel();
   initCustomCursorLikeAHumanityFreshman();
   initHeroBetDrag();
   initBlackjackChipDrag();
@@ -11,6 +13,252 @@ document.addEventListener('DOMContentLoaded', function () {
   initSuitsPool();
   initDecorFrameSecond();
 });
+
+function initHeroSnakeModel() {
+  var mount = document.querySelector('.hero-snake');
+  var modelHost = document.querySelector('.hero-snake-model');
+
+  if (mount == null || modelHost == null) {
+    return;
+  }
+
+  var scene = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(28, 1, 0.1, 100);
+  var renderer = new THREE.WebGLRenderer({
+    alpha: true,
+    antialias: true,
+    powerPreference: 'high-performance'
+  });
+  var loader = new GLTFLoader();
+  var modelPivot = new THREE.Group();
+  var reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var animationId = 0;
+  var model = null;
+  var twoPi = Math.PI * 2;
+  /* камера сверху; вращение вокруг X — на экране «верх/низ», не вокруг Y (лево/право) */
+  var topViewPitchBase = -Math.PI / 2 + 0.08;
+  var currentRotationX = 0;
+  var velocityX = 0.0085;
+  var isDragging = false;
+  var lastPointerX = 0;
+  var lastPointerY = 0;
+  var pointerId = null;
+
+  renderer.setClearColor(0x000000, 0);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.08;
+
+  modelHost.appendChild(renderer.domElement);
+  scene.add(modelPivot);
+  modelPivot.rotation.order = 'YXZ';
+
+  var hemiLight = new THREE.HemisphereLight(0xffffff, 0x1a1a1a, 2.1);
+  var keyLight = new THREE.DirectionalLight(0xffffff, 2.8);
+  var fillLight = new THREE.DirectionalLight(0x9eb6ff, 1.4);
+  var rimLight = new THREE.DirectionalLight(0xffffff, 1.1);
+
+  keyLight.position.set(4.2, 2.2, 4.5);
+  fillLight.position.set(-4.5, 2.4, -3.8);
+  rimLight.position.set(2.4, 0.8, -4.2);
+
+  scene.add(hemiLight);
+  scene.add(keyLight);
+  scene.add(fillLight);
+  scene.add(rimLight);
+
+  function renderFrame() {
+    renderer.render(scene, camera);
+  }
+
+  function heroSnakeWidthScaleMul() {
+    var w = window.innerWidth;
+    var wNarrow = 430;
+    var wWide = 1600;
+    var mulNarrow = 1;
+    var mulWide = 1.32 * 0.95;
+    if (w <= wNarrow) {
+      return mulNarrow;
+    }
+    if (w >= wWide) {
+      return mulWide;
+    }
+    return mulNarrow + (mulWide - mulNarrow) * (w - wNarrow) / (wWide - wNarrow);
+  }
+
+  function fitModelToFrame() {
+    if (model == null) {
+      return;
+    }
+
+    model.scale.setScalar(1);
+    model.position.set(0, 0, 0);
+
+    var box = new THREE.Box3().setFromObject(model);
+    var size = box.getSize(new THREE.Vector3());
+    var center = box.getCenter(new THREE.Vector3());
+    var maxSide = Math.max(size.x, size.y, size.z);
+
+    if (!isFinite(maxSide) || maxSide <= 0) {
+      maxSide = 1;
+    }
+
+    model.position.x -= center.x;
+    model.position.y -= center.y;
+    model.position.z -= center.z;
+
+    var baseFit = (3.35 * 0.9 * 0.95 * 0.9) * heroSnakeWidthScaleMul();
+    model.scale.setScalar(baseFit / maxSide);
+
+    box.setFromObject(model);
+    size = box.getSize(new THREE.Vector3());
+    center = box.getCenter(new THREE.Vector3());
+
+    model.position.x -= center.x;
+    model.position.y -= center.y;
+    model.position.z -= center.z;
+
+    modelPivot.position.set(0, -size.y * 0.08, 0);
+  }
+
+  function resizeRenderer() {
+    var width = mount.clientWidth;
+    var height = mount.clientHeight;
+
+    if (width <= 0 || height <= 0) {
+      return;
+    }
+
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setSize(width, height, false);
+    camera.aspect = width / height;
+    camera.up.set(0, 0, -1);
+    camera.position.set(0, 6.35, 0);
+    camera.lookAt(0, 0, 0);
+    camera.updateProjectionMatrix();
+
+    fitModelToFrame();
+    renderFrame();
+  }
+
+  function animate() {
+    if (model != null) {
+      if (!isDragging) {
+        velocityX *= 0.96;
+        if (Math.abs(velocityX) < 0.0025) {
+          velocityX = velocityX <= 0 ? -0.0025 : 0.0025;
+        }
+      }
+
+      currentRotationX += velocityX;
+      currentRotationX =
+        ((currentRotationX % twoPi) + twoPi) % twoPi;
+
+      modelPivot.rotation.y = 0;
+      modelPivot.rotation.x = topViewPitchBase + currentRotationX;
+      modelPivot.rotation.z = 0;
+    }
+
+    renderFrame();
+    animationId = window.requestAnimationFrame(animate);
+  }
+
+  function onPointerDown(event) {
+    if (model == null) {
+      return;
+    }
+
+    isDragging = true;
+    pointerId = event.pointerId;
+    lastPointerX = event.clientX;
+    lastPointerY = event.clientY;
+    velocityX = 0;
+
+    if (renderer.domElement.setPointerCapture != null) {
+      renderer.domElement.setPointerCapture(event.pointerId);
+    }
+
+    event.preventDefault();
+  }
+
+  function onPointerMove(event) {
+    if (!isDragging || pointerId !== event.pointerId) {
+      return;
+    }
+
+    var deltaX = event.clientX - lastPointerX;
+    var deltaY = event.clientY - lastPointerY;
+
+    lastPointerX = event.clientX;
+    lastPointerY = event.clientY;
+
+    velocityX = deltaY * 0.012 + deltaX * 0.004;
+    renderFrame();
+
+    event.preventDefault();
+  }
+
+  function onPointerUp(event) {
+    if (pointerId !== event.pointerId) {
+      return;
+    }
+
+    isDragging = false;
+    pointerId = null;
+
+    if (Math.abs(velocityX) < 0.003) {
+      velocityX = velocityX < 0 ? -0.003 : 0.003;
+    }
+  }
+
+  loader.load(
+    encodeURI('3d/Snake2.glb'),
+    function (gltf) {
+      model = gltf.scene;
+
+      model.traverse(function (child) {
+        if (!child.isMesh) {
+          return;
+        }
+
+        child.castShadow = false;
+        child.receiveShadow = false;
+        if (child.material != null && 'envMapIntensity' in child.material) {
+          child.material.envMapIntensity = 1.1;
+        }
+      });
+
+      modelPivot.add(model);
+      resizeRenderer();
+
+      if (reduceMotionQuery.matches) {
+        modelPivot.rotation.y = 0;
+        modelPivot.rotation.x = topViewPitchBase + currentRotationX;
+        modelPivot.rotation.z = 0;
+        renderFrame();
+        return;
+      }
+
+      if (animationId) {
+        window.cancelAnimationFrame(animationId);
+      }
+      animate();
+    },
+    undefined,
+    function (error) {
+      console.error('[hero-snake] failed to load glb model:', error);
+    }
+  );
+
+  renderer.domElement.addEventListener('pointerdown', onPointerDown);
+  renderer.domElement.addEventListener('pointermove', onPointerMove);
+  renderer.domElement.addEventListener('pointerup', onPointerUp);
+  renderer.domElement.addEventListener('pointercancel', onPointerUp);
+  renderer.domElement.addEventListener('pointerleave', onPointerUp);
+  window.addEventListener('resize', resizeRenderer);
+  window.requestAnimationFrame(resizeRenderer);
+}
 
 function initCustomCursorLikeAHumanityFreshman() {
   var canUseThis = window.matchMedia('(hover: hover) and (pointer: fine)');
@@ -1132,7 +1380,7 @@ function initSuitsPool() {
 
     for (i = 0; i < particles.length; i++) {
       p = particles[i];
-      p.vy = p.vy + 0.01;
+      p.vy = p.vy + 0.003;
       p.x = p.x + p.vx;
       p.y = p.y + p.vy;
       p.vx = p.vx * 0.995;

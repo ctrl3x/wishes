@@ -119,7 +119,44 @@ body.has-custom-cursor * {
   height: calc(390 * 100% / 932);
   left: calc(50% - 125 * 100% / 430);
   top: calc(50% - 136 * 100% / 932);
-  background: url(../img/1/image1_Glass.png) no-repeat center / contain;
+  overflow: visible;
+  pointer-events: auto;
+}
+
+.hero-snake-model {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-snake canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  cursor: grab;
+  touch-action: none;
+}
+
+.hero-snake canvas:active {
+  cursor: grabbing;
+}
+
+@media (min-width: 1400px) {
+  .screen.hero {
+    overflow: visible;
+  }
+
+  .hero .hero-rotator,
+  .hero .hero-rotator-inner {
+    overflow: visible;
+  }
+
+
+  .hero-snake {
+    width: calc(339 * 100% / 430);
+    height: calc(515 * 100% / 932);
+    left: calc(50% - 169.5 * 100% / 430);
+    top: calc(50% - 136 * 100% / 932 + 50px - 23.5 * 100% / 932);
+  }
 }
 
 .hero-bet {

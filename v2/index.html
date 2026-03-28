@@ -9,6 +9,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Cormorant+Infant:wght@600&family=Montserrat:wght@400&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/style.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/"
+      }
+    }
+  </script>
 </head>
 <body>
 
@@ -17,7 +25,9 @@
       <div class="hero-rotator-inner">
         <div class="hero-title-wrap"></div>
         <span class="hero-title">ЖЕЛАЙ</span>
-        <div class="hero-snake"></div>
+        <div class="hero-snake" aria-hidden="true">
+          <div class="hero-snake-model"></div>
+        </div>
         <div class="hero-bet hero-bet-1"></div>
         <div class="hero-bet hero-bet-2"></div>
         <div class="hero-bet hero-bet-3"></div>
@@ -246,6 +256,6 @@
   </div>
 
 
-<script src="js/script.js"></script>
+<script type="module" src="js/script.js"></script>
 </body>
 </html>
