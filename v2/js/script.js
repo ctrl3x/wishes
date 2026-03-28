@@ -1,14 +1,83 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', function () {
+  initCustomCursorLikeAHumanityFreshman();
   initHeroBetDrag();
   initBlackjackChipDrag();
   initBlackjackDealerCards();
   initScratchCard();
+  initPredictionDiceRolls();
   initSuitsStopwatch();
   initSuitsPool();
   initDecorFrameSecond();
 });
+
+function initCustomCursorLikeAHumanityFreshman() {
+  var canUseThis = window.matchMedia('(hover: hover) and (pointer: fine)');
+  if (!canUseThis.matches) {
+    return;
+  }
+
+  var circle = document.createElement('div');
+  circle.className = 'custom-cursor';
+  circle.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(circle);
+  document.body.classList.add('has-custom-cursor');
+
+  function putCircleSomewhere(x, y) {
+    var leftValue = x + 'px';
+    var topValue = y + 'px';
+    circle.style.left = leftValue;
+    circle.style.top = topValue;
+  }
+
+  function showCircle() {
+    circle.classList.add('is-visible');
+  }
+
+  function hideCircle() {
+    circle.classList.remove('is-visible');
+    circle.classList.remove('is-pressed');
+  }
+
+  function pressCircle() {
+    circle.classList.add('is-pressed');
+  }
+
+  function unpressCircle() {
+    circle.classList.remove('is-pressed');
+  }
+
+  document.addEventListener('mousemove', function (e) {
+    var x = e.clientX;
+    var y = e.clientY;
+    putCircleSomewhere(x, y);
+    showCircle();
+  });
+
+  document.addEventListener('mouseenter', function (e) {
+    var x = e.clientX;
+    var y = e.clientY;
+    putCircleSomewhere(x, y);
+    showCircle();
+  });
+
+  document.addEventListener('mouseleave', function () {
+    hideCircle();
+  });
+
+  document.addEventListener('mousedown', function () {
+    pressCircle();
+  });
+
+  document.addEventListener('mouseup', function () {
+    unpressCircle();
+  });
+
+  window.addEventListener('blur', function () {
+    hideCircle();
+  });
+}
 
 
 function initDecorFrameSecond() {
@@ -572,8 +641,8 @@ function initBlackjackDealerCards() {
 
 function initScratchCard() {
   var section = document.querySelector('.section-prediction');
-  var mobileBoard = document.querySelector('.section-prediction .prediction-rotator-inner');
-  var dragContainer = mobileBoard || section;
+  var rotatorInner = document.querySelector('.section-prediction .prediction-rotator-inner');
+  var dragContainer = rotatorInner || section;
   var wrap = document.querySelector('.prediction-scratch-wrap');
   var canvas = document.querySelector('.prediction-scratch-canvas');
   var chip = document.querySelector('.prediction-chip');
@@ -602,7 +671,7 @@ function initScratchCard() {
   }
 
   scratchBg.onload = drawScratchLayer;
-  scratchBg.src = 'img/scratch-bg.png';
+  scratchBg.src = 'img/prediction/scratch-bg-v2.png';
 
   function scratch(x, y) {
     if (x < -radius || x > width + radius || y < -radius || y > height + radius) {
@@ -690,16 +759,58 @@ function initScratchCard() {
     var rawDy = clientY - startY;
     var dx = rawDx;
     var dy = rawDy;
-    if (window.matchMedia('(max-width: 780px)').matches) {
+    var narrowScreen = window.matchMedia('(max-width: 780px)').matches;
+    if (narrowScreen) {
       /* .prediction-board-wrap: rotate(-90deg) — экранный дельта → left/top */
       dx = -rawDy;
       dy = rawDx;
     }
 
-    var newLeft = clamp(startLeft + dx, 0, dragContainer.clientWidth - chip.offsetWidth);
-    var newTop = clamp(startTop + dy, 0, dragContainer.clientHeight - chip.offsetHeight);
-    chip.style.left = newLeft + 'px';
-    chip.style.top = newTop + 'px';
+    var newLeft = startLeft + dx;
+    var newTop = startTop + dy;
+
+    if (narrowScreen) {
+      var k;
+      var sectionRect;
+      var chipRect;
+      var nudgeX;
+      var nudgeY;
+      var left = newLeft;
+      var top = newTop;
+      for (k = 0; k < 8; k++) {
+        chip.style.left = left + 'px';
+        chip.style.top = top + 'px';
+        sectionRect = section.getBoundingClientRect();
+        chipRect = chip.getBoundingClientRect();
+        nudgeX = 0;
+        nudgeY = 0;
+        if (chipRect.left < sectionRect.left) {
+          nudgeX += sectionRect.left - chipRect.left;
+        }
+        if (chipRect.right > sectionRect.right) {
+          nudgeX -= chipRect.right - sectionRect.right;
+        }
+        if (chipRect.top < sectionRect.top) {
+          nudgeY += sectionRect.top - chipRect.top;
+        }
+        if (chipRect.bottom > sectionRect.bottom) {
+          nudgeY -= chipRect.bottom - sectionRect.bottom;
+        }
+        if (Math.abs(nudgeX) < 0.25 && Math.abs(nudgeY) < 0.25) {
+          break;
+        }
+        left = left - nudgeY;
+        top = top + nudgeX;
+      }
+      newLeft = left;
+      newTop = top;
+    } else {
+      newLeft = clamp(newLeft, 0, dragContainer.clientWidth - chip.offsetWidth);
+      newTop = clamp(newTop, 0, dragContainer.clientHeight - chip.offsetHeight);
+      chip.style.left = newLeft + 'px';
+      chip.style.top = newTop + 'px';
+    }
+
     startLeft = newLeft;
     startTop = newTop;
     startX = clientX;
@@ -744,6 +855,104 @@ function initScratchCard() {
 }
 
 
+function initPredictionDiceRolls() {
+  var allDice = document.querySelectorAll('.section-prediction .prediction-dice');
+  if (allDice.length === 0) {
+    console.log('[prediction-dice] no dice found');
+    return;
+  }
+
+  var howLongRollGoes = 1200;
+  var gifForRoll = 'img/prediction/cube.gif';
+  var allDicePictures = [
+    'img/prediction/cube-face-1.png',
+    'img/prediction/cube-face-2.png',
+    'img/prediction/cube-face-3.png',
+    'img/prediction/cube-face-4.png',
+    'img/prediction/cube-face-5.png',
+    'img/prediction/cube-face-6.png'
+  ];
+  var i;
+
+  console.log('[prediction-dice] init, dice count:', allDice.length);
+
+  function getRandomDicePicture() {
+    var randomNumber = Math.floor(Math.random() * allDicePictures.length);
+    return allDicePictures[randomNumber];
+  }
+
+  function warmUpPictures() {
+    var gifImg = new Image();
+    var j;
+
+    gifImg.src = gifForRoll;
+    for (j = 0; j < allDicePictures.length; j++) {
+      var justImg = new Image();
+      justImg.src = allDicePictures[j];
+    }
+  }
+
+  function makeOneDiceWork(oneDice) {
+    var pic = oneDice.querySelector('img');
+    var rollingNow = false;
+    var timerThing = 0;
+
+    if (pic == null) {
+      console.log('[prediction-dice] missing image for die', oneDice.className);
+      return;
+    }
+
+    pic.src = getRandomDicePicture();
+    console.log('[prediction-dice] initial face:', oneDice.className, '->', pic.src);
+
+    function putGifInstead() {
+      console.log('[prediction-dice] rolling start:', oneDice.className);
+      oneDice.classList.add('prediction-dice--rolling');
+      pic.src = gifForRoll + '?t=' + Date.now();
+    }
+
+    function stopGifAndShowResult() {
+      var whatFell = getRandomDicePicture();
+      console.log('[prediction-dice] rolling end:', oneDice.className, '->', whatFell);
+      oneDice.classList.remove('prediction-dice--rolling');
+      pic.src = whatFell;
+      rollingNow = false;
+    }
+
+    function startDiceRoll() {
+      console.log('[prediction-dice] roll requested:', oneDice.className, 'isRolling:', rollingNow);
+      if (rollingNow) {
+        return;
+      }
+
+      rollingNow = true;
+      putGifInstead();
+
+      window.clearTimeout(timerThing);
+      timerThing = window.setTimeout(stopGifAndShowResult, howLongRollGoes);
+    }
+
+    oneDice.addEventListener('click', startDiceRoll);
+    oneDice.addEventListener('touchstart', function () {
+      console.log('[prediction-dice] touchstart:', oneDice.className);
+    }, { passive: true });
+    oneDice.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' && e.key !== ' ') {
+        return;
+      }
+
+      e.preventDefault();
+      console.log('[prediction-dice] keydown roll:', oneDice.className, 'key:', e.key);
+      startDiceRoll();
+    });
+  }
+
+  warmUpPictures();
+
+  for (i = 0; i < allDice.length; i++) {
+    makeOneDiceWork(allDice[i]);
+  }
+}
 
 function initSuitsStopwatch() {
   var el = document.querySelector('.suits-stopwatch-value');
@@ -824,7 +1033,7 @@ function initSuitsPool() {
     if (width < 800) return 150;
     if (width < 1200) return 300;
     if (width < 1600) return 500;
-    return 800;
+    return 800; 
   }
 
   function createParticle() {
@@ -833,11 +1042,7 @@ function initSuitsPool() {
 
     var span = document.createElement('span');
     span.textContent = symbol;
-    if (symbol === '♥' || symbol === '♦') {
-      span.className = 'suits-particle suit-red';
-    } else {
-      span.className = 'suits-particle suit-black';
-    }
+    span.className = 'suits-particle';
     pool.appendChild(span);
 
     var zoneWidth = wallRight - wallLeft;

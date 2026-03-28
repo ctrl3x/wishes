@@ -32,6 +32,36 @@ body {
   min-width: 320px;
 }
 
+body.has-custom-cursor,
+body.has-custom-cursor * {
+  cursor: none !important;
+}
+
+.custom-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.45);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15);
+  pointer-events: none;
+  z-index: 30000;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity 140ms ease-out, transform 140ms ease-out;
+}
+
+.custom-cursor.is-visible {
+  opacity: 1;
+}
+
+.custom-cursor.is-pressed {
+  transform: translate(-50%, -50%) scale(0.82);
+}
+
 .screen {
   position: relative;
   width: min(100%, var(--poster-max-w));
@@ -374,7 +404,7 @@ body {
   padding: 0;
   line-height: 80px;
   white-space: nowrap;
-  animation: run-text 7s linear infinite;
+  animation: run-text 20s linear infinite;
   color: #ffffff;
   position: absolute;
   left: 0;
@@ -852,6 +882,7 @@ body {
   position: relative;
   margin: 0 auto;
   background: #000000;
+  overflow: visible;
 }
 
 .prediction-board-wrap {
@@ -866,12 +897,14 @@ body {
   position: relative;
   width: 100%;
   height: 100%;
+  overflow: visible;
 }
 
 .prediction-rotator-inner {
   position: relative;
   width: 100%;
   height: 100%;
+  overflow: visible;
 }
 
 .prediction-dice-layer {
@@ -990,17 +1023,58 @@ body {
 }
 
 .prediction-dice {
+  --prediction-dice-size: clamp(
+    75px,
+    calc(75px + (100vmin - 430px) * 30 / 400),
+    105px
+  );
   position: absolute;
+  width: var(--prediction-dice-size);
   border: 0.728337px solid #000000;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow: visible;
+  transform-origin: center center;
+  cursor: pointer;
+  z-index: 12;
 }
 
 .prediction-dice img {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  transform: scale(1);
+  transform-origin: center center;
+}
+
+.prediction-dice.prediction-dice--rolling img {
+  transform: scale(1.9);
+}
+
+.prediction-dice-tl img {
+  transform: rotate(180deg) scale(1);
+}
+
+.prediction-dice.prediction-dice--rolling.prediction-dice-tl img {
+  transform: rotate(180deg) scale(1.9);
+}
+
+.prediction-dice-left img,
+.prediction-dice-right img {
+  transform: matrix(-1, 0, 0, 1, 0, 0) scale(1);
+}
+
+.prediction-dice.prediction-dice--rolling.prediction-dice-left img,
+.prediction-dice.prediction-dice--rolling.prediction-dice-right img {
+  transform: matrix(-1, 0, 0, 1, 0, 0) scale(1.9);
+}
+
+.prediction-dice-bl img {
+  transform: matrix(1, 0, 0, -1, 0, 0) scale(1);
+}
+
+.prediction-dice.prediction-dice--rolling.prediction-dice-bl img {
+  transform: matrix(1, 0, 0, -1, 0, 0) scale(1.9);
 }
 
 .prediction-dice-tl {
@@ -1008,9 +1082,9 @@ body {
   right: 76%;
   top: 17%;
   bottom: 71%;
-  width: auto;
+  width: var(--prediction-dice-size);
   height: auto;
-  transform: rotate(180deg);
+  transform: rotate(180deg) scale(0.66);
 }
 
 .prediction-dice-br {
@@ -1018,25 +1092,26 @@ body {
   right: 15%;
   top: 71%;
   bottom: 16%;
-  width: auto;
+  width: var(--prediction-dice-size);
   height: auto;
+  transform: scale(0.66);
 }
 
 .prediction-dice-left {
-  width: 122px;
-  left: calc(50% - 122px / 2 - 570px);
+  width: var(--prediction-dice-size);
+  left: calc(50% - var(--prediction-dice-size) / 2 - 570px);
   top: 42%;
   bottom: 44%;
   height: auto;
-  transform: matrix(-1, 0, 0, 1, 0, 0);
+  transform: matrix(-1, 0, 0, 1, 0, 0) scale(0.66);
 }
 
 .prediction-dice-tr {
-  width: 122px;
-  left: calc(50% - 122px / 2 + 467px);
-  top: 17%;
+  width: var(--prediction-dice-size);
+  left: calc(50% - var(--prediction-dice-size) / 2 + 467px);
   bottom: 70%;
   height: auto;
+  transform: scale(0.66);
 }
 
 .prediction-dice-bl {
@@ -1044,9 +1119,9 @@ body {
   right: 73%;
   top: 70%;
   bottom: 18%;
-  width: auto;
+  width: var(--prediction-dice-size);
   height: auto;
-  transform: matrix(1, 0, 0, -1, 0, 0);
+  transform: matrix(1, 0, 0, -1, 0, 0) scale(0.66);
 }
 
 .prediction-dice-right {
@@ -1054,9 +1129,9 @@ body {
   right: 8.49%;
   top: 43.43%;
   bottom: 45.04%;
-  width: auto;
+  width: var(--prediction-dice-size);
   height: auto;
-  transform: matrix(-1, 0, 0, 1, 0, 0);
+  transform: matrix(-1, 0, 0, 1, 0, 0) scale(0.66);
 }
 
 .prediction-chip {
@@ -1223,14 +1298,6 @@ body {
     transform: translate(-50%, -50%) rotate(90deg);
   }
 
-  .prediction-chip {
-    top: calc(50% + 618px / 2 + 24px);
-  }
-
-  .prediction-scratch-hint {
-    top: calc(50% + 618px / 2 + 122px);
-  }
-
   .screen.section-suits {
     width: 100%;
     max-width: 100%;
@@ -1375,16 +1442,23 @@ body {
     transform: translate(-50%, -50%) rotate(90deg);
   }
 
+ 
+
+
   .prediction-chip {
-    top: calc(50% + 322.5px / 2 + 24px);
+    left: calc(50% - 87.03px / 2 - (618px / 2 + 24px));
+    top: calc(50% - 89.31px / 2);
   }
 
   .prediction-scratch-hint {
-    top: calc(50% + 322.5px / 2 + 122px);
+    left: calc(50% - (618px / 2 + 72px));
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+    transform-origin: center center;
   }
 
-  /* узкий экран: как раньше делали для блэкджека/стирки — поворот + чуть меньше scale у стирки */
-  .blackjack-board-wrap {
+  
+.blackjack-board-wrap {
     transform: rotate(-90deg) scale(calc(982 / 1512 * 0.92));
     transform-origin: center center;
   }
@@ -1419,73 +1493,75 @@ body {
   }
 
   .prediction-dice {
+    width: var(--prediction-dice-size);
     height: auto;
     box-sizing: border-box;
   }
 
   .prediction-dice-tl {
     position: absolute;
-    width: 75.67px;
-    left: calc(50% - 75.67px/2 - 162.17px);
+    width: var(--prediction-dice-size);
+    left: calc(50% - var(--prediction-dice-size) / 2 - 162.17px);
     top: 15.01%;
     bottom: 76.67%;
 
-    transform: rotate(-90deg);
+    transform: rotate(-90deg) scale(0.66);
   }
 
 
   /* верхний центр */
   .prediction-dice-left {
     position: absolute;
+    width: var(--prediction-dice-size);
     left: 40.63%;
     right: 41.94%;
     top: 8.49%;
     bottom: 84.03%;
 
-    transform: matrix(0, 1, 1, 0, 0, 0);
+    transform: matrix(0, 1, 1, 0, 0, 0) scale(0.66);
   }
 
   /* верхний правый */
   .prediction-dice-tr {
     position: absolute;
+    width: var(--prediction-dice-size);
     left: 80.13%;
-    right: 2.44%;
-    top: 15.64%;
     bottom: 76.89%;
-
-    transform: rotate(-90deg);
+    transform: rotate(-90deg) scale(0.66);
   }
 
   /* левый нижний */
   .prediction-dice-bl {
     position: absolute;
+    width: var(--prediction-dice-size);
     left: 4.03%;
     right: 78.54%;
     top: 76.32%;
     bottom: 16.21%;
 
-    transform: rotate(90deg);
+    transform: rotate(90deg) scale(0.66);
   }
 
   /* нижний центральный */
   .prediction-dice-right {
     position: absolute;
-    width: 75.67px;
-    left: calc(50% - 75.67px/2 - 7.08px);
+    width: var(--prediction-dice-size);
+    left: calc(50% - var(--prediction-dice-size) / 2 - 7.08px);
     top: 83.68%;
     bottom: 8.01%;
 
-    transform: matrix(0, 1, 1, 0, 0, 0);
+    transform: matrix(0, 1, 1, 0, 0, 0) scale(0.66);
   }
 
   .prediction-dice-br {
     position: absolute;
+    width: var(--prediction-dice-size);
     left: 78.2%;
     right: 4.37%;
     top: 76.39%;
     bottom: 16.13%;
 
-    transform: matrix(0, -1, -1, 0, 0, 0);
+    transform: matrix(0, -1, -1, 0, 0, 0) scale(0.66);
   }
 
   
