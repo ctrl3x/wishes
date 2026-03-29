@@ -235,7 +235,7 @@ function initHeroSnakeModel() {
   }
 
   loader.load(
-    encodeURI(appendDevCacheBust('3d/Snake.glb')),
+    encodeURI(appendDevCacheBust('3d/Snake-white-and-eyes.glb')),
     function (gltf) {
       model = gltf.scene;
 
