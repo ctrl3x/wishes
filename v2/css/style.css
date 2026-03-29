@@ -775,6 +775,45 @@ body.has-custom-cursor * {
 #screen-second .wish-word.w25 { left: 54%; top: 83%; }
 #screen-second .wish-word.w26 { left: 78%; top: 90%; }
 
+@keyframes wish-word-shake-y {
+  0%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-2.5px); }
+  50% { transform: translateY(2.5px); }
+  75% { transform: translateY(-2.5px); }
+}
+
+@keyframes wish-word-shake-y-alt {
+  0%, 100% { transform: translateY(0); }
+  25% { transform: translateY(2.5px); }
+  50% { transform: translateY(-2.5px); }
+  75% { transform: translateY(2.5px); }
+}
+
+#screen-second:not(.screen-spacer--finale) .wish-word:nth-child(3n + 1) {
+  animation: wish-word-shake-y 0.52s steps(4, end) infinite;
+}
+
+#screen-second:not(.screen-spacer--finale) .wish-word:nth-child(3n + 2) {
+  animation: wish-word-shake-y-alt 0.56s steps(4, end) infinite;
+}
+
+#screen-second:not(.screen-spacer--finale) .wish-word:nth-child(3n) {
+  animation: wish-word-shake-y 0.48s steps(4, end) infinite;
+}
+
+#screen-second:not(.screen-spacer--finale) .wish-word:nth-child(6n + 1) { animation-delay: 0s; }
+#screen-second:not(.screen-spacer--finale) .wish-word:nth-child(6n + 2) { animation-delay: -0.09s; }
+#screen-second:not(.screen-spacer--finale) .wish-word:nth-child(6n + 3) { animation-delay: -0.18s; }
+#screen-second:not(.screen-spacer--finale) .wish-word:nth-child(6n + 4) { animation-delay: -0.27s; }
+#screen-second:not(.screen-spacer--finale) .wish-word:nth-child(6n + 5) { animation-delay: -0.36s; }
+#screen-second:not(.screen-spacer--finale) .wish-word:nth-child(6n) { animation-delay: -0.45s; }
+
+@media (prefers-reduced-motion: reduce) {
+  #screen-second:not(.screen-spacer--finale) .wish-word {
+    animation: none;
+  }
+}
+
 #screen-second .screen-spacer-img {
   position: absolute;
   left: 0;
