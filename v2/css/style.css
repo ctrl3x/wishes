@@ -75,11 +75,10 @@ body.has-custom-cursor * {
 
 .hero .hero-title-wrap {
   position: absolute;
-  width: 47.0899%;
-  aspect-ratio: 483 / 121;
-  height: auto;
-  left: 26.455%;
-  top: 10.1833%;
+  width: calc(619 * 100% / 1512);
+  height: calc(171.34 * 100% / 982);
+  left: calc(50% - 308.98 * 100% / 1512);
+  top: calc(67 * 100% / 982);
   pointer-events: none;
 }
 
@@ -99,19 +98,17 @@ body.has-custom-cursor * {
 
 .hero .hero-title {
   position: absolute;
-  width: 47.0899%;
-  aspect-ratio: 483 / 121;
-  height: auto;
-  left: 26.455%;
-  top: 10.1833%;
+  width: calc(619 * 100% / 1512);
+  height: calc(171.34 * 100% / 982);
+  left: calc(50% - 308.98 * 100% / 1512);
+  top: calc(67 * 100% / 982);
   display: block;
   object-fit: contain;
-  object-position: 100% 50%;
+  object-position: center center;
   box-sizing: border-box;
   pointer-events: none;
 }
 
-/* змейка: макет image1_Glass, эталон кадра 430×932 */
 .hero-snake {
   position: absolute;
   /* 248×390 px; left: 50% − 248/2 − 1; top: 50% − 390/2 + 59 → промежуточные через calc */
@@ -379,7 +376,7 @@ body.has-custom-cursor * {
 
 .suits-caption {
   position: absolute;
-  width: min(629px, 88%);
+  width: min(780px, 95%);
   left: 50%;
   top: 15.17%;
   margin: 0;
@@ -465,30 +462,34 @@ body.has-custom-cursor * {
   background: #000000;
 }
 
-.author-line h1 {
-  margin: 0;
-  padding: 0;
-  line-height: 80px;
-  white-space: nowrap;
-  animation: run-text 20s linear infinite;
-  color: #ffffff;
+.author-footer-text {
   position: absolute;
   left: 0;
-  top: 0;
-  width: max-content;
+  top: calc(50% - 15px / 2 + 0.5px);
+  margin: 0;
+  padding: 0;
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 12px;
+  line-height: 15px;
+  text-transform: uppercase;
+  color: #ffffff;
+  white-space: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
+  width: max-content;
+  animation: run-text 20s linear infinite;
 }
 
-.author-line h1:hover {
+.author-footer-text:hover {
   animation-play-state: paused;
 }
 
-.author-line h1 span {
+.author-footer-text span {
   display: inline-block;
-  margin-right: 5em;
+  flex-shrink: 0;
+  margin-right: 10em;
 }
 
 @keyframes run-text {
@@ -1335,6 +1336,21 @@ body.has-custom-cursor * {
     transform: translateY(var(--mobile-design-w)) rotate(-90deg);
   }
 
+  .hero .hero-title-wrap,
+  .hero .hero-title {
+    width: 308px;
+    height: 94.84px;
+    left: calc(50% - 308px / 2);
+    top: 67px;
+  }
+
+  .hero-snake {
+    width: 248.63px;
+    height: 378px;
+    left: calc(50% - 248.63px / 2 - 0.69px);
+    top: 336px;
+  }
+
   .marquee-line-2 {
     height: 120px;
   }
@@ -1412,7 +1428,7 @@ body.has-custom-cursor * {
   }
 
   .suits-caption {
-    width: min(629px, 92%);
+    width: min(720px, 96%);
     top: 13%;
     font-size: clamp(18px, 4.4vw, 30px);
   }
@@ -1474,7 +1490,7 @@ body.has-custom-cursor * {
   }
 
   .suits-caption {
-    width: 92%;
+    width: min(720px, 96%);
     left: 50%;
     top: 15%;
     transform: translateX(-50%);
@@ -1487,7 +1503,6 @@ body.has-custom-cursor * {
     right: -14%;
   }
 
-  /* Мобильный адаптив без поворотов секций */
   .screen,
   .marquee-line-2,
   .page-footer {
@@ -1600,73 +1615,70 @@ body.has-custom-cursor * {
 
   .screen.section-prediction {
     overflow: visible;
+    --prediction-dice-mobile-scale: 0.627;
   }
 
   .prediction-dice {
     width: var(--prediction-dice-size);
-    height: auto;
+    height: var(--prediction-dice-size);
     box-sizing: border-box;
   }
 
   .prediction-dice-tl {
     position: absolute;
-    width: var(--prediction-dice-size);
-    left: calc(50% - var(--prediction-dice-size) / 2 - 162.17px);
+    left: 4.03%;
+    right: auto;
     top: auto;
     bottom: 76.67%;
 
-    transform: scale(0.66);
+    transform: scale(var(--prediction-dice-mobile-scale));
   }
 
   .prediction-dice-left {
     position: absolute;
-    width: var(--prediction-dice-size);
-    left: 40.63%;
-    right: 41.94%;
+    left: calc(50% - var(--prediction-dice-size) / 2 - 7.08px);
+    right: auto;
     top: 8.49%;
-    bottom: 84.03%;
+    bottom: auto;
 
-    transform: scale(0.66);
+    transform: scale(var(--prediction-dice-mobile-scale));
   }
 
   .prediction-dice-tr {
     position: absolute;
-    width: var(--prediction-dice-size);
-    left: 80.13%;
+    left: 78.2%;
+    right: auto;
     bottom: 76.67%;
-    transform: scale(0.66);
+    transform: scale(var(--prediction-dice-mobile-scale));
   }
 
   .prediction-dice-bl {
     position: absolute;
-    width: var(--prediction-dice-size);
     left: 4.03%;
-    right: 78.54%;
+    right: auto;
     top: 76.32%;
-    bottom: 16.21%;
+    bottom: auto;
 
-    transform: scale(0.66);
+    transform: scale(var(--prediction-dice-mobile-scale));
   }
 
   .prediction-dice-right {
     position: absolute;
-    width: var(--prediction-dice-size);
     left: calc(50% - var(--prediction-dice-size) / 2 - 7.08px);
     top: 83.68%;
-    bottom: 8.01%;
+    bottom: auto;
 
-    transform: scale(0.66);
+    transform: scale(var(--prediction-dice-mobile-scale));
   }
 
   .prediction-dice-br {
     position: absolute;
-    width: var(--prediction-dice-size);
     left: 78.2%;
-    right: 4.37%;
+    right: auto;
     top: 76.32%;
-    bottom: 16.21%;
+    bottom: auto;
 
-    transform: scale(0.66);
+    transform: scale(var(--prediction-dice-mobile-scale));
   }
 
   .section-prediction .prediction-dice img {

@@ -941,7 +941,7 @@ function initScratchCard() {
   }
 
   scratchBg.onload = drawScratchLayer;
-  scratchBg.src = 'img/prediction/scratch-bg-v2.png';
+  scratchBg.src = 'img/prediction/scratch-bg-v3.png';
 
   function scratch(x, y) {
     if (x < -radius || x > width + radius || y < -radius || y > height + radius) {
