@@ -5,9 +5,10 @@
   --poster-max-w: 1512px;
   --poster-ratio-w: 1512;
   --poster-ratio-h: 982;
-  /* фишки hero: эталон 430px viewport → 60×56px */
-  --hero-bet-w: min(60px, calc(100vw * 60 / 430));
-  --hero-bet-h: min(56px, calc(100vw * 56 / 430));
+  --poster-chip-w: 88px;
+  --poster-chip-h: 88px;
+  --hero-bet-w: var(--poster-chip-w);
+  --hero-bet-h: var(--poster-chip-h);
 }
 
 *,
@@ -75,9 +76,11 @@ body.has-custom-cursor * {
 .hero .hero-title-wrap {
   position: absolute;
   width: 47.0899%;
-  height: 20.0173%;
+  aspect-ratio: 483 / 121;
+  height: auto;
   left: 26.455%;
   top: 10.1833%;
+  pointer-events: none;
 }
 
 .hero-rotator,
@@ -94,21 +97,18 @@ body.has-custom-cursor * {
   height: 100%;
 }
 
-/* заголовок ЖЕЛАЙ */
 .hero .hero-title {
   position: absolute;
   width: 47.0899%;
-  height: 20.0173%;
+  aspect-ratio: 483 / 121;
+  height: auto;
   left: 26.455%;
   top: 10.1833%;
-  font-family: 'Cormorant Garamond', serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: min(12.4123vw, 187.674px);
-  line-height: 1.21;
-  text-align: right;
-  text-transform: uppercase;
-  color: #ffffff;
+  display: block;
+  object-fit: contain;
+  object-position: 100% 50%;
+  box-sizing: border-box;
+  pointer-events: none;
 }
 
 /* змейка: макет image1_Glass, эталон кадра 430×932 */
@@ -159,15 +159,19 @@ body.has-custom-cursor * {
   }
 }
 
-.hero-bet {
+.hero-bet,
+.blackjack-chip {
   position: absolute;
   background: url(../img/1/bet.png) no-repeat center / contain;
   cursor: grab;
   touch-action: none;
+  transition: transform 140ms ease-out;
 }
 
 .hero-bet:active,
-.hero-bet.hero-bet-dragging {
+.hero-bet.hero-bet-dragging,
+.blackjack-chip:active,
+.blackjack-chip.blackjack-chip-dragging {
   cursor: grabbing;
 }
 
@@ -186,10 +190,20 @@ body.has-custom-cursor * {
   transform: rotate(63deg);
 }
 
+.hero-bet-1:active,
+.hero-bet-1.hero-bet-dragging {
+  transform: rotate(63deg) scale(1.22);
+}
+
 .hero-bet-2 {
   left: 11.7229%;
   top: 78.1314%;
   transform: rotate(-100deg);
+}
+
+.hero-bet-2:active,
+.hero-bet-2.hero-bet-dragging {
+  transform: rotate(-100deg) scale(1.22);
 }
 
 .hero-bet-3 {
@@ -198,16 +212,31 @@ body.has-custom-cursor * {
   transform: rotate(-40deg);
 }
 
+.hero-bet-3:active,
+.hero-bet-3.hero-bet-dragging {
+  transform: rotate(-40deg) scale(1.22);
+}
+
 .hero-bet-4 {
   left: 78.8856%;
   top: 31.8737%;
   transform: rotate(12deg);
 }
 
+.hero-bet-4:active,
+.hero-bet-4.hero-bet-dragging {
+  transform: rotate(12deg) scale(1.22);
+}
+
 .hero-bet-5 {
   left: 82.7546%;
   top: 41.4206%;
   transform: rotate(-40deg);
+}
+
+.hero-bet-5:active,
+.hero-bet-5.hero-bet-dragging {
+  transform: rotate(-40deg) scale(1.22);
 }
 
 .marquee {
@@ -257,8 +286,8 @@ body.has-custom-cursor * {
 }
 
 .marquee .marquee-arrow {
-  width: 102.75px;
-  height: 9.75px;
+  width: 205.5px;
+  height: 19.5px;
   transform: rotate(0deg);
 }
 
@@ -561,18 +590,8 @@ body.has-custom-cursor * {
 }
 
 .blackjack-chip {
-  position: absolute;
-  width: 88px;
-  height: 88px;
-  background: url(../img/1/bet.png) no-repeat center / contain;
-  cursor: grab;
-  touch-action: none;
-  transition: transform 140ms ease-out;
-}
-
-.blackjack-chip:active,
-.blackjack-chip.blackjack-chip-dragging {
-  cursor: grabbing;
+  width: var(--poster-chip-w);
+  height: var(--poster-chip-h);
 }
 
 .blackjack-chip-3 {
@@ -750,14 +769,18 @@ body.has-custom-cursor * {
 
 #screen-second .screen-spacer-hint {
   position: absolute;
-  left: 50%;
+  left: 0;
+  right: 0;
   top: 50%;
-  width: min(1120px, 92%);
-  margin: 0;
-  transform: translate(-50%, -50%);
+  width: fit-content;
+  max-width: min(1120px, 92%);
+  margin: 0 auto;
+  transform: translateY(-50%);
+  padding-inline: clamp(10px, 2.5vw, 28px);
+  box-sizing: border-box;
   font-family: 'Cormorant Garamond', serif;
   font-weight: 600;
-  font-size: clamp(20px, 2.25vw, 32px);
+  font-size: clamp(17px, 2vw, 28px);
   line-height: 1.08;
   text-align: center;
   text-transform: uppercase;
@@ -768,6 +791,11 @@ body.has-custom-cursor * {
   opacity: 1;
   visibility: visible;
   transition: opacity 0.25s ease, visibility 0.25s ease;
+  white-space: nowrap;
+}
+
+#screen-second .screen-spacer-hint__break {
+  display: none;
 }
 
 #screen-second.screen-spacer--hint-hidden .screen-spacer-hint {
@@ -1036,8 +1064,8 @@ body.has-custom-cursor * {
   width: 131px;
   height: 29px;
   left: 50%;
-  bottom: 13px;
-  transform: translateX(-50%);
+  bottom: 4px;
+  transform: translate(-50%, 0.6em);
   font-family: 'Cormorant Garamond';
   font-style: normal;
   font-weight: 500;
@@ -1173,9 +1201,9 @@ body.has-custom-cursor * {
 
 .prediction-chip {
   position: absolute;
-  width: 87.03px;
-  height: 89.31px;
-  left: calc(50% - 87.03px / 2);
+  width: var(--poster-chip-w);
+  height: var(--poster-chip-h);
+  left: calc(50% - var(--poster-chip-w) / 2);
   top: calc(50% + 322.5px / 2 + 24px);
   background: url(../img/1/bet.png) no-repeat center / contain;
   transform: rotate(-25deg);
@@ -1262,6 +1290,14 @@ body.has-custom-cursor * {
     overflow: hidden;
   }
 
+  #screen-second .screen-spacer-hint {
+    white-space: normal;
+  }
+
+  #screen-second .screen-spacer-hint__break {
+    display: block;
+  }
+
   .hero-rotator,
   .screen-spacer-rotator {
     width: var(--mobile-design-h);
@@ -1287,6 +1323,19 @@ body.has-custom-cursor * {
 
   .page-footer {
     height: 80px;
+  }
+
+  .hse-logo {
+    width: min(212px, 30vw);
+    max-width: 30vw;
+    padding: 12px clamp(8px, 3vw, 24px);
+    box-sizing: border-box;
+  }
+
+  .hse-logo img {
+    max-width: 100%;
+    max-height: min(50px, 15vw);
+    height: auto;
   }
 
   .section-blackjack {
@@ -1429,6 +1478,8 @@ body.has-custom-cursor * {
     margin-left: auto;
     margin-right: auto;
     transform: none;
+    left: auto;
+    right: auto;
   }
 
   .screen {
@@ -1483,8 +1534,8 @@ body.has-custom-cursor * {
 
 
   .prediction-chip {
-    left: calc(50% - 87.03px / 2 - (618px / 2 + 24px));
-    top: calc(50% - 89.31px / 2);
+    left: calc(50% - var(--poster-chip-w) / 2 - (618px / 2 + 24px));
+    top: calc(50% - var(--poster-chip-h) / 2);
   }
 
   .prediction-scratch-hint {
@@ -1494,8 +1545,12 @@ body.has-custom-cursor * {
     transform-origin: center center;
   }
 
-  
-.blackjack-board-wrap {
+.screen.hero {
+    --hero-bet-w: calc(var(--poster-chip-w) * 982 / 1512 * 0.92);
+    --hero-bet-h: calc(var(--poster-chip-h) * 982 / 1512 * 0.92);
+  }
+
+  .blackjack-board-wrap {
     transform: rotate(-90deg) scale(calc(982 / 1512 * 0.92));
     transform-origin: center center;
   }
@@ -1542,11 +1597,9 @@ body.has-custom-cursor * {
     top: 15.01%;
     bottom: 76.67%;
 
-    transform: rotate(-90deg) scale(0.66);
+    transform: scale(0.66);
   }
 
-
-  /* верхний центр */
   .prediction-dice-left {
     position: absolute;
     width: var(--prediction-dice-size);
@@ -1555,19 +1608,17 @@ body.has-custom-cursor * {
     top: 8.49%;
     bottom: 84.03%;
 
-    transform: matrix(0, 1, 1, 0, 0, 0) scale(0.66);
+    transform: scale(0.66);
   }
 
-  /* верхний правый */
   .prediction-dice-tr {
     position: absolute;
     width: var(--prediction-dice-size);
     left: 80.13%;
     bottom: 76.89%;
-    transform: rotate(-90deg) scale(0.66);
+    transform: scale(0.66);
   }
 
-  /* левый нижний */
   .prediction-dice-bl {
     position: absolute;
     width: var(--prediction-dice-size);
@@ -1576,10 +1627,9 @@ body.has-custom-cursor * {
     top: 76.32%;
     bottom: 16.21%;
 
-    transform: rotate(90deg) scale(0.66);
+    transform: scale(0.66);
   }
 
-  /* нижний центральный */
   .prediction-dice-right {
     position: absolute;
     width: var(--prediction-dice-size);
@@ -1587,7 +1637,7 @@ body.has-custom-cursor * {
     top: 83.68%;
     bottom: 8.01%;
 
-    transform: matrix(0, 1, 1, 0, 0, 0) scale(0.66);
+    transform: scale(0.66);
   }
 
   .prediction-dice-br {
@@ -1598,10 +1648,17 @@ body.has-custom-cursor * {
     top: 76.39%;
     bottom: 16.13%;
 
-    transform: matrix(0, -1, -1, 0, 0, 0) scale(0.66);
+    transform: scale(0.66);
   }
 
-  
+  .section-prediction .prediction-dice img {
+    transform: scale(1);
+  }
+
+  .section-prediction .prediction-dice.prediction-dice--rolling img {
+    transform: scale(1.9);
+  }
+
   .section-blackjack {
     overflow: hidden;
   }

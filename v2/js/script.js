@@ -1,7 +1,23 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-document.addEventListener('DOMContentLoaded', function () {
+function appendDevCacheBust(resourceUrl) {
+  if (typeof location === 'undefined') {
+    return resourceUrl;
+  }
+  var host = location.hostname;
+  var isLocal =
+    host === 'localhost' ||
+    host === '127.0.0.1' ||
+    host === '::1';
+  if (!isLocal) {
+    return resourceUrl;
+  }
+  var hasQuery = resourceUrl.indexOf('?') !== -1;
+  return resourceUrl + (hasQuery ? '&' : '?') + '_devcb=' + String(Date.now());
+}
+
+function runPageInits() {
   initHeroSnakeModel();
   initCustomCursorLikeAHumanityFreshman();
   initHeroBetDrag();
@@ -12,7 +28,13 @@ document.addEventListener('DOMContentLoaded', function () {
   initSuitsStopwatch();
   initSuitsPool();
   initDecorFrameSecond();
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', runPageInits);
+} else {
+  runPageInits();
+}
 
 function initHeroSnakeModel() {
   var mount = document.querySelector('.hero-snake');
@@ -213,7 +235,7 @@ function initHeroSnakeModel() {
   }
 
   loader.load(
-    encodeURI('3d/Snake2.glb'),
+    encodeURI(appendDevCacheBust('3d/Snake.glb')),
     function (gltf) {
       model = gltf.scene;
 
