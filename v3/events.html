@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Желай — События</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/events.css">
+</head>
+<body class="page--light">
+  <main class="page">
+    <div class="page__canvas" id="canvas">
+
+      <div class="events-bg"></div>
+
+      <h1 class="events-title">События</h1>
+
+      <div class="events-desc">
+        <p class="events-desc__main">Каждое событие в&nbsp;ЖЕЛАЙ&nbsp;&mdash; как&nbsp;приглашение поддаться искушению: войти в&nbsp;игру, довериться знаку и&nbsp;приблизиться к&nbsp;своему желанию.</p>
+        <p class="events-desc__note">Актуальные даты и&nbsp;условия участия уточняйте в&nbsp;афише событий.</p>
+      </div>
+
+      <div class="events-list" id="events-list">
+        <div class="events-item" data-event="1">
+          <span class="events-item__dot"></span>
+          <span class="events-item__text">&laquo;Вход только по&nbsp;желанию&raquo;</span>
+        </div>
+        <div class="events-item" data-event="2">
+          <span class="events-item__dot"></span>
+          <span class="events-item__text">&laquo;Покер откровений&raquo;</span>
+        </div>
+        <div class="events-item" data-event="3">
+          <span class="events-item__dot"></span>
+          <span class="events-item__text">&laquo;Сверкающий вечер ставок&raquo;</span>
+        </div>
+        <div class="events-item" data-event="4">
+          <span class="events-item__dot"></span>
+          <span class="events-item__text">&laquo;Смелая ставка&raquo;</span>
+        </div>
+        <div class="events-item" data-event="5">
+          <span class="events-item__dot"></span>
+          <span class="events-item__text">&laquo;Вечер ставки&raquo;</span>
+        </div>
+        <div class="events-item" data-event="6">
+          <span class="events-item__dot"></span>
+          <span class="events-item__text">&laquo;Тайная ночь желаний&raquo;</span>
+        </div>
+        <div class="events-item" data-event="7">
+          <span class="events-item__dot"></span>
+          <span class="events-item__text">&laquo;Обрывки желаний&raquo;</span>
+        </div>
+        <div class="events-item" data-event="8">
+          <span class="events-item__dot"></span>
+          <span class="events-item__text">&laquo;Ставка, которая меняет&raquo;</span>
+        </div>
+        <div class="events-item" data-event="9">
+          <span class="events-item__dot"></span>
+          <span class="events-item__text">&laquo;Дели желания на&nbsp;два&raquo;</span>
+        </div>
+      </div>
+
+      <div class="events-poster events-poster--default" id="events-poster">
+        <img class="events-poster__img" src="" alt="" decoding="async">
+      </div>
+
+      <img class="page__logo page__logo--events" src="img/logo.png" alt="Желай" width="100" height="100" decoding="async">
+
+      <button class="menu-btn menu-btn--events" type="button" aria-label="Открыть меню">
+        <img class="menu-btn__icon" src="img/menu-icon.svg" alt="" width="40" height="40" decoding="async">
+        <span class="menu-btn__label">МЕНЮ</span>
+      </button>
+
+    </div>
+  </main>
+  <script src="js/script.js"></script>
+</body>
+</html>
