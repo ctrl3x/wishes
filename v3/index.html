@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Желай</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="page">
+    <div class="page__canvas" id="canvas">
+      <img class="page__bg" src="img/background-main.png" alt="" width="1921" height="1080" decoding="async">
+
+      <img class="page__logo" src="img/logo.png" alt="Желай" width="100" height="100" decoding="async">
+
+      <nav class="page__nav" aria-label="Основная навигация">
+        <a class="nav-btn nav-btn--about" href="about.html">
+          <span class="nav-btn__dot" aria-hidden="true"></span>
+          <span class="nav-btn__label">о желай</span>
+        </a>
+        <a class="nav-btn nav-btn--space" href="#space">
+          <span class="nav-btn__dot" aria-hidden="true"></span>
+          <span class="nav-btn__label">пространство</span>
+        </a>
+        <a class="nav-btn nav-btn--book" href="#book">
+          <span class="nav-btn__dot" aria-hidden="true"></span>
+          <span class="nav-btn__label">книга</span>
+        </a>
+        <a class="nav-btn nav-btn--shop" href="#shop">
+          <span class="nav-btn__dot" aria-hidden="true"></span>
+          <span class="nav-btn__label">Магазин</span>
+        </a>
+        <a class="nav-btn nav-btn--events" href="events.html">
+          <span class="nav-btn__dot" aria-hidden="true"></span>
+          <span class="nav-btn__label">События</span>
+        </a>
+      </nav>
+
+      <button class="play-btn" type="button" aria-label="Воспроизвести">
+        <img src="img/play.svg" alt="" width="100" height="100" decoding="async">
+      </button>
+
+      <button class="menu-btn" type="button" aria-label="Открыть меню">
+        <img class="menu-btn__icon" src="img/menu-icon.svg" alt="" width="40" height="40" decoding="async">
+        <span class="menu-btn__label">МЕНЮ</span>
+      </button>
+    </div>
+  </main>
+  <script src="js/script.js"></script>
+</body>
+</html>

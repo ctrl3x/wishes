@@ -1,0 +1,184 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Cormorant Garamond', serif;
+  background: #000;
+  color: #fff;
+}
+
+button,
+a {
+  font: inherit;
+  color: inherit;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.page {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.page__canvas {
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+  flex-shrink: 0;
+  transform-origin: center center;
+}
+
+.page__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+
+.page__logo {
+  position: absolute;
+  left: 900px;
+  top: 50px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+
+.nav-btn {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  padding: 10px;
+  border-radius: 50px;
+  background: rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+  transition: background 0.2s ease;
+}
+
+.nav-btn:hover,
+.nav-btn:focus-visible {
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.nav-btn__dot {
+  flex-shrink: 0;
+  width: 13px;
+  height: 13px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+}
+
+.nav-btn__label {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.nav-btn--about {
+  left: 667px;
+  top: 202px;
+}
+
+.nav-btn--space {
+  left: 50px;
+  top: 370px;
+}
+
+.nav-btn--book {
+  left: 1438px;
+  top: 370px;
+}
+
+.nav-btn--shop {
+  left: 358px;
+  top: 675px;
+}
+
+.nav-btn--events {
+  left: 1592px;
+  top: 675px;
+}
+
+.play-btn {
+  position: absolute;
+  left: 910px;
+  top: 490px;
+  width: 100px;
+  height: 100px;
+  padding: 0;
+  border-radius: 80px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.play-btn:hover,
+.play-btn:focus-visible {
+  transform: scale(1.05);
+}
+
+.play-btn img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.menu-btn {
+  position: absolute;
+  left: 1736px;
+  top: 974px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 40px;
+  background: #000;
+  transition: opacity 0.2s ease;
+}
+
+.menu-btn:hover,
+.menu-btn:focus-visible {
+  opacity: 0.85;
+}
+
+.menu-btn__icon {
+  display: block;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.menu-btn__label {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1;
+  text-transform: uppercase;
+}
