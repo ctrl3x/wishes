@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Желай — Пространство · 2 этаж</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Montserrat:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/space.css">
+</head>
+<body>
+  <main class="page">
+    <div class="page__canvas" id="canvas">
+
+      <div class="space-second-floor">
+
+        <div class="floor-overlay">
+          <img class="floor-overlay__img" src="img/space/second-floor/2nd-floor.png" alt="" decoding="async">
+        </div>
+
+        <div class="floor-info">
+
+          <button class="floor-info__btn s2f-btn" type="button">
+            <span class="floor-info__btn-dot"></span>
+            <span class="floor-info__btn-text">2 этаж — игра</span>
+          </button>
+
+          <div class="floor-info__text">
+            <p class="floor-info__desc">Второй этаж&nbsp;&mdash; момент, когда посетитель перестаёт быть гостем и&nbsp;становится игроком. Азарт подают не&nbsp;шумом, а&nbsp;роскошью&nbsp;&mdash; мягко, уверенно, с&nbsp;обещанием, что&nbsp;желание можно не&nbsp;ждать, а&nbsp;взять.</p>
+            <p class="floor-info__func">Функция уровня&nbsp;&mdash; перевести человека из&nbsp;наблюдения в&nbsp;участие, придав риску ощущение статуса и&nbsp;тайны.</p>
+          </div>
+
+          <img class="floor-diagram floor-diagram--s2f" src="img/space/second-floor/2nd-floor-navi.png" alt="" decoding="async">
+
+        </div>
+
+        <img class="page__logo page__logo--space" src="img/logo.png" alt="Желай" width="100" height="100" decoding="async">
+
+        <button class="menu-btn menu-btn--space" type="button" aria-label="Открыть меню">
+          <span class="menu-btn__icon menu-btn__icon--space"></span>
+          <span class="menu-btn__label">о желай</span>
+        </button>
+
+      </div>
+
+    </div>
+  </main>
+  <script src="js/script.js"></script>
+  <script>
+    (function () {
+      var prev = 'space-white-hall.html';
+      var next = 'space-game-hall.html';
+      var navigated = false;
+      var threshold = 50;
+      var accum = 0;
+
+      function go(dir) {
+        if (navigated) return;
+        navigated = true;
+        window.location.href = dir;
+      }
+
+      window.addEventListener('wheel', function (event) {
+        if (navigated) return;
+        accum += event.deltaY;
+        if (accum >= threshold) go(next);
+        else if (accum <= -threshold) go(prev);
+      }, { passive: true });
+
+      window.addEventListener('keydown', function (event) {
+        if (event.key === 'ArrowDown' || event.key === 'PageDown') go(next);
+        if (event.key === 'ArrowUp' || event.key === 'PageUp') go(prev);
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Желай — Пространство · Бар</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Montserrat:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/space.css">
+</head>
+<body>
+  <main class="page">
+    <div class="page__canvas" id="canvas">
+
+      <div class="space-bar">
+
+        <button class="bar-btn" type="button">
+          <span class="bar-btn__dot"></span>
+          <span class="bar-btn__text">бар</span>
+        </button>
+
+        <div class="bar-text">
+          <p class="bar-text__desc">Напитки подают без&nbsp;спешки, так, словно время в&nbsp;&laquo;ЖЕЛАЙ&raquo; можно растянуть&nbsp;&mdash; хотя&nbsp;именно оно&nbsp;и&nbsp;является ставкой. Отсюда особенно легко сделать следующий шаг: в&nbsp;Белый зал, где&nbsp;желание получает форму и&nbsp;имя.</p>
+          <p class="bar-text__func">Бар&nbsp;снижает внутренний контроль и&nbsp;мягко направляет гостя к&nbsp;Белому залу.</p>
+        </div>
+
+        <div class="bar-gallery">
+          <div class="bar-gallery__main">
+            <img class="bar-gallery__img" src="img/space/bar/bar1.png" alt="" decoding="async">
+            <button class="bar-gallery__play" type="button" aria-label="Воспроизвести">
+              <img src="img/play.svg" alt="" width="100" height="100" decoding="async">
+            </button>
+          </div>
+          <img class="bar-gallery__img" src="img/space/bar/bar2.png" alt="" decoding="async">
+          <img class="bar-gallery__img" src="img/space/bar/bar3.png" alt="" decoding="async">
+        </div>
+
+        <img class="page__logo page__logo--space" src="img/logo.png" alt="Желай" width="100" height="100" decoding="async">
+
+        <button class="menu-btn menu-btn--space" type="button" aria-label="Открыть меню">
+          <span class="menu-btn__icon menu-btn__icon--space"></span>
+          <span class="menu-btn__label">о желай</span>
+        </button>
+
+      </div>
+
+    </div>
+  </main>
+  <script src="js/script.js"></script>
+  <script>
+    (function () {
+      var prev = 'space-floor.html';
+      var next = 'space-white-hall.html';
+      var navigated = false;
+      var threshold = 50;
+      var accum = 0;
+
+      function go(dir) {
+        if (navigated) return;
+        navigated = true;
+        window.location.href = dir;
+      }
+
+      window.addEventListener('wheel', function (event) {
+        if (navigated) return;
+        accum += event.deltaY;
+        if (accum >= threshold) go(next);
+        else if (accum <= -threshold) go(prev);
+      }, { passive: true });
+
+      window.addEventListener('keydown', function (event) {
+        if (event.key === 'ArrowDown' || event.key === 'PageDown') go(next);
+        if (event.key === 'ArrowUp' || event.key === 'PageUp') go(prev);
+      });
+    })();
+  </script>
+</body>
+</html>
