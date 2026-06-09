@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Желай — Магазин</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/shop.css">
+</head>
+<body class="shop-body">
+  <div class="shop-page" id="shop-page">
+
+    <img class="shop-logo" src="img/logo.png" alt="Желай" width="100" height="100" decoding="async">
+
+    <div class="shop-header">
+      <h1 class="shop-header__title">Магазин</h1>
+      <p class="shop-header__desc">Магазин ЖЕЛАЙ&nbsp;&mdash; пространство желанных находок, особых деталей и&nbsp;трофеев с&nbsp;характером. Наличие товаров и условия получения могут меняться. Выбирайте то, что&nbsp;притягивает именно вас, и&nbsp;забирайте с&nbsp;собой частицу этой игры.</p>
+    </div>
+
+    <!-- Product 1: Bag -->
+    <div class="shop-product shop-product--large shop-product--right">
+      <div class="shop-product__img">
+        <img class="shop-product__picture" src="img/shop/Duffle Bag Free Mockup-edited-free (carve.photos) 1.png" alt="сумка" decoding="async">
+      </div>
+      <div class="shop-product__info">
+        <span class="shop-product__name">сумка</span>
+        <span class="shop-product__cart"></span>
+      </div>
+      <div class="shop-product__line"></div>
+      <span class="shop-product__price">00000000000000&nbsp;%</span>
+    </div>
+
+    <!-- Row 2: Three small products -->
+    <div class="shop-row shop-row--three">
+      <div class="shop-product shop-product--small">
+        <div class="shop-product__img">
+          <img class="shop-product__picture" src="img/shop/Свеча.png" alt="Свеча «Тихая Ставка»" decoding="async">
+        </div>
+        <div class="shop-product__info">
+          <span class="shop-product__name">Свеча &laquo;Тихая Ставка&raquo;</span>
+          <span class="shop-product__cart"></span>
+        </div>
+        <div class="shop-product__line"></div>
+        <span class="shop-product__price">00000000000000&nbsp;%</span>
+      </div>
+
+      <div class="shop-product shop-product--small">
+        <div class="shop-product__img">
+          <img class="shop-product__picture" src="img/shop/Спички.png" alt="Спички" decoding="async">
+        </div>
+        <div class="shop-product__info">
+          <span class="shop-product__name">Спички</span>
+          <span class="shop-product__cart"></span>
+        </div>
+        <div class="shop-product__line"></div>
+        <span class="shop-product__price">00000000000000&nbsp;%</span>
+      </div>
+
+      <div class="shop-product shop-product--small">
+        <div class="shop-product__img">
+          <img class="shop-product__picture" src="img/shop/Шоколад.png" alt="Шоколад «Дофамин»" decoding="async">
+        </div>
+        <div class="shop-product__info">
+          <span class="shop-product__name">Шоколад &laquo;Дофамин&raquo;</span>
+          <span class="shop-product__cart"></span>
+        </div>
+        <div class="shop-product__line"></div>
+        <span class="shop-product__price">00000000000000&nbsp;%</span>
+      </div>
+    </div>
+
+    <!-- Row 3: Two t-shirts -->
+    <div class="shop-row shop-row--two">
+      <div class="shop-product shop-product--large">
+        <div class="shop-product__img">
+          <img class="shop-product__picture" src="img/shop/Frame 2087326130.png" alt="футболка 1" decoding="async">
+        </div>
+        <div class="shop-product__info">
+          <span class="shop-product__name">футболка&nbsp;1</span>
+          <span class="shop-product__cart"></span>
+        </div>
+        <div class="shop-product__line"></div>
+        <span class="shop-product__price">00000000000000&nbsp;%</span>
+      </div>
+
+      <div class="shop-product shop-product--large">
+        <div class="shop-product__img">
+          <img class="shop-product__picture" src="img/shop/Frame 2087326131.png" alt="футболка 2" decoding="async">
+        </div>
+        <div class="shop-product__info">
+          <span class="shop-product__name">футболка&nbsp;2</span>
+          <span class="shop-product__cart"></span>
+        </div>
+        <div class="shop-product__line"></div>
+        <span class="shop-product__price">00000000000000&nbsp;%</span>
+      </div>
+    </div>
+
+    <!-- Navigation button -->
+    <a class="shop-nav-btn" href="about.html">
+      <span class="shop-nav-btn__icon"></span>
+      <span class="shop-nav-btn__label">о желай</span>
+    </a>
+
+  </div>
+
+  <script>
+    (function () {
+      var page = document.getElementById('shop-page');
+      if (!page) return;
+
+      var DESIGN_WIDTH = 1920;
+
+      function scale() {
+        var scale = window.innerWidth / DESIGN_WIDTH;
+        page.style.transform = 'scale(' + scale + ')';
+        page.style.transformOrigin = 'top center';
+        document.body.style.minHeight = (2800 * scale) + 'px';
+      }
+
+      document.documentElement.style.overflowY = 'auto';
+      document.documentElement.style.overflowX = 'hidden';
+      scale();
+      window.addEventListener('resize', scale);
+    })();
+  </script>
+</body>
+</html>
