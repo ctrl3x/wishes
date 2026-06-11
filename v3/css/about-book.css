@@ -1,0 +1,170 @@
+/* ---------- left images ---------- */
+
+.shop-side {
+  position: absolute;
+  left: 50px;
+  top: 220px;
+  width: 895px;
+  height: 490px;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+
+.shop-bar {
+  position: absolute;
+  left: 204px;
+  top: 515px;
+  width: 895px;
+  height: 450px;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ---------- right content ---------- */
+
+.shop-content {
+  position: absolute;
+  left: 1283px;
+  top: 190px;
+  width: 587px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+.shop-content__title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 60px;
+  font-weight: 600;
+  line-height: 70px;
+  text-transform: uppercase;
+  color: #fff;
+  user-select: none;
+}
+
+.shop-content__desc {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #fff;
+}
+
+.shop-content__btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  gap: 30px;
+  width: 140px;
+  height: 33px;
+  background: #fff;
+  border-radius: 50px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+  text-transform: uppercase;
+  color: #000;
+  transition: opacity 0.2s ease;
+}
+
+.shop-content__btn:hover,
+.shop-content__btn:focus-visible {
+  opacity: 0.85;
+}
+
+/* ---------- logo ---------- */
+
+.page__logo--shop {
+  left: 900px;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.page__logo--shop:hover {
+  transform: scale(1.08);
+}
+
+/* ---------- menu button ---------- */
+
+.menu-btn--shop {
+  left: 1736px;
+  top: 974px;
+  background: #fff;
+  transition: opacity 0.2s ease;
+}
+
+.menu-btn--shop:hover,
+.menu-btn--shop:focus-visible {
+  opacity: 0.85;
+}
+
+.menu-btn--shop .menu-btn__label {
+  color: #000;
+}
+
+.menu-btn__icon--shop {
+  display: block;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  background: #000;
+  border-radius: 30px;
+  position: relative;
+}
+
+.menu-btn__icon--shop::before,
+.menu-btn__icon--shop::after {
+  content: '';
+  position: absolute;
+  background: #fff;
+}
+
+.menu-btn__icon--shop::before {
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 2px;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.menu-btn__icon--shop::after {
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 2px;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* ---------- entry animation ---------- */
+
+@keyframes shopFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.shop-side {
+  animation: shopFadeUp 0.7s ease both;
+}
+
+.shop-bar {
+  animation: shopFadeUp 0.7s 0.15s ease both;
+}
+
+.shop-content {
+  animation: shopFadeUp 0.7s 0.25s ease both;
+}
+
+.menu-btn--shop {
+  animation: shopFadeUp 0.5s 0.40s ease both;
+}

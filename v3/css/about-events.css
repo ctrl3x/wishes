@@ -1,0 +1,225 @@
+.page--light {
+  background: #fff;
+  color: #000;
+}
+
+.page--light .page__canvas {
+  background: #fff;
+}
+
+/* ---------- background ---------- */
+
+.events-bg {
+  position: absolute;
+  left: 50px;
+  top: 146px;
+  width: 1820px;
+  height: 934px;
+  background: url('../img/events/event1.png') no-repeat center / cover;
+  pointer-events: none;
+  user-select: none;
+}
+
+.events-bg:empty {
+  background-image: none;
+}
+
+/* ---------- title ---------- */
+
+.events-title {
+  position: absolute;
+  left: 50px;
+  top: 65px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 60px;
+  font-weight: 600;
+  line-height: 70px;
+  text-transform: uppercase;
+  color: #000;
+  user-select: none;
+}
+
+/* ---------- description ---------- */
+
+.events-desc {
+  position: absolute;
+  left: 50px;
+  top: 195px;
+  width: 1820px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.events-desc__main {
+  width: 587px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #000;
+}
+
+.events-desc__note {
+  width: 278px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #000;
+}
+
+/* ---------- events list ---------- */
+
+.events-list {
+  position: absolute;
+  left: 50px;
+  top: 404px;
+  width: 1820px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.events-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 37px;
+  border-bottom: 1px solid #000;
+  cursor: pointer;
+  transition: border-color 0.35s ease;
+}
+
+.events-item:hover {
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.events-item__dot {
+  flex-shrink: 0;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: #000;
+  order: 1;
+  opacity: 0;
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.events-item:hover .events-item__dot {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.events-item__text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 70px;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+  transition: color 0.35s ease, transform 0.35s ease;
+}
+
+.events-item:hover .events-item__text {
+  color: #000;
+  transform: translateX(8px);
+}
+
+/* ---------- poster ---------- */
+
+.events-poster {
+  position: absolute;
+  left: 830px;
+  top: 457px;
+  width: 587px;
+  height: 420px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.events-poster--default {
+  background: url('../img/events/event1.png') no-repeat center / cover;
+}
+
+.events-poster__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.events-poster__img--visible {
+  opacity: 1;
+}
+
+/* ---------- logo ---------- */
+
+.page__logo--events {
+  left: 900px;
+  filter: none;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.page__logo--events:hover {
+  transform: scale(1.08);
+}
+
+/* ---------- menu button ---------- */
+
+.menu-btn--events {
+  left: 1736px;
+  top: 974px;
+}
+
+.menu-btn--events .menu-btn__label {
+  color: #fff;
+}
+
+/* ---------- entry animation ---------- */
+
+@keyframes eventsFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.events-title {
+  animation: eventsFadeUp 0.7s ease both;
+}
+
+.events-desc {
+  animation: eventsFadeUp 0.7s 0.15s ease both;
+}
+
+.events-item {
+  animation: eventsFadeUp 0.5s ease both;
+}
+
+.events-item:nth-child(1)  { animation-delay: 0.25s; }
+.events-item:nth-child(2)  { animation-delay: 0.30s; }
+.events-item:nth-child(3)  { animation-delay: 0.35s; }
+.events-item:nth-child(4)  { animation-delay: 0.40s; }
+.events-item:nth-child(5)  { animation-delay: 0.45s; }
+.events-item:nth-child(6)  { animation-delay: 0.50s; }
+.events-item:nth-child(7)  { animation-delay: 0.55s; }
+.events-item:nth-child(8)  { animation-delay: 0.60s; }
+.events-item:nth-child(9)  { animation-delay: 0.65s; }
+
+.events-poster {
+  animation: eventsFadeUp 0.7s 0.30s ease both;
+}
+
+.menu-btn--events {
+  animation: eventsFadeUp 0.5s 0.40s ease both;
+}
