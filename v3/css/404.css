@@ -1,0 +1,156 @@
+.notfound-page .page__canvas {
+  background: #ffffff;
+}
+
+.notfound__img {
+  position: absolute;
+  left: calc(50% - 538px);
+  top: 140px;
+  width: 1076px;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+.notfound__subtitle {
+  position: absolute;
+  left: calc(50% - 298px);
+  top: 806px;
+  width: 597px;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 70px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #000000;
+}
+
+.notfound__btn {
+  position: absolute;
+  left: calc(50% - 134px);
+  top: 883px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  width: 268px;
+  height: 33px;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: #000000;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.notfound__btn:hover,
+.notfound__btn:focus-visible {
+  opacity: 0.85;
+}
+
+.notfound__chip {
+  position: absolute;
+  background: url(../img/404/bet.png) no-repeat center / contain;
+  cursor: grab;
+  touch-action: none;
+  transition: transform 140ms ease-out;
+  user-select: none;
+}
+
+.notfound__chip--1 {
+  left: 1743px;
+  top: 168px;
+  width: 133px;
+  height: 125px;
+  transform: rotate(-142.66deg);
+}
+
+.notfound__chip--1:active,
+.notfound__chip--1.notfound__chip--dragging {
+  cursor: grabbing;
+  transform: rotate(-142.66deg) scale(1.22);
+}
+
+.notfound__chip--2 {
+  left: 1644px;
+  top: 120px;
+  width: 134px;
+  height: 133px;
+  transform: rotate(-142.66deg);
+}
+
+.notfound__chip--2:active,
+.notfound__chip--2.notfound__chip--dragging {
+  cursor: grabbing;
+  transform: rotate(-142.66deg) scale(1.22);
+}
+
+.notfound__chip--3 {
+  left: 201px;
+  top: 740px;
+  width: 133px;
+  height: 125px;
+  transform: rotate(-142.66deg);
+}
+
+.notfound__chip--3:active,
+.notfound__chip--3.notfound__chip--dragging {
+  cursor: grabbing;
+  transform: rotate(-142.66deg) scale(1.22);
+}
+
+.notfound__chip--4 {
+  left: 50px;
+  top: 793px;
+  width: 134px;
+  height: 133px;
+  transform: rotate(-142.66deg);
+}
+
+.notfound__chip--4:active,
+.notfound__chip--4.notfound__chip--dragging {
+  cursor: grabbing;
+  transform: rotate(-142.66deg) scale(1.22);
+}
+
+.notfound__chip--5 {
+  left: 104px;
+  top: 846px;
+  width: 134px;
+  height: 143px;
+  transform: rotate(157.34deg);
+}
+
+.notfound__chip--5:active,
+.notfound__chip--5.notfound__chip--dragging {
+  cursor: grabbing;
+  transform: rotate(157.34deg) scale(1.22);
+}
+
+@keyframes notfoundFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.notfound__img {
+  animation: notfoundFadeUp 0.7s ease both;
+}
+
+.notfound__subtitle {
+  animation: notfoundFadeUp 0.7s 0.15s ease both;
+}
+
+.notfound__btn {
+  animation: notfoundFadeUp 0.7s 0.3s ease both;
+}
