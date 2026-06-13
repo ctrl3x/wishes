@@ -16,26 +16,29 @@
   scaleCanvas();
   window.addEventListener('resize', scaleCanvas);
 
-  var eventsList = document.getElementById('events-list');
-  var poster = document.getElementById('events-poster');
-  var posterImg = document.querySelector('.events-poster__img');
-  if (eventsList && poster && posterImg) {
-    var leaveTimer;
+  var covers = document.querySelector('.book-covers');
+  var gridCells = document.querySelectorAll('.book-grid__cell img');
+  var canvasEl = document.getElementById('canvas');
+  var zoomOverlay = document.querySelector('.book-zoom-overlay');
+  var zoomImg = document.querySelector('.book-zoom-img img');
+  if (covers && gridCells.length && canvasEl && zoomOverlay && zoomImg) {
+    covers.addEventListener('click', function (e) {
+      var card = e.target.closest('.book-covers__card');
+      if (!card) return;
+      var idx = Array.prototype.indexOf.call(covers.children, card);
+      if (idx < 0 || idx >= gridCells.length) return;
+      zoomImg.src = gridCells[idx].src;
+      canvasEl.classList.add('canvas-zoomed');
+    });
 
-    eventsList.addEventListener('mouseenter', function (e) {
-      var item = e.target.closest('.events-item');
-      if (!item) return;
-      var num = item.getAttribute('data-event');
-      if (!num) return;
-      clearTimeout(leaveTimer);
-      posterImg.src = 'img/events/event' + num + '.png';
-      posterImg.classList.add('events-poster__img--visible');
-    }, true);
+    zoomOverlay.addEventListener('click', function () {
+      canvasEl.classList.remove('canvas-zoomed');
+      zoomImg.src = '';
+    });
 
-    eventsList.addEventListener('mouseleave', function () {
-      leaveTimer = setTimeout(function () {
-        posterImg.classList.remove('events-poster__img--visible');
-      }, 80);
+    zoomImg.parentElement.addEventListener('click', function () {
+      canvasEl.classList.remove('canvas-zoomed');
+      zoomImg.src = '';
     });
   }
 })();

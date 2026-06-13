@@ -6,75 +6,352 @@
   <title>Желай — События</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Montserrat:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/events.css">
 </head>
-<body class="page--light">
+<body class="events-page">
   <main class="page">
     <div class="page__canvas" id="canvas">
 
-      <div class="events-bg"></div>
-
-      <h1 class="events-title">События</h1>
-
-      <div class="events-desc">
-        <p class="events-desc__main">Каждое событие в&nbsp;ЖЕЛАЙ&nbsp;&mdash; как&nbsp;приглашение поддаться искушению: войти в&nbsp;игру, довериться знаку и&nbsp;приблизиться к&nbsp;своему желанию.</p>
-        <p class="events-desc__note">Актуальные даты и&nbsp;условия участия уточняйте в&nbsp;афише событий.</p>
-      </div>
-
-      <div class="events-list" id="events-list">
-        <div class="events-item" data-event="1">
-          <span class="events-item__dot"></span>
-          <span class="events-item__text">&laquo;Вход только по&nbsp;желанию&raquo;</span>
-        </div>
-        <div class="events-item" data-event="2">
-          <span class="events-item__dot"></span>
-          <span class="events-item__text">&laquo;Покер откровений&raquo;</span>
-        </div>
-        <div class="events-item" data-event="3">
-          <span class="events-item__dot"></span>
-          <span class="events-item__text">&laquo;Сверкающий вечер ставок&raquo;</span>
-        </div>
-        <div class="events-item" data-event="4">
-          <span class="events-item__dot"></span>
-          <span class="events-item__text">&laquo;Смелая ставка&raquo;</span>
-        </div>
-        <div class="events-item" data-event="5">
-          <span class="events-item__dot"></span>
-          <span class="events-item__text">&laquo;Вечер ставки&raquo;</span>
-        </div>
-        <div class="events-item" data-event="6">
-          <span class="events-item__dot"></span>
-          <span class="events-item__text">&laquo;Тайная ночь желаний&raquo;</span>
-        </div>
-        <div class="events-item" data-event="7">
-          <span class="events-item__dot"></span>
-          <span class="events-item__text">&laquo;Обрывки желаний&raquo;</span>
-        </div>
-        <div class="events-item" data-event="8">
-          <span class="events-item__dot"></span>
-          <span class="events-item__text">&laquo;Ставка, которая меняет&raquo;</span>
-        </div>
-        <div class="events-item" data-event="9">
-          <span class="events-item__dot"></span>
-          <span class="events-item__text">&laquo;Дели желания на&nbsp;два&raquo;</span>
+      <div class="events-header">
+        <h1 class="events-header__title">События</h1>
+        <div class="events-header__text">
+          <p class="events-header__main">События ЖЕЛАЙ&nbsp;&mdash; это ночи, когда азарт становится ближе, тайное манит сильнее, а&nbsp;желания выходят из&nbsp;тени. Здесь каждый вечер может обернуться знаком, шансом или исполнением.</p>
+          <p class="events-header__note">Некоторые события появляются внезапно&nbsp;&mdash; следите за&nbsp;афишей и&nbsp;не&nbsp;упускайте свой момент.</p>
         </div>
       </div>
 
-      <div class="events-poster events-poster--default" id="events-poster">
-        <img class="events-poster__img" src="" alt="" decoding="async">
+      <div class="events-marquee">
+        <div class="events-marquee__track">
+
+          <div class="events-card" data-event="1">
+            <img class="events-card__img" src="img/events/event1.png" alt="" decoding="async">
+            <div class="events-card__info">
+              <span class="events-card__name">&laquo;Вход только по&nbsp;желанию&raquo;</span>
+              <button class="events-card__arrow" type="button" aria-label="Подробнее"></button>
+            </div>
+            <div class="events-card__line"></div>
+            <div class="events-card__date">
+              <span class="events-card__date-text">01/01/2026</span>
+              <span class="events-card__date-text">20:00&nbsp;&mdash;&nbsp;00:00</span>
+            </div>
+          </div>
+
+          <div class="events-card" data-event="2">
+            <img class="events-card__img" src="img/events/event2.png" alt="" decoding="async">
+            <div class="events-card__info">
+              <span class="events-card__name">&laquo;Покер откровений&raquo;</span>
+              <span class="events-card__dot"></span>
+            </div>
+            <div class="events-card__line"></div>
+            <div class="events-card__date">
+              <span class="events-card__date-text">01/01/2026</span>
+              <span class="events-card__date-text">18:00&nbsp;&mdash;&nbsp;20:00</span>
+            </div>
+          </div>
+
+          <div class="events-card" data-event="3">
+            <img class="events-card__img" src="img/events/event3.png" alt="" decoding="async">
+            <div class="events-card__info">
+              <span class="events-card__name">&laquo;Сверкающий вечер ставок&raquo;</span>
+              <span class="events-card__dot"></span>
+            </div>
+            <div class="events-card__line"></div>
+            <div class="events-card__date">
+              <span class="events-card__date-text">01/01/2026</span>
+              <span class="events-card__date-text">18:00&nbsp;&mdash;&nbsp;20:00</span>
+            </div>
+          </div>
+
+          <div class="events-card" data-event="4">
+            <img class="events-card__img" src="img/events/event4.png" alt="" decoding="async">
+            <div class="events-card__info">
+              <span class="events-card__name">&laquo;Смелая ставка&raquo;</span>
+              <span class="events-card__dot"></span>
+            </div>
+            <div class="events-card__line"></div>
+            <div class="events-card__date">
+              <span class="events-card__date-text">01/01/2026</span>
+              <span class="events-card__date-text">18:00&nbsp;&mdash;&nbsp;20:00</span>
+            </div>
+          </div>
+
+          <div class="events-card" data-event="5">
+            <img class="events-card__img" src="img/events/event5.png" alt="" decoding="async">
+            <div class="events-card__info">
+              <span class="events-card__name">&laquo;Вечер ставки&raquo;</span>
+              <span class="events-card__dot"></span>
+            </div>
+            <div class="events-card__line"></div>
+            <div class="events-card__date">
+              <span class="events-card__date-text">01/01/2026</span>
+              <span class="events-card__date-text">18:00&nbsp;&mdash;&nbsp;20:00</span>
+            </div>
+          </div>
+
+          <div class="events-card" data-event="6">
+            <img class="events-card__img" src="img/events/event6.png" alt="" decoding="async">
+            <div class="events-card__info">
+              <span class="events-card__name">&laquo;Тайная ночь желаний&raquo;</span>
+              <span class="events-card__dot"></span>
+            </div>
+            <div class="events-card__line"></div>
+            <div class="events-card__date">
+              <span class="events-card__date-text">01/01/2026</span>
+              <span class="events-card__date-text">18:00&nbsp;&mdash;&nbsp;20:00</span>
+            </div>
+          </div>
+
+          <div class="events-card" data-event="7">
+            <img class="events-card__img" src="img/events/event7.png" alt="" decoding="async">
+            <div class="events-card__info">
+              <span class="events-card__name">&laquo;Обрывки желаний&raquo;</span>
+              <span class="events-card__dot"></span>
+            </div>
+            <div class="events-card__line"></div>
+            <div class="events-card__date">
+              <span class="events-card__date-text">01/01/2026</span>
+              <span class="events-card__date-text">18:00&nbsp;&mdash;&nbsp;20:00</span>
+            </div>
+          </div>
+
+          <div class="events-card" data-event="8">
+            <img class="events-card__img" src="img/events/event8.png" alt="" decoding="async">
+            <div class="events-card__info">
+              <span class="events-card__name">&laquo;Ставка, которая меняет&raquo;</span>
+              <span class="events-card__dot"></span>
+            </div>
+            <div class="events-card__line"></div>
+            <div class="events-card__date">
+              <span class="events-card__date-text">01/01/2026</span>
+              <span class="events-card__date-text">18:00&nbsp;&mdash;&nbsp;20:00</span>
+            </div>
+          </div>
+
+          <div class="events-card" data-event="9">
+            <img class="events-card__img" src="img/events/event9.png" alt="" decoding="async">
+            <div class="events-card__info">
+              <span class="events-card__name">&laquo;Дели желания на&nbsp;два&raquo;</span>
+              <span class="events-card__dot"></span>
+            </div>
+            <div class="events-card__line"></div>
+            <div class="events-card__date">
+              <span class="events-card__date-text">01/01/2026</span>
+              <span class="events-card__date-text">18:00&nbsp;&mdash;&nbsp;20:00</span>
+            </div>
+          </div>
+
+          <div class="events-card" data-event="1">
+            <img class="events-card__img" src="img/events/event1.png" alt="" decoding="async">
+            <div class="events-card__info">
+              <span class="events-card__name">&laquo;Вход только по&nbsp;желанию&raquo;</span>
+              <button class="events-card__arrow" type="button" aria-label="Подробнее"></button>
+            </div>
+            <div class="events-card__line"></div>
+            <div class="events-card__date">
+              <span class="events-card__date-text">01/01/2026</span>
+              <span class="events-card__date-text">20:00&nbsp;&mdash;&nbsp;00:00</span>
+            </div>
+          </div>
+
+          <div class="events-card" data-event="2">
+            <img class="events-card__img" src="img/events/event2.png" alt="" decoding="async">
+            <div class="events-card__info">
+              <span class="events-card__name">&laquo;Покер откровений&raquo;</span>
+              <span class="events-card__dot"></span>
+            </div>
+            <div class="events-card__line"></div>
+            <div class="events-card__date">
+              <span class="events-card__date-text">01/01/2026</span>
+              <span class="events-card__date-text">18:00&nbsp;&mdash;&nbsp;20:00</span>
+            </div>
+          </div>
+
+          <div class="events-card" data-event="3">
+            <img class="events-card__img" src="img/events/event3.png" alt="" decoding="async">
+            <div class="events-card__info">
+              <span class="events-card__name">&laquo;Сверкающий вечер ставок&raquo;</span>
+              <span class="events-card__dot"></span>
+            </div>
+            <div class="events-card__line"></div>
+            <div class="events-card__date">
+              <span class="events-card__date-text">01/01/2026</span>
+              <span class="events-card__date-text">18:00&nbsp;&mdash;&nbsp;20:00</span>
+            </div>
+          </div>
+
+          <div class="events-card" data-event="4">
+            <img class="events-card__img" src="img/events/event4.png" alt="" decoding="async">
+            <div class="events-card__info">
+              <span class="events-card__name">&laquo;Смелая ставка&raquo;</span>
+              <span class="events-card__dot"></span>
+            </div>
+            <div class="events-card__line"></div>
+            <div class="events-card__date">
+              <span class="events-card__date-text">01/01/2026</span>
+              <span class="events-card__date-text">18:00&nbsp;&mdash;&nbsp;20:00</span>
+            </div>
+          </div>
+
+          <div class="events-card" data-event="5">
+            <img class="events-card__img" src="img/events/event5.png" alt="" decoding="async">
+            <div class="events-card__info">
+              <span class="events-card__name">&laquo;Вечер ставки&raquo;</span>
+              <span class="events-card__dot"></span>
+            </div>
+            <div class="events-card__line"></div>
+            <div class="events-card__date">
+              <span class="events-card__date-text">01/01/2026</span>
+              <span class="events-card__date-text">18:00&nbsp;&mdash;&nbsp;20:00</span>
+            </div>
+          </div>
+
+          <div class="events-card" data-event="6">
+            <img class="events-card__img" src="img/events/event6.png" alt="" decoding="async">
+            <div class="events-card__info">
+              <span class="events-card__name">&laquo;Тайная ночь желаний&raquo;</span>
+              <span class="events-card__dot"></span>
+            </div>
+            <div class="events-card__line"></div>
+            <div class="events-card__date">
+              <span class="events-card__date-text">01/01/2026</span>
+              <span class="events-card__date-text">18:00&nbsp;&mdash;&nbsp;20:00</span>
+            </div>
+          </div>
+
+          <div class="events-card" data-event="7">
+            <img class="events-card__img" src="img/events/event7.png" alt="" decoding="async">
+            <div class="events-card__info">
+              <span class="events-card__name">&laquo;Обрывки желаний&raquo;</span>
+              <span class="events-card__dot"></span>
+            </div>
+            <div class="events-card__line"></div>
+            <div class="events-card__date">
+              <span class="events-card__date-text">01/01/2026</span>
+              <span class="events-card__date-text">18:00&nbsp;&mdash;&nbsp;20:00</span>
+            </div>
+          </div>
+
+          <div class="events-card" data-event="8">
+            <img class="events-card__img" src="img/events/event8.png" alt="" decoding="async">
+            <div class="events-card__info">
+              <span class="events-card__name">&laquo;Ставка, которая меняет&raquo;</span>
+              <span class="events-card__dot"></span>
+            </div>
+            <div class="events-card__line"></div>
+            <div class="events-card__date">
+              <span class="events-card__date-text">01/01/2026</span>
+              <span class="events-card__date-text">18:00&nbsp;&mdash;&nbsp;20:00</span>
+            </div>
+          </div>
+
+          <div class="events-card" data-event="9">
+            <img class="events-card__img" src="img/events/event9.png" alt="" decoding="async">
+            <div class="events-card__info">
+              <span class="events-card__name">&laquo;Дели желания на&nbsp;два&raquo;</span>
+              <span class="events-card__dot"></span>
+            </div>
+            <div class="events-card__line"></div>
+            <div class="events-card__date">
+              <span class="events-card__date-text">01/01/2026</span>
+              <span class="events-card__date-text">18:00&nbsp;&mdash;&nbsp;20:00</span>
+            </div>
+          </div>
+
+        </div>
       </div>
 
-      <img class="page__logo page__logo--events" src="img/logo.png" alt="Желай" width="100" height="100" decoding="async">
+      <img class="page__logo" src="img/logo.png" alt="Желай" width="100" height="100" decoding="async">
 
-      <button class="menu-btn menu-btn--events" type="button" aria-label="Открыть меню">
+      <button class="menu-btn menu-btn--events-page" type="button" aria-label="Открыть меню">
         <img class="menu-btn__icon" src="img/menu-icon.svg" alt="" width="40" height="40" decoding="async">
-        <span class="menu-btn__label">МЕНЮ</span>
+        <span class="menu-btn__label">о желай</span>
       </button>
 
     </div>
   </main>
+
+  <div class="events-modal" id="events-modal">
+    <div class="events-modal__backdrop"></div>
+    <form class="events-modal__form" id="events-form">
+      <div class="events-modal__header">
+        <h2 class="events-modal__title">Регистрация</h2>
+        <button class="events-modal__close" type="button" aria-label="Закрыть"></button>
+      </div>
+      <p class="events-modal__subtitle">Заполните все поля.</p>
+      <div class="events-modal__fields">
+        <label class="events-modal__field">
+          <span class="events-modal__field-label">Name</span>
+          <input class="events-modal__field-input" type="text" name="name">
+        </label>
+        <label class="events-modal__field">
+          <span class="events-modal__field-label">Email</span>
+          <input class="events-modal__field-input" type="text" name="email">
+        </label>
+        <label class="events-modal__field">
+          <span class="events-modal__field-label">Phone</span>
+          <input class="events-modal__field-input" type="tel" name="phone">
+        </label>
+      </div>
+      <button class="events-modal__submit" type="submit">отправить</button>
+    </form>
+
+    <div class="events-success" id="events-success">
+      <div class="events-success__header">
+        <h2 class="events-success__title">ЖДЁМ ВАС</h2>
+        <button class="events-modal__close" type="button" aria-label="Закрыть"></button>
+      </div>
+      <p class="events-success__text">Все детали события уже у&nbsp;вас на&nbsp;почте&nbsp;&mdash; искушение ближе, чем&nbsp;кажется.</p>
+    </div>
+  </div>
+
   <script src="js/script.js"></script>
+  <script>
+    (function () {
+      var modal = document.getElementById('events-modal');
+      var form = document.getElementById('events-form');
+      var success = document.getElementById('events-success');
+      var closeBtns = modal.querySelectorAll('.events-modal__close');
+      var backdrop = modal.querySelector('.events-modal__backdrop');
+      var track = document.querySelector('.events-marquee__track');
+      var cards = document.querySelectorAll('.events-card');
+      var activeCard = null;
+
+      function openModal(e) {
+        var card = e.currentTarget;
+        activeCard = card;
+        activeCard.classList.add('events-card--active');
+        form.classList.remove('events-modal__form--hidden');
+        success.classList.remove('events-success--visible');
+        modal.classList.add('events-modal--open');
+        track.classList.add('events-marquee__track--paused');
+      }
+
+      function closeModal() {
+        modal.classList.remove('events-modal--open');
+        track.classList.remove('events-marquee__track--paused');
+        if (activeCard) {
+          activeCard.classList.remove('events-card--active');
+          activeCard = null;
+        }
+      }
+
+      cards.forEach(function (card) {
+        card.addEventListener('click', openModal);
+      });
+
+      closeBtns.forEach(function (btn) {
+        btn.addEventListener('click', closeModal);
+      });
+      backdrop.addEventListener('click', closeModal);
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        form.classList.add('events-modal__form--hidden');
+        success.classList.add('events-success--visible');
+      });
+    })();
+  </script>
 </body>
 </html>
