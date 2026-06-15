@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/about.css">
+  <link rel="stylesheet" href="css/nav.css">
 </head>
 <body>
   <main class="page">
@@ -19,6 +20,11 @@
 
       <button class="play-btn" type="button" aria-label="Воспроизвести">
         <img src="img/play.svg" alt="" width="100" height="100" decoding="async">
+      </button>
+
+      <button class="menu-btn" type="button" aria-label="Открыть меню" style="display: none">
+        <img class="menu-btn__icon" src="img/menu-icon.svg" alt="" width="40" height="40" decoding="async">
+        <span class="menu-btn__label">МЕНЮ</span>
       </button>
 
       <div class="menu-drawer">
@@ -43,11 +49,11 @@
           </div>
 
           <nav class="menu-panel__tabs" aria-label="Разделы">
-            <a class="menu-tab menu-tab--active" href="about.html">о желай</a>
-            <a class="menu-tab menu-tab--filled" href="about.html">пространство</a>
-            <a class="menu-tab" href="#">Магазин</a>
-            <a class="menu-tab" href="#">События</a>
-            <a class="menu-tab" href="#">книга</a>
+            <a class="menu-tab" href="about.html">о желай</a>
+            <a class="menu-tab" href="space.html">пространство</a>
+            <a class="menu-tab" href="shop.html">Магазин</a>
+            <a class="menu-tab" href="events.html">События</a>
+            <a class="menu-tab" href="book.html">книга</a>
           </nav>
 
           <div class="menu-panel__social">
@@ -66,7 +72,6 @@
             <p class="menu-panel__subscribe-title">Будь ближе к ЖЕЛАЙ</p>
             <form class="menu-panel__email-form" action="#" method="post">
               <label class="menu-panel__email-field">
-                <span class="visually-hidden">Email</span>
                 <input type="email" name="email" placeholder="Email" autocomplete="email">
               </label>
               <button class="menu-panel__email-submit" type="submit" aria-label="Подписаться">
@@ -76,13 +81,14 @@
           </div>
         </div>
 
-        <a class="menu-drawer__close" href="index.html" aria-label="Закрыть меню">
-          <img src="img/close.svg" alt="" width="14" height="14" decoding="async">
-        </a>
+        <button class="menu-drawer__close" type="button" aria-label="Закрыть меню">
+          <span class="menu-drawer__close-cross"></span>
+        </button>
       </div>
     </div>
   </main>
   <script src="js/script.js"></script>
+  <script src="js/nav.js"></script>
   <script src="js/about-scroll.js"></script>
 </body>
 </html>

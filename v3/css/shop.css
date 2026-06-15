@@ -27,8 +27,7 @@
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
-  pointer-events: none;
-  user-select: none;
+  cursor: pointer;
 }
 
 /* ---------- header ---------- */
@@ -231,63 +230,9 @@
 
 /* ---------- nav button ---------- */
 
-.shop-nav-btn {
-  position: absolute;
+.shop .menu-btn {
   left: 1736px;
   top: 2694px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 8px 10px;
-  width: 135px;
-  height: 56px;
-  background: #fff;
-  border-radius: 40px;
-  text-decoration: none;
-  transition: opacity 0.2s ease;
-}
-
-.shop-nav-btn:hover,
-.shop-nav-btn:focus-visible {
-  opacity: 0.85;
-}
-
-.shop-nav-btn__icon {
-  flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-  background: #000;
-  border-radius: 30px;
-  position: relative;
-}
-
-.shop-nav-btn__icon::before,
-.shop-nav-btn__icon::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 18px;
-  height: 2px;
-  background: #fff;
-}
-
-.shop-nav-btn__icon::before {
-  transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.shop-nav-btn__icon::after {
-  transform: translate(-50%, -50%) rotate(-45deg);
-}
-
-.shop-nav-btn__label {
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 24px;
-  text-transform: uppercase;
-  color: #000;
 }
 
 /* ---------- entry animation ---------- */
@@ -319,6 +264,6 @@
   animation: shopFadeUp 0.7s 0.3s ease both;
 }
 
-.shop-nav-btn {
+.shop .menu-btn {
   animation: shopFadeUp 0.5s 0.4s ease both;
 }

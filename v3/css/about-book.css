@@ -81,7 +81,6 @@
 /* ---------- logo ---------- */
 
 .page__logo--shop {
-  left: 900px;
   transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -105,39 +104,6 @@
 
 .menu-btn--shop .menu-btn__label {
   color: #000;
-}
-
-.menu-btn__icon--shop {
-  display: block;
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
-  background: #000;
-  border-radius: 30px;
-  position: relative;
-}
-
-.menu-btn__icon--shop::before,
-.menu-btn__icon--shop::after {
-  content: '';
-  position: absolute;
-  background: #fff;
-}
-
-.menu-btn__icon--shop::before {
-  top: 50%;
-  left: 50%;
-  width: 18px;
-  height: 2px;
-  transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.menu-btn__icon--shop::after {
-  top: 50%;
-  left: 50%;
-  width: 18px;
-  height: 2px;
-  transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 /* ---------- entry animation ---------- */

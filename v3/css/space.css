@@ -480,39 +480,6 @@
   z-index: 10;
 }
 
-.menu-btn__icon--space {
-  display: block;
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
-  background: #fff;
-  border-radius: 30px;
-  position: relative;
-}
-
-.menu-btn__icon--space::before,
-.menu-btn__icon--space::after {
-  content: '';
-  position: absolute;
-  background: #000;
-}
-
-.menu-btn__icon--space::before {
-  top: 50%;
-  left: 50%;
-  width: 18px;
-  height: 2px;
-  transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.menu-btn__icon--space::after {
-  top: 50%;
-  left: 50%;
-  width: 18px;
-  height: 2px;
-  transform: translate(-50%, -50%) rotate(-45deg);
-}
-
 /* ================================================================
    ENTRY ANIMATIONS
    ================================================================ */
@@ -770,39 +737,6 @@
 
 .menu-btn--gh .menu-btn__label {
   color: #000;
-}
-
-.menu-btn__icon--gh {
-  display: block;
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
-  background: #000;
-  border-radius: 30px;
-  position: relative;
-}
-
-.menu-btn__icon--gh::before,
-.menu-btn__icon--gh::after {
-  content: '';
-  position: absolute;
-  background: #fff;
-}
-
-.menu-btn__icon--gh::before {
-  top: 50%;
-  left: 50%;
-  width: 18px;
-  height: 2px;
-  transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.menu-btn__icon--gh::after {
-  top: 50%;
-  left: 50%;
-  width: 18px;
-  height: 2px;
-  transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 /* space-white-hall.html */

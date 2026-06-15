@@ -177,10 +177,6 @@
   top: 974px;
 }
 
-.menu-btn--events .menu-btn__label {
-  color: #fff;
-}
-
 /* ---------- entry animation ---------- */
 
 @keyframes eventsFadeUp {

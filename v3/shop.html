@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/shop.css">
+  <link rel="stylesheet" href="css/nav.css">
 </head>
 <body class="shop-body">
   <div class="shop-page" id="shop-page">
@@ -100,10 +101,10 @@
     </div>
 
     <!-- Navigation button -->
-    <a class="shop-nav-btn" href="about.html">
-      <span class="shop-nav-btn__icon"></span>
-      <span class="shop-nav-btn__label">о желай</span>
-    </a>
+<button class="menu-btn" type="button" aria-label="Открыть меню">
+        <img class="menu-btn__icon" src="img/menu-icon.svg" alt="" width="40" height="40" decoding="async">
+        <span class="menu-btn__label">МЕНЮ</span>
+      </button>
 
   </div>
 
@@ -127,5 +128,6 @@
       window.addEventListener('resize', scale);
     })();
   </script>
+<script src="js/nav.js"></script>
 </body>
 </html>
