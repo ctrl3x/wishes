@@ -15,13 +15,8 @@
   top: 146px;
   width: 1820px;
   height: 934px;
-  background: url('../img/events/event1.png') no-repeat center / cover;
   pointer-events: none;
   user-select: none;
-}
-
-.events-bg:empty {
-  background-image: none;
 }
 
 /* ---------- title ---------- */
@@ -137,10 +132,6 @@
   height: 420px;
   pointer-events: none;
   user-select: none;
-}
-
-.events-poster--default {
-  background: url('../img/events/event1.png') no-repeat center / cover;
 }
 
 .events-poster__img {
