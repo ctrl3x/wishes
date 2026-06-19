@@ -60,6 +60,8 @@
   position: absolute;
   top: 330px;
   left: 0;
+  display: flex;
+  align-items: center;
   width: 1920px;
   height: 609px;
   overflow: hidden;
@@ -102,7 +104,7 @@
 
 .events-card:hover,
 .events-card--active {
-  transform: scale(1.26);
+  transform: scale(1.16);
   margin-left: 76px;
   margin-right: 76px;
 }

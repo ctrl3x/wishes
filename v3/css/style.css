@@ -57,6 +57,12 @@ a {
   user-select: none;
 }
 
+.page__bg::-webkit-media-controls,
+.page__bg::-webkit-media-controls-start-playback-button,
+.page__bg::-webkit-media-controls-overlay-play-button {
+  display: none !important;
+}
+
 .page__logo {
   position: absolute;
   left: 50%;
