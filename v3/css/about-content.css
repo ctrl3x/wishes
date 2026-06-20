@@ -56,16 +56,37 @@
 }
 
 .about-content__panel {
-  display: block;
+  position: relative;
   width: 895px;
   height: 480px;
+}
+
+.about-content__panel-video {
+  display: block;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
-.about-content__panel::-webkit-media-controls,
-.about-content__panel::-webkit-media-controls-start-playback-button,
-.about-content__panel::-webkit-media-controls-overlay-play-button {
+.about-content__panel-video::-webkit-media-controls,
+.about-content__panel-video::-webkit-media-controls-start-playback-button,
+.about-content__panel-video::-webkit-media-controls-overlay-play-button {
   display: none !important;
+}
+
+.about-content__panel-arrow {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  left: 835px;
+  top: 420px;
+  display: block;
+}
+
+.about-content__panel-arrow img {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .about-content__menu {

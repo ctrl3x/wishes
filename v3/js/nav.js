@@ -28,11 +28,11 @@
           '<div class="menu-panel__ctas">' +
             '<a class="menu-panel__cta" href="#">' +
               '<span>сделай ставку</span>' +
-              '<img src="' + resolveLink('img/arrow.svg') + '" alt="" width="30" height="30" decoding="async">' +
+              '<img src="' + resolveLink('img/arrow-white.svg') + '" alt="" width="30" height="30" decoding="async">' +
             '</a>' +
             '<a class="menu-panel__cta" href="#">' +
               '<span>испытай азарт</span>' +
-              '<img src="' + resolveLink('img/arrow.svg') + '" alt="" width="30" height="30" decoding="async">' +
+              '<img src="' + resolveLink('img/arrow-white.svg') + '" alt="" width="30" height="30" decoding="async">' +
             '</a>' +
           '</div>' +
         '</div>' +

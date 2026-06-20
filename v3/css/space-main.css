@@ -2,3 +2,23 @@
   left: 50%;
   margin-left: -50px;
 }
+
+.scroll-hint {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  gap: 10px;
+  position: absolute;
+  width: 98px;
+  height: 30px;
+  left: calc(50% - 98px / 2);
+  top: 987px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 50px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #fff;
+}
