@@ -54,17 +54,34 @@
   color: #000;
 }
 
-/* ---------- running line ---------- */
+/* ---------- horizontal scroll strip ---------- */
 
 .events-marquee {
   position: absolute;
   top: 330px;
-  left: 0;
+  left: 50px;
   display: flex;
   align-items: center;
-  width: 1920px;
+  width: 1820px;
   height: 609px;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 20px;
+}
+
+.events-marquee::-webkit-scrollbar {
+  height: 0;
+  display: none;
+}
+
+.events-marquee::-webkit-scrollbar-track {
+  display: none;
+}
+
+.events-marquee::-webkit-scrollbar-thumb {
+  display: none;
 }
 
 .events-marquee__track {
@@ -72,17 +89,7 @@
   flex-direction: row;
   align-items: center;
   gap: 30px;
-  width: max-content;
-  animation: eventsScroll 40s linear infinite;
-}
-
-.events-marquee__track:hover {
-  animation-play-state: paused;
-}
-
-@keyframes eventsScroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  height: 100%;
 }
 
 /* ---------- card ---------- */
@@ -264,12 +271,6 @@
   animation: eventsFadeUp 0.5s 0.4s ease both;
 }
 
-/* ---------- marquee paused state ---------- */
-
-.events-marquee__track--paused {
-  animation-play-state: paused !important;
-}
-
 /* ---------- modal ---------- */
 
 .events-modal {
@@ -404,7 +405,7 @@
   font-size: 20px;
   font-weight: 400;
   line-height: 28px;
-  color: #fff;
+  color: #888;
   white-space: nowrap;
   flex-shrink: 0;
 }
