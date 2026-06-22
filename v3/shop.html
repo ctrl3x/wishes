@@ -108,6 +108,44 @@
 
   </div>
 
+  <div class="shop-order-modal" id="shop-order-modal">
+    <div class="shop-order-modal__backdrop"></div>
+    <form class="shop-order-modal__form" id="shop-order-form">
+      <div class="shop-order-modal__header">
+        <h2 class="shop-order-modal__title">Оформление заказа</h2>
+        <button class="shop-order-modal__close" type="button" aria-label="Закрыть"></button>
+      </div>
+      <p class="shop-order-modal__subtitle">Заполните все поля.</p>
+      <div class="shop-order-modal__fields">
+        <label class="shop-order-modal__field">
+          <span class="shop-order-modal__field-label">Имя</span>
+          <input class="shop-order-modal__field-input" type="text" name="name">
+        </label>
+        <label class="shop-order-modal__field">
+          <span class="shop-order-modal__field-label">Email</span>
+          <input class="shop-order-modal__field-input" type="text" name="email">
+        </label>
+        <label class="shop-order-modal__field">
+          <span class="shop-order-modal__field-label">Телефон</span>
+          <input class="shop-order-modal__field-input" type="tel" name="phone">
+        </label>
+        <label class="shop-order-modal__field">
+          <span class="shop-order-modal__field-label">Адрес доставки</span>
+          <input class="shop-order-modal__field-input" type="text" name="address">
+        </label>
+      </div>
+      <button class="shop-order-modal__submit" type="submit">оформить</button>
+    </form>
+
+    <div class="shop-order-success" id="shop-order-success">
+      <div class="shop-order-success__header">
+        <h2 class="shop-order-success__title">ЗАКАЗ ПРИНЯТ</h2>
+        <button class="shop-order-modal__close" type="button" aria-label="Закрыть"></button>
+      </div>
+      <p class="shop-order-success__text">Мы свяжемся с вами в ближайшее время для подтверждения заказа.</p>
+    </div>
+  </div>
+
   <script>
     (function () {
       var page = document.getElementById('shop-page');
@@ -118,14 +156,72 @@
       function scale() {
         var scale = window.innerWidth / DESIGN_WIDTH;
         page.style.transform = 'scale(' + scale + ')';
-        page.style.transformOrigin = 'top center';
-        document.body.style.minHeight = (2800 * scale) + 'px';
+
+        var contentHeight = 0;
+        Array.from(page.children).forEach(function (child) {
+          var s = getComputedStyle(child);
+          if (s.position === 'absolute') {
+            var bottom = parseFloat(s.top) + child.offsetHeight;
+            if (bottom > contentHeight) contentHeight = bottom;
+          }
+        });
+        page.style.height = (contentHeight * scale) + 'px';
       }
 
       document.documentElement.style.overflowY = 'auto';
       document.documentElement.style.overflowX = 'hidden';
       scale();
       window.addEventListener('resize', scale);
+    })();
+  </script>
+  <script>
+    (function () {
+      var modal = document.getElementById('shop-order-modal');
+      var form = document.getElementById('shop-order-form');
+      var success = document.getElementById('shop-order-success');
+      var closeBtns = modal.querySelectorAll('.shop-order-modal__close');
+      var backdrop = modal.querySelector('.shop-order-modal__backdrop');
+      var carts = document.querySelectorAll('.shop-product__cart');
+
+      function openModal() {
+        form.classList.remove('shop-order-modal__form--hidden');
+        success.classList.remove('shop-order-success--visible');
+        modal.classList.add('shop-order-modal--open');
+      }
+
+      function closeModal() {
+        modal.classList.remove('shop-order-modal--open');
+      }
+
+      var inputs = form.querySelectorAll('.shop-order-modal__field-input');
+      inputs.forEach(function (input) {
+        var label = input.parentNode.querySelector('.shop-order-modal__field-label');
+        input.addEventListener('focus', function () {
+          label.style.display = 'none';
+          input.style.paddingLeft = '24px';
+        });
+        input.addEventListener('blur', function () {
+          if (!input.value.trim()) {
+            label.style.display = 'flex';
+            input.style.paddingLeft = '0';
+          }
+        });
+      });
+
+      carts.forEach(function (cart) {
+        cart.addEventListener('click', openModal);
+      });
+
+      closeBtns.forEach(function (btn) {
+        btn.addEventListener('click', closeModal);
+      });
+      backdrop.addEventListener('click', closeModal);
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        form.classList.add('shop-order-modal__form--hidden');
+        success.classList.add('shop-order-success--visible');
+      });
     })();
   </script>
 <script src="js/nav.js"></script>
