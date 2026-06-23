@@ -8,6 +8,10 @@
   var drawer = document.querySelector('.menu-drawer');
   var hasExisting = !!drawer;
 
+  var lightPages = ['about-book.html', 'space-game-hall.html', 'space-third-floor.html', 'shop.html'];
+  var pathname = window.location.pathname;
+  var isLight = lightPages.some(function (p) { return pathname.indexOf(p) !== -1; });
+
   if (!hasExisting) {
     var aboutLink = resolveLink('about.html');
     var spaceLink = resolveLink('space.html');
@@ -74,6 +78,10 @@
     if (canvas) {
       canvas.appendChild(drawer);
     }
+  }
+
+  if (isLight) {
+    drawer.classList.add('menu-drawer--light');
   }
 
   var triggers = document.querySelectorAll('.menu-btn, .about-content__menu');

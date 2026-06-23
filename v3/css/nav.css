@@ -293,3 +293,76 @@
 .menu-drawer__close-cross::after {
   transform: rotate(-45deg);
 }
+
+.menu-drawer--light .menu-panel {
+  background: #fff;
+}
+
+.menu-drawer--light .menu-panel__brand {
+  border-color: #000;
+  color: #000;
+}
+
+.menu-drawer--light .menu-panel__intro {
+  color: #000;
+}
+
+.menu-drawer--light .menu-panel__desc {
+  color: #000;
+}
+
+.menu-drawer--light .menu-panel__cta {
+  color: #000;
+}
+
+.menu-drawer--light .menu-panel__cta img {
+  filter: invert(1);
+}
+
+.menu-drawer--light .menu-tab {
+  color: #000;
+}
+
+.menu-drawer--light .menu-tab:hover,
+.menu-drawer--light .menu-tab:focus-visible {
+  background: #920000;
+  color: #fff;
+}
+
+.menu-drawer--light .menu-panel__social-link img {
+  filter: invert(1);
+}
+
+.menu-drawer--light .menu-panel__subscribe {
+  color: #000;
+}
+
+.menu-drawer--light .menu-panel__subscribe-title {
+  color: #000;
+}
+
+.menu-drawer--light .menu-panel__email-field {
+  background: #fff;
+  border-color: #000;
+}
+
+.menu-drawer--light .menu-panel__email-field input {
+  color: #000;
+}
+
+.menu-drawer--light .menu-panel__email-field input::placeholder {
+  color: #000;
+}
+
+.menu-drawer--light .menu-panel__email-submit img {
+  filter: invert(1);
+}
+
+.menu-drawer--light .menu-drawer__close {
+  background: #fff;
+}
+
+.menu-drawer--light .menu-drawer__close-cross::before,
+.menu-drawer--light .menu-drawer__close-cross::after {
+  background: #000;
+}
