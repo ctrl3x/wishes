@@ -63,10 +63,8 @@
           '<form class="menu-panel__email-form" action="#" method="post">' +
             '<label class="menu-panel__email-field">' +
               '<input type="email" name="email" placeholder="Email" autocomplete="email">' +
-            '</label>' +
-            '<button class="menu-panel__email-submit" type="submit" aria-label="Подписаться">' +
               '<img src="' + resolveLink('img/arrow-email.svg') + '" alt="" width="35" height="35" decoding="async">' +
-            '</button>' +
+            '</label>' +
           '</form>' +
         '</div>' +
       '</div>' +
@@ -77,6 +75,8 @@
     var canvas = document.getElementById('canvas');
     if (canvas) {
       canvas.appendChild(drawer);
+    } else {
+      document.body.appendChild(drawer);
     }
   }
 

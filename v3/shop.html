@@ -12,9 +12,14 @@
   <link rel="stylesheet" href="css/nav.css">
 </head>
 <body class="shop-body">
+  <img class="shop-logo" src="img/logo.png" alt="Желай" width="100" height="100" decoding="async">
+  <div class="shop-menu-wrapper">
+    <button class="menu-btn" type="button" aria-label="Открыть меню">
+      <img class="menu-btn__icon" src="img/menu-icon.svg" alt="" width="40" height="40" decoding="async">
+      <span class="menu-btn__label">МЕНЮ</span>
+    </button>
+  </div>
   <div class="shop-page" id="shop-page">
-
-    <img class="shop-logo" src="img/logo.png" alt="Желай" width="100" height="100" decoding="async">
 
     <div class="shop-header">
       <h1 class="shop-header__title">Магазин</h1>
@@ -100,12 +105,6 @@
       </div>
     </div>
 
-    <!-- Navigation button -->
-<button class="menu-btn" type="button" aria-label="Открыть меню">
-        <img class="menu-btn__icon" src="img/menu-icon.svg" alt="" width="40" height="40" decoding="async">
-        <span class="menu-btn__label">МЕНЮ</span>
-      </button>
-
   </div>
 
   <div class="shop-order-modal" id="shop-order-modal">
@@ -152,10 +151,32 @@
       if (!page) return;
 
       var DESIGN_WIDTH = 1920;
+      var logo = document.querySelector('.shop-logo');
+      var menuWrapper = document.querySelector('.shop-menu-wrapper');
 
       function scale() {
         var scale = window.innerWidth / DESIGN_WIDTH;
         page.style.transform = 'scale(' + scale + ')';
+
+        if (logo) {
+          logo.style.top = (50 * scale) + 'px';
+          logo.style.width = (100 * scale) + 'px';
+          logo.style.height = (100 * scale) + 'px';
+          logo.style.marginLeft = (-50 * scale) + 'px';
+        }
+
+        if (menuWrapper) {
+          menuWrapper.style.left = (1736 * scale) + 'px';
+          menuWrapper.style.top = (974 * scale) + 'px';
+          menuWrapper.style.transform = 'scale(' + scale + ')';
+        }
+
+        var drawer = document.querySelector('.menu-drawer');
+        if (drawer) {
+          drawer.style.left = (50 * scale) + 'px';
+          drawer.style.top = (709 * scale) + 'px';
+          drawer.style.transform = 'scale(' + scale + ')';
+        }
 
         var contentHeight = 0;
         Array.from(page.children).forEach(function (child) {
@@ -170,6 +191,7 @@
 
       document.documentElement.style.overflowY = 'auto';
       document.documentElement.style.overflowX = 'hidden';
+      window.scaleShop = scale;
       scale();
       window.addEventListener('resize', scale);
     })();
@@ -225,5 +247,6 @@
     })();
   </script>
 <script src="js/nav.js"></script>
+<script>if (window.scaleShop) window.scaleShop();</script>
 </body>
 </html>
