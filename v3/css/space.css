@@ -10,6 +10,16 @@
   background: #FFFFFF;
 }
 
+.page--space-red {
+  background: #920000;
+  color: #fff;
+}
+
+.page--space-white {
+  background: #FFFFFF;
+  color: #000;
+}
+
 .space-building {
   position: absolute;
   width: 1049px;
